@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/WeatherForecasts';
 
-class FetchData extends Component {
+class WeatherPage extends Component {
   componentDidMount() {
     // This method is called when the component is first added to the document
     this.ensureDataFetched();
@@ -69,4 +69,4 @@ class FetchData extends Component {
 export default connect(
   state => state.weatherForecasts,
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(FetchData);
+)(WeatherPage);

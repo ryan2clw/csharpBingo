@@ -1,66 +1,40 @@
-/* Events and initial state as headers */ 
-import { evnt, handleResponse } from './events';
+import { evnt } from './events';
+import { authService} from '../webservices/authService';
 
-const login = (username, password) => {
-    let headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    };
-    let body = new URLSearchParams({
-        username: username,
-        password: password,
-        Key: "8e22faa5-6f9e-4488-8efd-af1e8fcc7d6f",
-        Token: null
-    });
-    const requestOptions = {
-        method: 'POST',
-        headers: headers,
-        body: body
-    };
-    return fetch("http://localhost:60128/api/WalletAPI/GetPlayerInfo", requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
-            return user;
-        });
-  }
-  
-  const logout = () => {
-    localStorage.removeItem('user'); // remove user from local storage to log user out
-  }
-  
-  export const actionCreators = {
-    requestWeatherForecasts: startDateIndex => async (dispatch, getState) => {
-      if (startDateIndex === getState().weatherForecasts.startDateIndex) {
-        return;
-      }
-      dispatch({ type: evnt.requestWeatherForecastsType, startDateIndex });
-      const url = `api/SampleData/WeatherForecasts?startDateIndex=${startDateIndex}`;
-      const forecasts = fetch(url).then(handleResponse);
-      dispatch({ type: evnt.receiveWeatherForecastsType, startDateIndex, forecasts });
-    }
-  };
-  
-  export const reducer = (state, action) => {
-    const initialState = { forecasts: [], isLoading: false };    
+export const actionCreators = {
+    loginRequest: (username,password) => async (dispatch, getState) => {
+        /* Make API request and send action.object to the reducer */
+        const currentUser = getState().user;
+        if (username === currentUser.username) {
+            return; /* avoid duplicates */
+        }
+        dispatch({ type: evnt.LOGIN_REQUEST });        
+        const user = authService.login(username, password);
+        dispatch({ type: evnt.LOGIN_SUCCESS, user });
+    },
+    logout: () => { authService.logout() }
+};
+export const userReducer = (state, action) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const initialState = user ? { loggedIn: true, user } : {};
     state = state || initialState;
-  
-    if (action.type === evnt.requestWeatherForecastsType) {
-      return {
-        ...state,
-        startDateIndex: action.startDateIndex,
-        isLoading: true
-      };
+    switch (action.type) {
+        case evnt.LOGIN_REQUEST:
+            return {
+                ...state,
+                loggingIn: true,
+            };
+        case evnt.LOGIN_SUCCESS:
+            return {
+                ...state,
+                loggedIn: true,
+                user: action.user
+            };
+        case evnt.LOGIN_FAILURE:
+            return {};
+        case evnt.LOGOUT:
+            return {};
+        default:
+            return state
     }
-  
-    if (action.type === evnt.receiveWeatherForecastsType) {
-      return {
-        ...state,
-        startDateIndex: action.startDateIndex,
-        forecasts: action.forecasts,
-        isLoading: false
-      };
-    }
-  
-    return state;
-  };
+};
