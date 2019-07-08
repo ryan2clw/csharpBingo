@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+//import { bindActionCreators } from 'redux';
 import { actionCreators } from '../store/User';
 
 class LoginPage extends React.Component {
@@ -15,9 +15,10 @@ class LoginPage extends React.Component {
         };      
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        console.log("props", this.props);
     }
     ComponentWillMount(){
-        actionCreators.logout();        
+        actionCreators.logout();
     }
 
     handleChange(e) {
@@ -30,7 +31,7 @@ class LoginPage extends React.Component {
         this.setState({ submitted: true });
         const { username, password } = this.state;
         if (username && password) {
-            actionCreators.loginRequest(username, password);
+            this.props.dispatch(actionCreators.loginRequest(username, password, this.props.history));
         }
     }
 
@@ -68,16 +69,11 @@ class LoginPage extends React.Component {
     }
 }
 
-// function mapStateToProps(state) {
-//     const { loggingIn } = state.authentication;
-//     return {
-//         loggingIn
-//     };
-// }
-// // connect to the redux store
-// const connectedLoginPage = connect(mapStateToProps)(LoginPage);
-// export { connectedLoginPage as LoginPage }; 
-export default connect(
-    state => state.user,
-    dispatch => bindActionCreators(actionCreators, dispatch)
-  )(LoginPage);
+function mapStateToProps(state) {
+    const { loggingIn } = state.authentication || {};
+    return {
+        loggingIn
+    };
+}
+// connect to the redux store
+export default LoginPage = connect(mapStateToProps)(LoginPage);

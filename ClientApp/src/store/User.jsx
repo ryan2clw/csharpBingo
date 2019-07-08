@@ -2,15 +2,18 @@ import { evnt } from './events';
 import { authService} from '../webservices/authService';
 
 export const actionCreators = {
-    loginRequest: (username,password) => async (dispatch, getState) => {
+    loginRequest: (username,password,history) => async (dispatch, getState) => {
         /* Make API request and send action.object to the reducer */
         const currentUser = getState().user;
         if (username === currentUser.username) {
             return; /* avoid duplicates */
         }
         dispatch({ type: evnt.LOGIN_REQUEST });        
-        const user = authService.login(username, password);
+        const user = await authService.login(username, password);
         dispatch({ type: evnt.LOGIN_SUCCESS, user });
+        console.log("dispatch", dispatch);
+        console.log("getState", getState());
+        history.push("/");
     },
     logout: () => { authService.logout() }
 };
@@ -22,6 +25,7 @@ export const userReducer = (state, action) => {
         case evnt.LOGIN_REQUEST:
             return {
                 ...state,
+                submitted: true,
                 loggingIn: true,
             };
         case evnt.LOGIN_SUCCESS:

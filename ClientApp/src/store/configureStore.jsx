@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { createLogger} from 'redux-logger';
 import { userReducer } from './User';
 import { messageReducer } from './Message'
 import { counterReducer } from './Counter';
@@ -14,10 +15,12 @@ export default function configureStore(history, initialState) {
         counter: counterReducer,
         weatherForecasts: weatherReducer,
     };
+    const loggerMiddleware = createLogger();
 
     const middleware = [
         thunk,
-        routerMiddleware(history)
+        routerMiddleware(history),
+        loggerMiddleware
     ];
 
     // In development, use the browser's Redux dev tools extension if installed

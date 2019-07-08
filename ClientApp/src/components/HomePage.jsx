@@ -1,25 +1,51 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-/* Could example of a static page using functional syntax */
+import { actionCreators } from '../store/User';
 
-const HomePage = props => (
-  <div>
-    <h1>Hello, world!</h1>
-    <p>Welcome to your new single-page application, built with:</p>
-    <ul>
-      <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-      <li><a href='https://facebook.github.io/react/'>React</a> and <a href='https://redux.js.org/'>Redux</a> for client-side code</li>
-      <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-    </ul>
-    <p>To help you get started, we've also set up:</p>
-    <ul>
-      <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-      <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-      <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-    </ul>
-    <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-  </div>
-);
+class HomePage extends React.Component {
 
-export default connect()(HomePage);
+    //componentDidMount() {
+        //network calls go here
+        //this.props.dispatch(userActions.getAll());
+        //var myUser = localStorage.getItem("user");
+        //myUser = {"player":{"username":"p@p.com","firstName":"Peter","lastName":"Waechter","balances":[{"id":46523,"balanceTypeID":1,"name":"Cash","amount":48657,"displayOrder":null,"alias":null,"description":null},{"id":56743,"balanceTypeID":2,"name":"Bonus","amount":0,"displayOrder":null,"alias":null,"description":null},{"id":0,"balanceTypeID":0,"name":"Total","amount":48657,"displayOrder":null,"alias":null,"description":null},{"id":0,"balanceTypeID":0,"name":"Withdrawable","amount":48657,"displayOrder":null,"alias":null,"description":null}],"balanceCurrency":"USD","isActive":true,"isLocked":false,"isExcluded":false,"isVerified":true,"hasPin":false,"culture":null,"currencyCulture":"en-US","features":{"feature_Syndication":true,"feature_SupportTickets":true,"feature_PlayerLimits":true,"feature_PlayerExclusions":true,"feature_Promotions":true,"feature_Messaging":true},"fullName":"Peter Waechter (#19)","cashBalanceString":"48,657.00","franchiseKey":"8e22faa5-6f9e-4488-8efd-af1e8fcc7d6f","lastLoginDate":"2019-07-01T20:54:30.517","optIn_Important":true,"optIn_Marketing":false},"applicationKey":null,"phoneNumber":null,"serverTimeLocal":"7/2/2019 3:34:48 PM","serverTimeUTC":"7/2/2019 7:34:48 PM","wasSuccessful":true,"validationError":false,"message":null,"token":"f2ca1493-0802-455a-80a5-db5ed67e1d35"}
+    //}
+
+    handleDeleteUser(id) {
+        return (e) => this.props.dispatch(actionCreators.delete(id));
+    }
+
+    render() {
+        const {user} = this.props.user;
+        console.log("user", user);
+        const myBalance = new Intl.NumberFormat('en-US', 
+            { style: 'currency', currency: 'USD' }
+        ).format(user.player.balances[0].amount);
+        return (
+            <div className="container">
+                <h1>Hi {user.player.firstName} {user.player.lastName} !</h1>
+                <p>You're logged in with React!!</p>
+                <p>
+                    <Link to="/lobby">How about ordering some Bingo games, you have a balance of:  { myBalance }</Link>
+                </p>
+                <p>
+                    <Link to="/lobby">Wait for game in lobby</Link>
+                </p>
+                <p>
+                    <Link to="/login">Logout</Link>
+                </p>
+            </div>
+        );
+    }
+}
+
+function mapStateToProps(state) {
+    console.log("state", state);
+    const user = state.user;
+    return {
+         user
+    };
+}
+export default HomePage = connect(mapStateToProps)(HomePage);
