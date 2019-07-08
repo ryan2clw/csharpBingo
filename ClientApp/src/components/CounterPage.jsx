@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Counter';
 
-/* Example of a page with state but no AJAX */
+/* Example of a page with state but no AJAX, functional syntax */
 
 const CounterPage = props => (
   <div>

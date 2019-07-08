@@ -7,15 +7,12 @@ import { actionCreators } from '../store/User';
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
-
         // reset login status
-
         this.state = {
             username: '',
             password: '',
             submitted: false
-        };
-
+        };      
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -30,12 +27,10 @@ class LoginPage extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
         this.setState({ submitted: true });
         const { username, password } = this.state;
-        const { dispatch } = this.props;
         if (username && password) {
-            dispatch(actionCreators.loginRequest(username, password));
+            actionCreators.loginRequest(username, password);
         }
     }
 
@@ -46,10 +41,10 @@ class LoginPage extends React.Component {
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
+                    <div className={'form-group' + ( submitted && !username ? ' has-error' : '')}>
                         <label htmlFor="username">Username</label>
                         <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                        {submitted && !username &&
+                        { submitted && !username &&
                             <div className="help-block">Username is required</div>
                         }
                     </div>

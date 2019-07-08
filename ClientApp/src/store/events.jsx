@@ -10,6 +10,9 @@ export const evnt = {
     requestWeatherForecastsType: 'REQUEST_WEATHER_FORECASTS',
     receiveWeatherForecastsType: 'RECEIVE_WEATHER_FORECASTS',
     /* End of demo page events, delete this section above eventually */
+    MESSAGE_CLEAR: 'MESSAGE_CLEAR', 
+    MESSAGE_SUCCESS: 'MESSAGE_SUCCESS',
+    MESSAGE_ERROR: 'MESSAGE_ERROR',
     /* Login events to go from Anonymous Area to Protected Route */
     LOGIN_REQUEST: 'USERS_LOGIN_REQUEST',
     LOGIN_SUCCESS: 'USERS_LOGIN_SUCCESS',
