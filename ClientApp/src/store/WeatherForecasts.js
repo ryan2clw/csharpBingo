@@ -1,5 +1,4 @@
-const requestWeatherForecastsType = 'REQUEST_WEATHER_FORECASTS';
-const receiveWeatherForecastsType = 'RECEIVE_WEATHER_FORECASTS';
+import { evnt } from './constants';
 const initialState = { forecasts: [], isLoading: false };
 
 export const actionCreators = {
@@ -9,20 +8,20 @@ export const actionCreators = {
       return;
     }
 
-    dispatch({ type: requestWeatherForecastsType, startDateIndex });
+    dispatch({ type: evnt.requestWeatherForecastsType, startDateIndex });
 
     const url = `api/SampleData/WeatherForecasts?startDateIndex=${startDateIndex}`;
     const response = await fetch(url);
     const forecasts = await response.json();
 
-    dispatch({ type: receiveWeatherForecastsType, startDateIndex, forecasts });
+    dispatch({ type: evnt.receiveWeatherForecastsType, startDateIndex, forecasts });
   }
 };
 
 export const reducer = (state, action) => {
   state = state || initialState;
 
-  if (action.type === requestWeatherForecastsType) {
+  if (action.type === evnt.requestWeatherForecastsType) {
     return {
       ...state,
       startDateIndex: action.startDateIndex,
@@ -30,7 +29,7 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (action.type === receiveWeatherForecastsType) {
+  if (action.type === evnt.receiveWeatherForecastsType) {
     return {
       ...state,
       startDateIndex: action.startDateIndex,
