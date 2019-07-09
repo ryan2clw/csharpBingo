@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
         };      
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        console.log("props", this.props);
+        console.log("LoginPage props", this.props);
     }
     ComponentWillMount(){
         actionCreators.logout();
@@ -31,7 +31,7 @@ class LoginPage extends React.Component {
         this.setState({ submitted: true });
         const { username, password } = this.state;
         if (username && password) {
-            this.props.dispatch(actionCreators.loginRequest(username, password, this.props.history));
+            this.props.dispatch(actionCreators.loginRequest(username, password));
         }
     }
 

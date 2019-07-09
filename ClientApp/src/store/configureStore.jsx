@@ -2,16 +2,16 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import { createLogger} from 'redux-logger';
+import { messageReducer } from './Message';
 import { userReducer } from './User';
-import { messageReducer } from './Message'
 import { counterReducer } from './Counter';
 import { weatherReducer } from './WeatherForecasts';
 
 export default function configureStore(history, initialState) {
 
     const reducers = {
-        user: userReducer,
         message: messageReducer,
+        user: userReducer,
         counter: counterReducer,
         weatherForecasts: weatherReducer,
     };

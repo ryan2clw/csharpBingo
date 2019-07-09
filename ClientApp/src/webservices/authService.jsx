@@ -1,11 +1,10 @@
 import { handleResponse } from '../store/events';
+import { error } from '../store/Message';
+import { evnt } from '../store/events';
 
-const login = (username, password) => {
-    /* MARK TO DO: FIGURE OUT WHERE THESE NEXT 5 PARAMS COME FROM */
-    // let OTP = null;
-    // let Coords = null;
-    // let Culture = null;
-    // let Token = null;
+const failure = (error) => { return { type: evnt.LOGIN_FAILURE, error } }
+
+const login = async (username, password) => {
     let headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
     };
@@ -26,8 +25,12 @@ const login = (username, password) => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
             return user;
+        },
+        error => {
+            failure(evnt.LOGIN_FAILURE, error.toString());
+            //error(error.toString());
         });
-}
+    }
 
 const logout = () => {
     // remove user from local storage to log user out
