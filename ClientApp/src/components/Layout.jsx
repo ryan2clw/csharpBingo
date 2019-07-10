@@ -15,7 +15,7 @@ export const Layout = (props) => (
                     </div>
                 </div>
             {props.children}
-            {console.log("props", props)}
+            { console.log("props", props) }
         </Container>
     </div>
 );

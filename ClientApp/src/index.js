@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import configureStore from './store/configureStore';
 import  App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { alertActions } from './store/Message'
+import { clear } from './store/Message'
 import { history } from './store/history';
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
@@ -14,15 +14,12 @@ const initialState = window.initialReduxState;
 const store = configureStore(history, initialState);
 const rootElement = document.getElementById('root');
 const { dispatch } = store;
-// history.listen((location, action) => {
-//     // clear alert on location change
-//     dispatch(alertActions.clear());
-// });
+// console.log("_________________________________", dispatch);
 
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App dispatch={dispatch} />
+      <App dispatch={dispatch} message="IDFK" />
     </ConnectedRouter>
   </Provider>,
   rootElement);

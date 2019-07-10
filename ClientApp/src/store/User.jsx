@@ -20,7 +20,7 @@ export const actionCreators = {
                 return user;
             }else{
                 // MARK TO DO ADD ERROR HERE
-                dispatch({ type: evnt.LOGIN_FAILURE, message:"ERR0R" });
+                dispatch({ type: evnt.ERROR, message:"ERR0R" });
                 dispatch(error(error.toString()));
                 history.push('/login');
             }

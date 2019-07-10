@@ -10,29 +10,22 @@ import CounterPage from './components/CounterPage';
 import WeatherPage from './components/WeatherPage';
 import PrivateRoute from './components/PrivateRoute';
 
-function App(props){
-  
-  console.log("App props", props);
-  // const [msg, setMsg] = useState(
-  //   { message: "IDFK"}
-  // );
-  // message={msg.message}
-  const ret = (
+export default (props) =>
+  (
   <Layout message={props.message}>
     <PrivateRoute exact path="/" component={ HomePage} />
     <Route path="/login" component={ LoginPage} />
     <Route path='/home' component={HomePage} />
     <Route path='/counter' component={CounterPage} />
     <Route path='/fetch-data/:startDateIndex?' component={WeatherPage} />
-  </Layout>);
-  return ret;
-};
-function mapStateToProps(state) {
-  const { message } = state.message || {};
-  return {
-      message
-  };
-}
-// connect to the redux store
-export default App = connect(mapStateToProps)(App);
+  </Layout>
+  );
+// function mapStateToProps(state) {
+//   const { message } = state.message || {};
+//   return {
+//       message
+//   };
+// }
+// // connect to the redux store
+// export default App = connect(mapStateToProps)(App);
   

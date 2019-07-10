@@ -42,7 +42,7 @@ class HomePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log("state", state);
+    console.log("HomePage state", state);
     const user = state.user;
     return {
          user
