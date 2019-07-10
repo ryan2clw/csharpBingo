@@ -18,7 +18,7 @@ class HomePage extends React.Component {
     }
 
     render() {
-        const {user} = this.props.user;
+        const {user} = this.props;
         console.log("user", user);
         const myBalance = new Intl.NumberFormat('en-US', 
             { style: 'currency', currency: 'USD' }
@@ -40,10 +40,8 @@ class HomePage extends React.Component {
         );
     }
 }
-
 function mapStateToProps(state) {
-    console.log("HomePage state", state);
-    const user = state.user;
+    const {user} = state.authentication;
     return {
          user
     };

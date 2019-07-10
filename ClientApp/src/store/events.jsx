@@ -1,3 +1,5 @@
+import { history } from './history';
+
 /* These are like the backbone events that feed into the state machine,
 or reduxStore, which is like the brains of the front end.
 In React terms these are action types, and an event in programming is a type of action
@@ -11,20 +13,30 @@ export const evnt = {
     receiveWeatherForecastsType: 'RECEIVE_WEATHER_FORECASTS',
     /* End of demo page events, delete this section above eventually */
     SUCCESS: 'ALERT_SUCCESS',
-    ERROR: 'ALERT_ERROR',
+    ERROR: 'alert-danger',
     CLEAR: 'ALERT_CLEAR',
     /* Login events to go from Anonymous Area to Protected Route */
     LOGIN_REQUEST: 'LOGIN_REQUEST',
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
     LOGIN_FAILURE: 'LOGIN_FAILURE',   
-    LOGOUT: 'USERS_LOGOUT',
+    LOGOUT: 'LOGOUT',
     /* Protected Route = HomePage */
 };
+export function logout() {
+    // remove user from local storage to log user out, could invalidate the JWT on the server as well
+    localStorage.removeItem('user');
+}
 /* Global parsing and error handling for AJAX requests */
 export const handleResponse = response => {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
+            if (response.status === 401) {
+                // AUTHENTICATION FAILURE
+                logout();
+                history.push('/login');
+                // location.reload(true);
+            }
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }

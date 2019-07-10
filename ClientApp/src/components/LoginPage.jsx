@@ -8,6 +8,7 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         // reset login status
+        this.props.dispatch(actionCreators.logout());
         this.state = {
             username: '',
             password: '',
@@ -70,7 +71,7 @@ class LoginPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication || {};
+    const { loggingIn } = state.authentication;
     return {
         loggingIn
     };

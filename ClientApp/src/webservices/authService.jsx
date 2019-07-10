@@ -1,8 +1,4 @@
 import { handleResponse } from '../store/events';
-import { error } from '../store/Message';
-import { evnt } from '../store/events';
-
-const failure = (error) => { return { type: evnt.LOGIN_FAILURE, error } }
 
 const login = async (username, password) => {
     let headers = {
@@ -25,11 +21,7 @@ const login = async (username, password) => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
             return user;
-        },
-        error => {
-            failure(evnt.LOGIN_FAILURE, error.toString());
-            //error(error.toString());
-        });
+        })
     }
 
 const logout = () => {
