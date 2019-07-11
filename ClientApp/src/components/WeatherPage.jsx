@@ -48,7 +48,7 @@ class WeatherPage extends Component {
     const nextStartDateIndex = (props.startDateIndex || 0) + 5;
   
     return <p className='clearfix text-center'>
-      <Link className='btn btn-default pull-left' to={`/fetch-data/${prevStartDateIndex}`}>Previous</Link>
+      <Link className='btn blu-hu pull-left' to={`/fetch-data/${prevStartDateIndex}`}>Previous</Link>
       <Link className='btn btn-default pull-right' to={`/fetch-data/${nextStartDateIndex}`}>Next</Link>
       {props.isLoading ? <span>Loading...</span> : []}
     </p>;
@@ -56,7 +56,7 @@ class WeatherPage extends Component {
 
   render() {
     return (
-      <div>
+      <div class="col-md-7 offset-2">
         <h1>Weather forecast</h1>
         <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
         {this.renderForecastsTable(this.props)}

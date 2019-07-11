@@ -6,7 +6,7 @@ import NavMenu from './NavMenu';
 export const Layout = (props) => (
     <div>
         <NavMenu />
-        <Row className="jumbotron">
+        <Row className="jumbotron row py-5">
                 <div className="">
                     <div className="">
                         {//message.message && <div className={`alert ${message.type}`}>{message.message}</div>
