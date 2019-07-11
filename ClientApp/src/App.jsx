@@ -7,6 +7,7 @@ import LoginPage from './components/LoginPage'
 import HomePage from './components/HomePage';
 import CounterPage from './components/CounterPage';
 import WeatherPage from './components/WeatherPage';
+import BingoPage  from './components/BingoPage';
 import PrivateRoute from './components/PrivateRoute';
 import { history } from './store/history';
 
@@ -34,6 +35,7 @@ class App extends React.Component {
                       <Route path='/home' component={HomePage} />
                       <Route path='/counter' component={CounterPage} />
                       <Route path='/fetch-data/:startDateIndex?' component={ WeatherPage } />
+                      <Route path='/play' component={ BingoPage } />
                   </Layout>
               </Router>
           </div>

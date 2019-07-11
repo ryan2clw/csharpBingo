@@ -2,13 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { actionCreators } from '../store/User';
-
 class HomePage extends React.Component {
-
-    handleDeleteUser(id) {
-        return (e) => this.props.dispatch(actionCreators.delete(id));
-    }
 
     render() {
         const {user} = this.props;
@@ -21,10 +15,10 @@ class HomePage extends React.Component {
                 <h1>Hi {user.player.firstName} {user.player.lastName} !</h1>
                 <p>You're logged in with React!!</p>
                 <p>
-                    <Link to="/lobby">How about ordering some Bingo games, you have a balance of:  { myBalance }</Link>
+                    <Link to="/play">How about ordering some Bingo games, you have a balance of:  { myBalance }</Link>
                 </p>
                 <p>
-                    <Link to="/lobby">Wait for game in lobby</Link>
+                    <Link to="/play">Wait for game in lobby</Link>
                 </p>
                 <p>
                     <Link to="/login">Logout</Link>

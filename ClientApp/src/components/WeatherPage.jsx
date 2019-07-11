@@ -21,7 +21,7 @@ class WeatherPage extends Component {
   }
   renderForecastsTable(props) {
     return (
-      <table className='table table-striped'>
+      <table className='table table-striped bg-white'>
         <thead>
           <tr>
             <th>Date</th>
