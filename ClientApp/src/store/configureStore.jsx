@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import { createLogger} from 'redux-logger';
 import { messageReducer } from './Message';
-import { authentication } from './User';
+import { loginReducer } from './User';
 import { counterReducer } from './Counter';
 import { weatherReducer } from './WeatherForecasts';
 
@@ -11,7 +11,7 @@ export default function configureStore(history, initialState) {
 
     const reducers = {
         alert: messageReducer,
-        authentication: authentication,
+        authentication: loginReducer,
         counter: counterReducer,
         weatherForecasts: weatherReducer,
     };

@@ -29,7 +29,7 @@ export const actionCreators = {
 let user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? { loggedIn: true, user } : {};
 
-export function authentication(state = initialState, action) {
+export function loginReducer(state = initialState, action) {
   switch (action.type) {
     case evnt.LOGIN_REQUEST:
       return {

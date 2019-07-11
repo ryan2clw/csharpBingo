@@ -20,7 +20,7 @@ export default class NavMenu extends React.Component {
   render () {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light >
+        <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow" light >
           <Container>
             <NavbarBrand tag={Link} to="/">SpaBingo</NavbarBrand>
             <NavbarToggler onClick={this.toggle} className="mr-2" />

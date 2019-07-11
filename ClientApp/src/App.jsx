@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-//import { clear } from './store/Message';
+import { clear } from './store/Message';
 import { Layout } from './components/Layout';
 import LoginPage from './components/LoginPage'
 import HomePage from './components/HomePage';
@@ -11,32 +11,31 @@ import PrivateRoute from './components/PrivateRoute';
 import { history } from './store/history';
 
 class App extends React.Component {
-  // constructor(props) {
-  //     super(props);
+  constructor(props) {
+      super(props);
 
-  //     const { dispatch } = this.props;
-  //     history.listen((location, action) => {
-  //       dispatch(clear());
-  //     });
-  // }
+      const { dispatch } = this.props;
+      history.listen((location, action) => {
+        dispatch(clear());
+      });
+  }
 
   render() {
       const { alert } = this.props;
-      console.log("alert", alert);
       return (
           <div>
-                  <Router history={ history }>
-                      <Layout>
-                      {this.props.alert &&
-                            <div className={`alert ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                        }
-                          <PrivateRoute exact path="/" component={ HomePage } />
-                          <Route path="/login" component={ LoginPage} />
-                          <Route path='/home' component={HomePage} />
-                          <Route path='/counter' component={CounterPage} />
-                          <Route path='/fetch-data/:startDateIndex?' component={ WeatherPage } />
-                      </Layout>
-                  </Router>
+              <Router history={ history }>
+                  <Layout>
+                  { alert &&
+                        <div className={`alert ${alert.type}`}>{alert.message}</div>
+                  }
+                      <PrivateRoute exact path="/" component={ HomePage } />
+                      <Route path="/login" component={ LoginPage} />
+                      <Route path='/home' component={HomePage} />
+                      <Route path='/counter' component={CounterPage} />
+                      <Route path='/fetch-data/:startDateIndex?' component={ WeatherPage } />
+                  </Layout>
+              </Router>
           </div>
       );
   }
