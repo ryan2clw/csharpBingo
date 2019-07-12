@@ -6,7 +6,7 @@ import { actionCreators } from '../store/Counter';
 /* Example of a page with state but no AJAX, functional syntax */
 
 const CounterPage = props => (
-  <div class="col-md-4 offset-4">
+  <div>
     <h1>Counter</h1>
     <p>This is a simple example of a React component.</p>
     <p>

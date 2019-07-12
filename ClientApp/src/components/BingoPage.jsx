@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Board } from '../store/BingoBoard';
+import Board from '../store/BingoBoard';
 
 
 class BingoPage extends React.Component {
@@ -18,7 +18,6 @@ class BingoPage extends React.Component {
         const {game} = this.props;
         return (
             <Board>
-                
             </Board>
         );
     }

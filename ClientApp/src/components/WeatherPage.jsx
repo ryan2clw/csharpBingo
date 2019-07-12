@@ -21,7 +21,7 @@ class WeatherPage extends Component {
   }
   renderForecastsTable(props) {
     return (
-      <table className='table table-striped bg-white'>
+      <table className='table table-striped bg-white border'>
         <thead>
           <tr>
             <th>Date</th>
@@ -56,7 +56,7 @@ class WeatherPage extends Component {
 
   render() {
     return (
-      <div class="col-md-7 offset-2">
+      <div>
         <h1>Weather forecast</h1>
         <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
         {this.renderForecastsTable(this.props)}
