@@ -1,3 +1,8 @@
+SO TO COMPILE AND RUN THIS THING YOU JUST TYPE "dotnet run" FROM THE ROOT DIRECTORY
+BUT WAIT, YOU NEED ALL THE JS dependencies, so go to the directory named "ClientApp" type "yarn" then go back and try step one again,
+you should only need to install the dependencies every so often (like when we add one), "npm install" also works for installing 
+JS dependencies, but for consistency sake if you're checking in work use yarn, otherwise it throws a warning when you switch
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

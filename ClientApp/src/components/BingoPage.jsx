@@ -1,23 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Board from '../store/BingoBoard';
-
+import Board from './BingoBoard';
+import {actionCreators} from '../store/Numbers'
 
 class BingoPage extends React.Component {
 
+    componentDidMount(){
+        this.numbers();
+    }
+
+    numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));    
+
     render() {
+        const {games} = this.props;
         return (
-            <Board>
-                {console.log("bingoProps", this.props)}
-                {console.log("bingoState", this.state)}
-            </Board>
+            games.games.length ? 
+            <Board games={ games }></Board> :
+            <h3>DATA LOADING...{console.log("--------------------------NO DATA-------------------games", games.games)}</h3>
         );
     }
 }
 function mapStateToProps(state) {
-    const {game} = state;
+    const {games} = state;
     return {
-         game
+         games
     };
 }
 export default connect(mapStateToProps)(BingoPage);

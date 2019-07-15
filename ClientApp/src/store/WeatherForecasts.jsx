@@ -6,7 +6,7 @@ export const actionCreators = {
             return;
         }
         dispatch({ type: evnt.requestWeatherForecastsType, startDateIndex });
-        const url = `api/SampleData/WeatherForecasts?startDateIndex=${startDateIndex}`;
+        const url = `api/Bingo/WeatherForecasts?startDateIndex=${startDateIndex}`;
         const forecasts = await fetch(url).then(handleResponse);
         dispatch({ type: evnt.receiveWeatherForecastsType, startDateIndex, forecasts });
     }

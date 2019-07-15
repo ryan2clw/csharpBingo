@@ -39,9 +39,6 @@ class LoginPage extends React.Component {
     render() {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
-        console.log("submitted", submitted);
-        console.log("username", username);
-        console.log("password", password);
         return (
             <div className="col-md-4">
                 <h2>Login</h2>

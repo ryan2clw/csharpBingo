@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Square from './Square';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -13,34 +14,40 @@ const Wrapper = styled.section`
   border-radius: 15px;
   width: 300px;
 `;
-const Square = styled.div`
-  background: black;
-  height: 54px;
-  width: 54px;
-  margin: 1px;
-`;
+// const Square = styled.div`
+//   background: black;
+//   height: 54px;
+//   width: 54px;
+//   margin: 1px;
+// `;
 
 class Board extends React.Component {
 
   constructor(props){
     super(props);
     this.handleBingo = this.handleBingo.bind(this);
+    console.log("Board props", this.props);
   }
-  handleBingo = () => alert('YOU FUCKING WON DUDE');
-  squares = (rowNumber = "0", columnCount = 5) => (
+
+  handleBingo = () => {alert('YOU FUCKING WON DUDE')};
+  squares = (rowNumber = "0", columnCount) => (
       <div className="d-flex flex-row justify-content-center" key={"Row(" + rowNumber + ")"}>
-        {[...Array(columnCount)].map((_, i) => <Square key={"Square(" + rowNumber + "," + i + ")"}></Square>)}
+        {[...Array(columnCount)].map((_, i) => <Square ticketNumber={i.toString()} key={"Square(" + rowNumber + "," + i + ")"}></Square>)}
       </div>
     );
-  rows = (rowCount = 5) => [...Array(rowCount)].map((_, i) => this.squares(i.toString(), rowCount));
+  rows = (gameJSON, rowCount = 5, columnCount = 5) => {
+    console.log("gameJSON", gameJSON);
+    return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount))
+  };
 
   render(){
+    const { games } = this.props.games;
     return(
     <Wrapper className="align-content-center">
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
-      { this.rows() }
+        { this.rows(games, 5, 5)/* Configurable, can send row and column lengths */ }
         <div className="d-flex flex-row justify-content-center mt-1 pointy" onClick={this.handleBingo}>
           <img src="/BingoButton.png" alt="Bingo!"/>
         </div>

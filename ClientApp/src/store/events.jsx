@@ -20,12 +20,12 @@ export const evnt = {
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
     LOGIN_FAILURE: 'LOGIN_FAILURE',   
     LOGOUT: 'LOGOUT',
-    /* Protected Route = HomePage */
+    /* Play */
+    NUMBERS_REQUEST: 'NUMBERS_REQUEST',
+    NUMBERS_SUCCESS: 'NUMBERS_SUCCESS',
+    NUMBERS_FAILURE: 'NUMBERS_FAILURE'
 };
-export function logout() {
-    // remove user from local storage to log user out, could invalidate the JWT on the server as well
-    localStorage.removeItem('user');
-}
+const logout = () => localStorage.removeItem('user');// remove user from local storage to log user out, could invalidate the JWT on the server as well
 /* Global parsing and error handling for AJAX requests */
 export const handleResponse = response => {
     return response.text().then(text => {

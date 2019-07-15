@@ -43,7 +43,7 @@ export function loginReducer(state = initialState, action) {
         user: action.user
       };
     case evnt.LOGIN_FAILURE:
-      return {};
+      return {loggingIn: false};
     case evnt.LOGOUT:
       return {};
     default:
