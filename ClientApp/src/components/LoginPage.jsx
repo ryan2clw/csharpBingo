@@ -43,7 +43,7 @@ class LoginPage extends React.Component {
         console.log("username", username);
         console.log("password", password);
         return (
-            <div className="col-md-4 offset-4">
+            <div className="col-md-4">
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + ( !username ? ' has-error' : '')}>
