@@ -4,7 +4,7 @@ import { Flex } from 'reflexbox';
 import { connect } from 'react-redux';
 import Board from './BingoBoard';
 import BallBoard from './BallBoard';
-import QuadBounce, {Ball} from './Ball';
+//import QuadBounce, {Ball} from './Ball';
 import {actionCreators} from '../store/Numbers';
 import { Alert } from 'reactstrap';
 

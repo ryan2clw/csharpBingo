@@ -17,15 +17,11 @@ const Wrapper = styled.section`
 
 class BallBoard extends React.Component {
 
-  constructor(props){
-    super(props);
-  }
-
   handleBingo = () => {alert('YOU FUCKING WON DUDE')};
   squares = (rowNumber = "0", columnCount, rowJSON) => {
       let numBas = Object.values(rowJSON);
       return(
-      <Flex key={"Row(" + rowNumber + ")"}>
+      <Flex justify='center' key={"Row(" + rowNumber + ")"}>
         {[...Array(columnCount)].map((_, i) => {
             let reactKey = "Square(" + rowNumber + "," + i + ")";
             return (<Square height="40px" width="50px" ticketNumber={numBas[i].toString()} key={reactKey} />)

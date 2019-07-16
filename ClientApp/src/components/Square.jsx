@@ -18,11 +18,6 @@ const FlexHeight = styled(Flex)`
 
 class Square extends React.Component {
 
-  constructor(props){
-    super(props);
-    console.log("SQUARE", this.props);
-  }
-
   width = () => this.props.width || "54px";
   height = () => this.props.height || "54px";
   back = () => this.props.background || "black";
@@ -34,7 +29,6 @@ class Square extends React.Component {
     )
   }
 }
-
 Square.propTypes = {
   ticketNumber: PropTypes.string,
   called: PropTypes.bool,

@@ -1,14 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Helpers;
+using WebApi.Entities;
 
 namespace SpaBingo.Controllers
 {
     [Route("api/[controller]")]
     public class BingoController : Controller
     {
+        private DataContext _context;
+
+        public BingoController(DataContext context){
+            _context = context;
+        }
+
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -19,6 +26,21 @@ namespace SpaBingo.Controllers
             for(var i =min; i <max; i++){
                 arr.Add(i.ToString());
             }
+            return arr.ToArray();
+        }
+        [HttpGet("[action]")]
+        public IEnumerable<BingoNumber> StartGame(int startNumber, int endNumber)
+        {
+            var arr = new List<BingoNumber>();
+            for(var i = startNumber; i <endNumber; i++){
+                arr.Add(new BingoNumber(){
+                    NumValue = i.ToString(),
+                    IsPlayed = false
+                });
+            }
+            // MARK TO DO: DELETE OLD ROWS
+            _context.AddRange(entities: arr);
+            _context.SaveChanges();
             return arr.ToArray();
         }
         [HttpGet("[action]")]

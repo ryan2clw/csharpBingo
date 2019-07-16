@@ -33,7 +33,7 @@ class Board extends React.Component {
               let reactKey = "Square(" + rowNumber + "," + i + ")";
               let background = "black";
               let ticketNumber = numBas[i].toString();
-              if(reactKey=="Square(2,2)"){
+              if(reactKey==="Square(2,2)"){
                 background="green";
                 ticketNumber = "FREE";
               }
