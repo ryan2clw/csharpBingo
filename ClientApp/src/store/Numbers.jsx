@@ -1,4 +1,4 @@
-import { evnt, handleResponse } from './events';
+import { evnt } from './events';
 import {numberService} from '../webservices/numberService';
 import { danger } from './Message';
 

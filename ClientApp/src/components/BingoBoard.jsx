@@ -14,12 +14,6 @@ const Wrapper = styled.section`
   border-radius: 15px;
   width: 300px;
 `;
-// const Square = styled.div`
-//   background: black;
-//   height: 54px;
-//   width: 54px;
-//   margin: 1px;
-// `;
 
 class Board extends React.Component {
 
@@ -30,14 +24,15 @@ class Board extends React.Component {
   }
 
   handleBingo = () => {alert('YOU FUCKING WON DUDE')};
-  squares = (rowNumber = "0", columnCount) => (
+  squares = (rowNumber = "0", columnCount, rowJSON) => {
+      let numBas = Object.values(rowJSON);
+      return(
       <div className="d-flex flex-row justify-content-center" key={"Row(" + rowNumber + ")"}>
-        {[...Array(columnCount)].map((_, i) => <Square ticketNumber={i.toString()} key={"Square(" + rowNumber + "," + i + ")"}></Square>)}
-      </div>
-    );
+        {[...Array(columnCount)].map((_, i) => <Square ticketNumber={numBas[i].toString()} key={"Square(" + rowNumber + "," + i + ")"}></Square>)}
+      </div>);
+    };
   rows = (gameJSON, rowCount = 5, columnCount = 5) => {
-    console.log("gameJSON", gameJSON);
-    return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount))
+    return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i]))
   };
 
   render(){
