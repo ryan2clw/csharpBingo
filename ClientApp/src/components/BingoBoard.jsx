@@ -1,4 +1,5 @@
 import React from 'react';
+import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
 
@@ -27,9 +28,18 @@ class Board extends React.Component {
   squares = (rowNumber = "0", columnCount, rowJSON) => {
       let numBas = Object.values(rowJSON);
       return(
-      <div className="d-flex flex-row justify-content-center" key={"Row(" + rowNumber + ")"}>
-        {[...Array(columnCount)].map((_, i) => <Square ticketNumber={numBas[i].toString()} key={"Square(" + rowNumber + "," + i + ")"}></Square>)}
-      </div>);
+        <Flex key={"Row(" + rowNumber + ")"}>
+          {[...Array(columnCount)].map((_, i) => {
+              let reactKey = "Square(" + rowNumber + "," + i + ")";
+              let background = "black";
+              let ticketNumber = numBas[i].toString();
+              if(reactKey=="Square(2,2)"){
+                background="green";
+                ticketNumber = "FREE";
+              }
+              return (<Square background={background} ticketNumber={ticketNumber} key={reactKey} />)
+          })}
+        </Flex>);
     };
   rows = (gameJSON, rowCount = 5, columnCount = 5) => {
     return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i]))

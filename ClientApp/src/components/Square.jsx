@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Flex } from 'reflexbox';
 
@@ -10,12 +11,26 @@ import './styles/Square.css';
  * is passed down to it.
  * @class
  */
+const FlexHeight = styled(Flex)`
+  height: ${props => props.height || "54px"};
+  background: ${props => props.background || "black"};
+`;
+
 class Square extends React.Component {
+
+  constructor(props){
+    super(props);
+    console.log("SQUARE", this.props);
+  }
+
+  width = () => this.props.width || "54px";
+  height = () => this.props.height || "54px";
+  back = () => this.props.background || "black";
   render() {
     return(
-      <Flex p={1} justify='center' align='center' className={'ticket-number ' + (this.props.called ? 'called' : '')}>
+      <FlexHeight background={this.back()} height={this.height()} w={this.width()} p={1} justify='center' align='center' className={'ticket-number ' + (this.props.called ? 'called' : '')}>
           {this.props.ticketNumber}
-      </Flex>
+      </FlexHeight>
     )
   }
 }
