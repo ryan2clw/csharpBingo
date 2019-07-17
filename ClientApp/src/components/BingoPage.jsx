@@ -6,7 +6,7 @@ import Board from './BingoBoard';
 import BallBoard from './BallBoard';
 //import QuadBounce, {Ball} from './Ball';
 import {actionCreators} from '../store/Numbers';
-import { Alert, Spinner } from 'reactstrap';
+import { Alert } from 'reactstrap';
 
 const BoardHeader = styled.div`
     color:#337ab7;
@@ -26,7 +26,7 @@ class BingoPage extends React.Component {
     numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));    
 
     render() {
-        const {games} = this.props;
+        const {games, balls} = this.props;
         return (
             games.games.length ? (
             <Flex justify='space-evenly' w='80%'>
@@ -34,7 +34,7 @@ class BingoPage extends React.Component {
                     <Flex justify='center'>
                         <BoardHeader>Called Balls</BoardHeader>
                     </Flex>
-                    <BallBoard />
+                    <BallBoard balls= { balls || {}} />
                 </div>
                 <div>
                     <FlexTall column justify='center' align='center'>
@@ -48,18 +48,19 @@ class BingoPage extends React.Component {
                     <Flex justify='center'>
                         <BoardHeader>Bingo Card</BoardHeader>
                     </Flex>
-                    <Board games={ games } />
+                    <Board games={ games } dispatch= { this.props.dispatch } balls= { balls || {}} />
                 </div>
             </Flex>
             ) :
-            <Spinner color="primary" style={{ width: '3rem', height: '3rem' }} />
+            <h3>DATA LOADING...{console.log("--------------------------NO DATA-------------------", games.games)}</h3>
         );
     }
 }
 function mapStateToProps(state) {
-    const {games} = state;
+    const {games, balls} = state;
     return {
-         games
+         games,
+         balls
     };
 }
 export default connect(mapStateToProps)(BingoPage);

@@ -20,10 +20,14 @@ export const evnt = {
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
     LOGIN_FAILURE: 'LOGIN_FAILURE',   
     LOGOUT: 'LOGOUT',
-    /* Play */
+    /* Fill Board */
     NUMBERS_REQUEST: 'NUMBERS_REQUEST',
     NUMBERS_SUCCESS: 'NUMBERS_SUCCESS',
-    NUMBERS_FAILURE: 'NUMBERS_FAILURE'
+    NUMBERS_FAILURE: 'NUMBERS_FAILURE',
+    /* Get Round */
+    ROUND_REQUEST: 'ROUND_REQUEST',
+    ROUND_SUCCESS: 'ROUND_SUCCESS',
+    ROUND_FAILURE: 'ROUND_FAILURE'
 };
 const logout = () => localStorage.removeItem('user');// remove user from local storage to log user out, could invalidate the JWT on the server as well
 /* Global parsing and error handling for AJAX requests */
@@ -35,7 +39,6 @@ export const handleResponse = response => {
                 // AUTHENTICATION FAILURE
                 logout();
                 history.push('/login');
-                // location.reload(true);
             }
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);

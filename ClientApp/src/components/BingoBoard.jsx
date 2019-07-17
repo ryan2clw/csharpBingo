@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
+import {ballAction} from '../store/Balls';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -23,8 +24,16 @@ class Board extends React.Component {
     this.handleBingo = this.handleBingo.bind(this);
     console.log("Board props", this.props);
   }
+  sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
-  handleBingo = () => {alert('YOU FUCKING WON DUDE')};
+  handleBingo = async () => {
+    for(let i=0;i<=75;i++){
+      this.props.dispatch(ballAction.getRound());
+      await(this.sleep(5000));
+    }
+  };
   squares = (rowNumber = "0", columnCount, rowJSON) => {
       let numBas = Object.values(rowJSON);
       return(

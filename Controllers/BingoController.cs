@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers;
 using WebApi.Entities;
 using System.Threading.Tasks;
-
+using System.Diagnostics;
+using System.Threading;
 
 namespace SpaBingo.Controllers
 {
@@ -56,21 +57,27 @@ namespace SpaBingo.Controllers
             }
             _context.SaveChanges();
             BlowBalls();
+            //ThreadPool.QueueUserWorkItem(x => BlowBalls());
             return Ok();
         }
+        // Blows Balls once every 5 seconds for 6.25 minutes
         private void BlowBalls()
         {
-            Task.Run(async () => {
-                for (; ; )
-                {
-                    await Task.Delay(5000);
-                    var rng = new Random();
-                    var myBalls = _context.BingoNumbers.Where(b=>b.IsPlayed == false).ToArray();
-                    var index = rng.Next(myBalls.Length);
-                    var myBall = myBalls[index].IsPlayed = false;
-                    _context.SaveChanges();
-                }
-            });
+            var startTime = DateTime.UtcNow;
+            while (DateTime.UtcNow - startTime < TimeSpan.FromMinutes(7))
+            {
+                System.Threading.Thread.Sleep(5000);
+                var rng = new Random();
+                var myBalls = _context.BingoNumbers.Where(b => b.IsPlayed == false).ToArray();
+                var index = rng.Next(myBalls.Length);
+                myBalls[index].IsPlayed = true;
+                _context.SaveChanges();
+            }
+        }
+        [HttpGet("[action]")]
+        public IEnumerable<string> GetNumbas()
+        {
+            return _context.BingoNumbers.Where(x => x.IsPlayed).Select(item => item.NumValue).ToArray();
         }
         [HttpGet("[action]")]
         public IEnumerable<Numba> BingoCard(int cardCount)
