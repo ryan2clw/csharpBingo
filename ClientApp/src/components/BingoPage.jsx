@@ -6,7 +6,7 @@ import Board from './BingoBoard';
 import BallBoard from './BallBoard';
 //import QuadBounce, {Ball} from './Ball';
 import {actionCreators} from '../store/Numbers';
-import { Alert } from 'reactstrap';
+import { Alert, Spinner } from 'reactstrap';
 
 const BoardHeader = styled.div`
     color:#337ab7;
@@ -52,7 +52,7 @@ class BingoPage extends React.Component {
                 </div>
             </Flex>
             ) :
-            <h3>DATA LOADING...{console.log("--------------------------NO DATA-------------------games", games.games)}</h3>
+            <Spinner color="primary" style={{ width: '3rem', height: '3rem' }} />
         );
     }
 }

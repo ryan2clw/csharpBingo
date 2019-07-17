@@ -1,7 +1,9 @@
 SO TO COMPILE AND RUN THIS THING YOU JUST TYPE "dotnet run" FROM THE ROOT DIRECTORY
 BUT WAIT, YOU NEED ALL THE JS dependencies, so go to the directory named "ClientApp" type "yarn" then go back and try step one again,
 you should only need to install the dependencies every so often (like when we add one), "npm install" also works for installing 
-JS dependencies, but for consistency sake if you're checking in work use yarn, otherwise it throws a warning when you switch
+JS dependencies, but for consistency sake if you're checking in work use yarn, otherwise it throws a warning when you switch.
+YOU CAN USE THIS PROJECT WITH VS2017 despite the warning, just don't save the solution file.  MS waves the magic wand incorrectly for
+this project and my version of VS Studio.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 

@@ -4,6 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers;
 using WebApi.Entities;
+using System.Threading.Tasks;
+
 
 namespace SpaBingo.Controllers
 {
@@ -29,19 +31,46 @@ namespace SpaBingo.Controllers
             return arr.ToArray();
         }
         [HttpGet("[action]")]
-        public IEnumerable<BingoNumber> StartGame(int startNumber, int endNumber)
+        public IEnumerable<BingoNumber> InitGame(int startNumber, int endNumber)
         {
             var arr = new List<BingoNumber>();
-            for(var i = startNumber; i <endNumber; i++){
-                arr.Add(new BingoNumber(){
+            for (var i = startNumber; i <= endNumber; i++)
+            {
+                arr.Add(new BingoNumber()
+                {
                     NumValue = i.ToString(),
                     IsPlayed = false
                 });
             }
-            // MARK TO DO: DELETE OLD ROWS
             _context.AddRange(entities: arr);
             _context.SaveChanges();
             return arr.ToArray();
+        }
+        [HttpGet("[action]")]
+        public IActionResult StartGame()
+        {
+            BingoNumber[] numBas = _context.BingoNumbers.ToArray();
+            foreach (BingoNumber numBa in numBas)
+            {
+                numBa.IsPlayed = false;
+            }
+            _context.SaveChanges();
+            BlowBalls();
+            return Ok();
+        }
+        private void BlowBalls()
+        {
+            Task.Run(async () => {
+                for (; ; )
+                {
+                    await Task.Delay(5000);
+                    var rng = new Random();
+                    var myBalls = _context.BingoNumbers.Where(b=>b.IsPlayed == false).ToArray();
+                    var index = rng.Next(myBalls.Length);
+                    var myBall = myBalls[index].IsPlayed = false;
+                    _context.SaveChanges();
+                }
+            });
         }
         [HttpGet("[action]")]
         public IEnumerable<Numba> BingoCard(int cardCount)
