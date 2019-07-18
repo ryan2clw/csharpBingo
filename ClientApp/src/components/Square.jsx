@@ -13,10 +13,14 @@ import './styles/Square.css';
  */
 const FlexHeight = styled(Flex)`
   height: ${props => props.height || "54px"};
-  background: ${props => props.background || "black"};
+  background: ${props => props.background};
 `;
 
 class Square extends React.Component {
+
+  constructor(props){
+    super(props); 
+  }
 
   width = () => this.props.width || "54px";
   height = () => this.props.height || "54px";

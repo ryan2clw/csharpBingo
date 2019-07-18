@@ -56,7 +56,10 @@ namespace SpaBingo.Controllers
                 numBa.IsPlayed = false;
             }
             _context.SaveChanges();
-            BlowBalls();
+            //Thread t = new Thread(()=>{
+             BlowBalls();
+            //});
+            //t.Start();
             //ThreadPool.QueueUserWorkItem(x => BlowBalls());
             return Ok();
         }
@@ -71,6 +74,7 @@ namespace SpaBingo.Controllers
                 var myBalls = _context.BingoNumbers.Where(b => b.IsPlayed == false).ToArray();
                 var index = rng.Next(myBalls.Length);
                 myBalls[index].IsPlayed = true;
+                myBalls[index].Updated = DateTime.Now;
                 _context.SaveChanges();
             }
         }
@@ -78,6 +82,11 @@ namespace SpaBingo.Controllers
         public IEnumerable<string> GetNumbas()
         {
             return _context.BingoNumbers.Where(x => x.IsPlayed).Select(item => item.NumValue).ToArray();
+        }
+        [HttpGet("[action]")]
+        public string GetNumba()
+        {
+            return _context.BingoNumbers.Where(x => x.IsPlayed).OrderByDescending(x=>x.Updated).Select(item => item.NumValue).FirstOrDefault();
         }
         [HttpGet("[action]")]
         public IEnumerable<Numba> BingoCard(int cardCount)

@@ -7,7 +7,7 @@ import { loginReducer } from './User';
 import { counterReducer } from './Counter';
 import { weatherReducer } from './WeatherForecasts';
 import { gamesReducer } from './Numbers';
-import { ballsReducer } from './Balls';
+import { ballsReducer, ballReducer } from './Balls';
 
 export default function configureStore(history, initialState) {
 
@@ -17,7 +17,8 @@ export default function configureStore(history, initialState) {
         counter: counterReducer,
         weatherForecasts: weatherReducer,
         games: gamesReducer,
-        balls: ballsReducer
+        balls: ballsReducer,
+        ball: ballReducer
     };
     const loggerMiddleware = createLogger();
 

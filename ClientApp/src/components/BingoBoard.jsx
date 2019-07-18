@@ -29,7 +29,7 @@ class Board extends React.Component {
   }
 
   handleBingo = async () => {
-    for(let i=0;i<=75;i++){
+    for(let i=0;i<=5;i++){
       this.props.dispatch(ballAction.getRound());
       await(this.sleep(5000));
     }
@@ -40,7 +40,7 @@ class Board extends React.Component {
         <Flex key={"Row(" + rowNumber + ")"}>
           {[...Array(columnCount)].map((_, i) => {
               let reactKey = "Square(" + rowNumber + "," + i + ")";
-              let background = "black";
+              let background = "black"
               let ticketNumber = numBas[i].toString();
               if(reactKey==="Square(2,2)"){
                 background="green";
