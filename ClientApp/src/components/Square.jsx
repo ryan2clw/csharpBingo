@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Flex } from 'reflexbox';
-
+import { connect } from 'react-redux';
 import './styles/Square.css';
 
 /**
@@ -20,6 +20,8 @@ class Square extends React.Component {
 
   constructor(props){
     super(props); 
+    if(this.props.height==="40px")
+      console.log("SQUARE PROPS", this.props);
   }
 
   width = () => this.props.width || "54px";
@@ -29,6 +31,7 @@ class Square extends React.Component {
     return(
       <FlexHeight background={this.back()} height={this.height()} w={this.width()} p={1} justify='center' align='center' className={'ticket-number ' + (this.props.called ? 'called' : '')}>
           {this.props.ticketNumber}
+          { console.log("SQUARE STATE", this.state) }
       </FlexHeight>
     )
   }
@@ -37,4 +40,10 @@ Square.propTypes = {
   ticketNumber: PropTypes.string,
   called: PropTypes.bool,
 };
-export default Square;
+function mapStateToProps(state) {
+  const {ball} = state;
+  return {
+       ball
+  };
+}
+export default connect(mapStateToProps)(Square);
