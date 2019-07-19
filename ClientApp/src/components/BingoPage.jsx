@@ -26,9 +26,12 @@ class BingoPage extends React.Component {
     numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
 
     render() {
-        const {games, balls, ball} = this.props;
+        const {games} = this.props;
+        console.log("BINGO PAGE RENDERS, PROPS:", this.props);
+        const balls = [];
+        const ball = "69";             
         return (
-            games.games.length ? (
+            games ? (
             <Flex justify='space-evenly' w='80%'>
                 <div>
                     <Flex justify='center'>
@@ -36,7 +39,6 @@ class BingoPage extends React.Component {
                     </Flex>
                     <BallBoard ball= { ball || -1 } />
                 </div>
-                {console.log("BingoPage props", this.props)}
                 <div>
                     <FlexTall column justify='center' align='center'>
                         <BoardHeader>Current Number</BoardHeader>
@@ -53,16 +55,21 @@ class BingoPage extends React.Component {
                 </div>
             </Flex>
             ) :
-            <h3>DATA LOADING...{console.log("--------------------------NO DATA-------------------", games.games)}</h3>
+            <h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>
         );
     }
 }
-function mapStateToProps(state) {
-    const {games, balls, ball} = state;
+function mapStateToProps(state, ownProps) {
+    const { games } = state.games;
     return {
-         games,
-         balls,
-         ball
-    };
+        ...ownProps,
+        games:games
+    }
+    // const {games, balls, ball} = state;
+    // return {
+    //      games,
+    //      balls,
+    //      ball
+    // };
 }
 export default connect(mapStateToProps)(BingoPage);

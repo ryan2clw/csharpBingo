@@ -22,7 +22,7 @@ class Board extends React.Component {
   constructor(props){
     super(props);
     this.handleBingo = this.handleBingo.bind(this);
-    console.log("Board props", this.props);
+    console.log("Initial bingoBoard props", this.props);
   }
   sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -50,13 +50,23 @@ class Board extends React.Component {
           })}
         </Flex>);
     };
-  rows = (gameJSON, rowCount = 5, columnCount = 5) => {
-    return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i]))
-  };
+  rows = (gameJSON, rowCount = 5, columnCount = 5) => (
+        <p>
+          {
+            gameJSON.forEach(function(element) {
+                element.toString();
+            })
+          }
+        </p>
+      )
+    //return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i]))
+
 
   render(){
-    const { games } = this.props.games;
-    return(
+    const { games } = this.props;
+    console.log("bingoBoard's render has these game props:", games);
+    return games ?
+    (
     <Wrapper className="align-content-center">
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
@@ -65,7 +75,10 @@ class Board extends React.Component {
         <div className="d-flex flex-row justify-content-center mt-1 pointy" onClick={this.handleBingo}>
           <img src="/BingoButton.png" alt="Bingo!"/>
         </div>
-    </Wrapper>);
+    </Wrapper>)
+    :(
+        <h3>N/A</h3>
+    );
   }
 }
 export default Board;

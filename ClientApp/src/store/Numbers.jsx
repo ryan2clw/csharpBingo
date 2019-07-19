@@ -30,18 +30,18 @@ export const gamesReducer = (state = { games: [], isLoading: false }, action) =>
     switch (action.type) {
         case evnt.NUMBERS_REQUEST:
             return {
-                ...state,
                 cardCount: action.cardCount,
                 isLoading: true
             };
         case evnt.NUMBERS_SUCCESS:
+        {
             /* Successful API call so update dynamic data: state.whatever = action.whatever */
             return {
-                ...state,
                 cardCount: action.cardCount,
-                games: action.games,
+                games: action.games || [],
                 isLoading: false
             };
+        }
         case evnt.NUMBERS_FAILURE:
             return {
                 loggingIn: false,

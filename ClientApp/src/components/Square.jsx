@@ -18,19 +18,19 @@ const FlexHeight = styled(Flex)`
 
 class Square extends React.Component {
 
-  constructor(props){
-    super(props); 
-    if(this.props.height==="40px")
-      console.log("SQUARE PROPS", this.props);
-  }
+    constructor(props){
+        super(props);
+        if(this.props.height == "50px")
+            console.log("bingoBoard propSQUARE IS MADE", props);
+    }
 
   width = () => this.props.width || "54px";
   height = () => this.props.height || "54px";
-  back = () => this.props.ballsCalled.includes(this.props.ticketNumber) ? "green" : "black";
   render() {
     return(
-      <FlexHeight background={this.back()} height={this.height()} w={this.width()} p={1} justify='center' align='center' className={'ticket-number ' + (this.props.called ? 'called' : '')}>
+      <FlexHeight background={this.props.isCalled ? "green" : "black"} height={this.height()} w={this.width()} p={1} justify='center' align='center' className={'ticket-number ' + (this.props.called ? 'called' : '')}>
           {this.props.ticketNumber}
+          {this.props.height == "50px" && console.log("CARD SQUARE IS RENDERED")}
       </FlexHeight>
     )
   }
@@ -40,18 +40,25 @@ Square.propTypes = {
   called: PropTypes.bool,
 };
 function mapStateToProps(state, ownProps) {
-    const { balls } = state.balls;
-    const ticketNumber = ownProps.ticketNumber || "AVOID NULL AT ALL COSTS";
-    if (balls && balls.includes(ticketNumber)) {
-        let newProps = { ...ownProps };
-        newProps.background = "green";
-        console.log("FOUND NEW TICKET", ticketNumber);
-    };
-    let ret = {
-        ballsCalled: balls || [],
-        ...ownProps
-    };
-    console.log("-----------------------------ret", ret);
-    return ret;
+    if(ownProps.height === "50px"){
+        console.log("<-------------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
+    }    
+    return ownProps;
 }
 export default connect(mapStateToProps)(Square);
+
+
+
+
+
+
+    // const { balls } = state.balls;
+    // if (balls && balls.includes(ownProps.ticketNumber)) {           
+    //     if(!ownProps.isCalled){
+    //         let newProps = { ...ownProps};
+    //         newProps.isCalled = true;
+    //         newProps.background = "green";
+    //         console.log("FOUND NEW TICKET from state---------->", state);      
+    //         return newProps;
+    //     }
+    // };

@@ -50,10 +50,14 @@ export const ballsReducer = (state = { balls: [], isLoading: false }, action) =>
             };
         case evnt.ROUND_SUCCESS:
             /* Successful API call so update dynamic data: state.whatever = action.whatever */
+            {
+            const balls = action.numBas;
             return {
-                balls: action.numBas,
+                balls: balls,
+                ball: balls[0] || "IDFK",
                 isLoading: false
             };
+        }
         case evnt.ROUND_FAILURE:
             return {
                 error: action.error
@@ -62,28 +66,28 @@ export const ballsReducer = (state = { balls: [], isLoading: false }, action) =>
             return state;
     }
 };
-export const ballReducer = (state = -1, action) => {
-    /* 
-          State is immutable, so you unpack the original state, 
-        then you set the new state.whatever = action.whatever,
-        changing the state's properties but not state itself
-    */
-    switch (action.type) {
-        case evnt.ROUND_REQUEST:
-            return {
-                isLoading: true
-            };
-        case evnt.ROUND_SUCCESS:
-            /* Successful API call so update dynamic data: state.whatever = action.whatever */
-            return {
-                ball: action.numBa,
-                isLoading: false
-            };
-        case evnt.ROUND_FAILURE:
-            return {
-                error: action.error
-            };
-        default:
-            return state;
-    }
-};
+// export const ballReducer = (state = -1, action) => {
+//     /* 
+//           State is immutable, so you unpack the original state, 
+//         then you set the new state.whatever = action.whatever,
+//         changing the state's properties but not state itself
+//     */
+//     switch (action.type) {
+//         case evnt.ROUND_REQUEST:
+//             return {
+//                 isLoading: true
+//             };
+//         case evnt.ROUND_SUCCESS:
+//             /* Successful API call so update dynamic data: state.whatever = action.whatever */
+//             return {
+//                 ball: action.numBa,
+//                 isLoading: false
+//             };
+//         case evnt.ROUND_FAILURE:
+//             return {
+//                 error: action.error
+//             };
+//         default:
+//             return state;
+//     }
+// };
