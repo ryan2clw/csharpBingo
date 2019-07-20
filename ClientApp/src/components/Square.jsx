@@ -20,7 +20,7 @@ class Square extends React.Component {
 
     constructor(props){
         super(props);
-        if(this.props.height == "50px")
+        if(this.props.height === "50px")
             console.log("bingoBoard propSQUARE IS MADE", props);
     }
 
@@ -28,9 +28,9 @@ class Square extends React.Component {
   height = () => this.props.height || "54px";
   render() {
     return(
-      <FlexHeight background={this.props.isCalled ? "green" : "black"} height={this.height()} w={this.width()} p={1} justify='center' align='center' className={'ticket-number ' + (this.props.called ? 'called' : '')}>
+      <FlexHeight background={this.props.background} height={this.height()} w={this.width()} p={1} justify='center' align='center' className={'ticket-number ' + (this.props.called ? 'called' : '')}>
           {this.props.ticketNumber}
-          {this.props.height == "50px" && console.log("CARD SQUARE IS RENDERED")}
+          {this.props.height === "50px" && console.log("CARD SQUARE IS RENDERED")}
       </FlexHeight>
     )
   }
@@ -41,7 +41,7 @@ Square.propTypes = {
 };
 function mapStateToProps(state, ownProps) {
     if(ownProps.height === "50px"){
-        console.log("<-------------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
+        console.log("<---------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
     }    
     return ownProps;
 }

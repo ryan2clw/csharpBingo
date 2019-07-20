@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
+import { connect } from 'react-redux';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -24,7 +25,7 @@ class BallBoard extends React.Component {
       <Flex justify='center' key={"Row(" + rowNumber + ")"}>
         {[...Array(columnCount)].map((_, i) => {
             let reactKey = "Square(" + rowNumber + "," + i + ")";
-            return (<Square height="40px" width="50px" ticketNumber={numBas[i].toString()} key={reactKey} />)
+            return (<Square background="black" height="40px" width="50px" ticketNumber={numBas[i].toString()} key={reactKey} />)
         })}
       </Flex>);
     };
@@ -145,7 +146,7 @@ class BallBoard extends React.Component {
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
-        {  console.log("BALLBOARD RENDERS")}{
+        {  console.log("BALLBOARD RENDERS", this.props)}{
             this.rows(this.balls(), 15, 5)/* Configurable, can send row and column lengths */ }
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
@@ -153,4 +154,11 @@ class BallBoard extends React.Component {
     </Wrapper>);
   }
 }
-export default BallBoard;
+function mapStateToProps(state, ownProps) {
+    console.log("STATE CHANGE IN BALL BOARD", state);
+    if(ownProps.height === "50px"){
+        console.log("<---------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
+    }    
+    return ownProps;
+}
+export default connect(mapStateToProps)(BallBoard);

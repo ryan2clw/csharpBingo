@@ -12,6 +12,7 @@ export const Layout = (props) => (
         <NavMenu />
         <GreyDiv className="d-flex flex-column justify-content-flex-start align-items-center">
             {props.children}
+            {/* {console.log("Layout props", props)} */}
         </GreyDiv>
     </div>
 );

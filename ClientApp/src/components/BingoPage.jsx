@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'reflexbox';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import Board from './BingoBoard';
 import BallBoard from './BallBoard';
 //import QuadBounce, {Ball} from './Ball';
-import {actionCreators} from '../store/Numbers';
 import { Alert } from 'reactstrap';
 
 const BoardHeader = styled.div`
@@ -19,31 +18,30 @@ const FlexTall = styled(Flex)`
 
 class BingoPage extends React.Component {
 
-    componentDidMount(){
-        this.numbers();
-    }
+    // componentDidMount(){
+    //     this.numbers();
+    // }
 
-    numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
+    // numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
 
     render() {
-        const {games} = this.props;
-        console.log("BINGO PAGE RENDERS, PROPS:", this.props);
-        const balls = [];
-        const ball = "69";             
+        //const {games} = this.props;
+        console.log("BINGO PAGE RENDERS PROPS:", this.props);
+        //const balls = (this.props.balls && this.props.balls.balls) || [];
+        const ball = (this.props.balls && this.props.balls.ball) || "420";             
         return (
-            games ? (
             <Flex justify='space-evenly' w='80%'>
                 <div>
                     <Flex justify='center'>
                         <BoardHeader>Called Balls</BoardHeader>
                     </Flex>
-                    <BallBoard ball= { ball || -1 } />
+                    <BallBoard ball= { ball } />
                 </div>
                 <div>
                     <FlexTall column justify='center' align='center'>
                         <BoardHeader>Current Number</BoardHeader>
                         <Alert color="success">
-                            { ball > 0 ? ball : 420 }
+                            { ball }
                         </Alert>
                     </FlexTall>
                 </div>
@@ -51,25 +49,26 @@ class BingoPage extends React.Component {
                     <Flex justify='center'>
                         <BoardHeader>Bingo Card</BoardHeader>
                     </Flex>
-                    <Board games={ games } dispatch= { this.props.dispatch } balls= { balls || {}} />
+                    <Board />
                 </div>
             </Flex>
-            ) :
-            <h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>
-        );
+            ); //:
+            //<h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>
+        //);
     }
 }
-function mapStateToProps(state, ownProps) {
-    const { games } = state.games;
-    return {
-        ...ownProps,
-        games:games
-    }
-    // const {games, balls, ball} = state;
-    // return {
-    //      games,
-    //      balls,
-    //      ball
-    // };
-}
-export default connect(mapStateToProps)(BingoPage);
+// function mapStateToProps(state, ownProps) {
+//     const { games } = state;
+//     return {
+//         ...ownProps,
+//         games:games
+//     }
+//     // const {games, balls, ball} = state;
+//     // return {
+//     //      games,
+//     //      balls,
+//     //      ball
+//     // };
+// }
+// export default connect(mapStateToProps)(BingoPage);
+export default BingoPage;

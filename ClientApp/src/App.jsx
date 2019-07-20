@@ -19,12 +19,12 @@ margin-bottom:5px;
 class App extends React.Component {
   constructor(props) {
       super(props);
-      const { dispatch } = this.props;
+      console.log("APP CONSTRUCTOR PROPS", props);
+      //const { dispatch } = this.props;
       history.listen((location, action) => {
-        dispatch(clear());
+        props.dispatch(clear());
       });
   }
-
   
   render() {
       const { alert } = this.props;
@@ -44,7 +44,7 @@ class App extends React.Component {
                       <Route path='/home' component={HomePage} />
                       <Route path='/counter' component={CounterPage} />
                       <Route path='/fetch-data/:startDateIndex?' component={WeatherPage} />
-                      <Route path='/play' component={BingoPage} />
+                      <Route path='/play' component={BingoPage}  />
                   </Layout>
               </Router>
           </div>
