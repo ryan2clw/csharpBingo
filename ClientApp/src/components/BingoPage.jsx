@@ -15,18 +15,20 @@ const FlexTall = styled(Flex)`
     height:50%;
     font-size: 40px;
 `
+const RoundAlert = styled(Alert)`
+    border-radius: 50px;
+`
 
 class BingoPage extends React.Component {
 
     // componentDidMount(){
     //     this.numbers();
     // }
-
     // numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
 
     render() {
         //const {games} = this.props;
-        console.log("BINGO PAGE RENDERS PROPS:", this.props);
+        // console.log("BINGO PAGE RENDERS PROPS:", this.props);
         //const balls = (this.props.balls && this.props.balls.balls) || [];
         const ball = (this.props.balls && this.props.balls.ball) || "420";             
         return (
@@ -40,9 +42,9 @@ class BingoPage extends React.Component {
                 <div>
                     <FlexTall column justify='center' align='center'>
                         <BoardHeader>Current Number</BoardHeader>
-                        <Alert color="success">
+                        <RoundAlert color="success">
                             { ball }
-                        </Alert>
+                        </RoundAlert>
                     </FlexTall>
                 </div>
                 <div>

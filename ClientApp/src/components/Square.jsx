@@ -27,25 +27,38 @@ class Square extends React.Component {
   width = () => this.props.width || "54px";
   height = () => this.props.height || "54px";
   render() {
-    return(
-      <FlexHeight background={this.props.background} height={this.height()} w={this.width()} p={1} justify='center' align='center' className={'ticket-number ' + (this.props.called ? 'called' : '')}>
+    return (
+      <FlexHeight background={this.props.isCalled ? "green" : "black"} height={this.height()} w={this.width()} p={1} justify='center' align='center' className={'ticket-number'}>
           {this.props.ticketNumber}
-          {this.props.height === "50px" && console.log("CARD SQUARE IS RENDERED")}
+          { /*console.log("CARD SQUARE IS RENDERED")*/}
       </FlexHeight>
-    )
+    );
   }
 }
 Square.propTypes = {
   ticketNumber: PropTypes.string,
   called: PropTypes.bool,
 };
-function mapStateToProps(state, ownProps) {
-    if(ownProps.height === "50px"){
-        console.log("<---------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
-    }    
-    return ownProps;
-}
-export default connect(mapStateToProps)(Square);
+export default Square;
+// function mapStateToProps(state, ownProps) {
+//     //console.log("Square state", state);
+//     if(state.balls && state.balls.balls){
+//         const { balls } = state.balls;
+//         //console.log("Square state balls", balls);
+//         //console.log("Square state ownProps", ownProps);        
+//         if(balls.includes(ownProps.ticketNumber) && ownProps.isCalled === false){
+//             let newProps = { ...ownProps}; // only toggle once
+//             newProps.isCalled = true;
+//             console.log("WELL PLAYED", newProps);
+//             return newProps;          
+//         }       
+//     }
+//     return ownProps;
+// }
+// export default connect(mapStateToProps)(Square);
+// if(ownProps.height === "54px"){
+//     console.log("<---------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
+// }  
 
 
 

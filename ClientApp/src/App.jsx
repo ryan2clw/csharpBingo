@@ -19,7 +19,7 @@ margin-bottom:5px;
 class App extends React.Component {
   constructor(props) {
       super(props);
-      console.log("APP CONSTRUCTOR PROPS", props);
+      //console.log("APP CONSTRUCTOR PROPS", props);
       //const { dispatch } = this.props;
       history.listen((location, action) => {
         props.dispatch(clear());

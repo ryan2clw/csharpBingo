@@ -24,7 +24,7 @@ class Board extends React.Component {
   constructor(props){
     super(props);
     this.handleBingo = this.handleBingo.bind(this);
-    console.log("Initial bingoBoard props", this.props);
+    //console.log("Initial bingoBoard props", this.props);
   }
   componentDidMount(){
     this.numbers();
@@ -45,13 +45,13 @@ class Board extends React.Component {
         <Flex key={"Row(" + rowNumber + ")"}>
           {[...Array(columnCount)].map((_, i) => {
               let reactKey = "Square(" + rowNumber + "," + i + ")";
-              let background = "black"
+              let isCalled = false;
               let ticketNumber = Object.values(rowJSON)[i].toString();
               if(reactKey==="Square(2,2)"){
-                background="green";
+                isCalled = true;
                 ticketNumber = "FREE";
               }
-              return (<Square background={background} ticketNumber={ticketNumber} key={reactKey} />)
+              return (<Square isCalled={isCalled} ticketNumber={ticketNumber} key={reactKey} />)
           })}
         </Flex>) : (
         <Flex key={"Row(" + rowNumber + ")"} justify='center'><h6>----Row data Loading----</h6></Flex>);
@@ -60,14 +60,14 @@ class Board extends React.Component {
 
   render(){
     const games = this.props.games;
-    console.log("bingoBoard's render props:", games);
-    return games.games ?
+    //console.log("bingoBoard's render props:", games);
+    return games ?
     (
     <Wrapper className="align-content-center">
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
-        { this.rows(games.games, 5, 5) /* Configurable, can send row and column lengths */ }
+        { this.rows(games, 5, 5) /* Configurable, can send row and column lengths */ }
         <div className="d-flex flex-row justify-content-center mt-1 pointy" onClick={this.handleBingo}>
           <img src="/BingoButton.png" alt="Bingo!"/>
         </div>
@@ -78,17 +78,17 @@ class Board extends React.Component {
   }
 }
 function mapStateToProps(state, ownProps) {
-    console.log("Bingo board mapStateToProps state", state);
-    console.log("Bingo board mapStateToProps ownProps", {
-        ...ownProps,
-        games:state.games
-    });    
+    //console.log("Bingo board mapStateToProps state", state);
+    // console.log("Bingo board mapStateToProps ownProps", {
+    //     ...ownProps,
+    //     games: state.games ? state.games.games : []
+    // });    
     // if(ownProps.height === "50px"){
     //     console.log("<---------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
     // }    
     return {
         ...ownProps,
-        games:state.games
+        games:state.games ? state.games.games : []
     };
 }
 export default connect(mapStateToProps)(Board);
