@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -21,17 +21,17 @@ class BallBoard extends React.Component {
   handleBingo = () => {alert('YOU FUCKING WON DUDE')};
   squares = (rowNumber = "0", columnCount, rowJSON) => {
       let numBas = Object.values(rowJSON);
-      //const {calledBalls} = this.props;
+      const {calledBalls} = this.props;
       return(
       <Flex justify='center' key={"Row(" + rowNumber + ")"}>
         {[...Array(columnCount)].map((_, i) => {
             let reactKey = "Square(" + rowNumber + "," + i + ")";
             let ticketNumber= numBas[i].toString();
-            // if(calledBalls && calledBalls.includes(ticketNumber)){
-            //   console.log("CALLED NUMBER", this.props);
-            // }
+            if(calledBalls && calledBalls.includes(ticketNumber)){
+              console.log("CALLED NUMBER", this.props);
+              return (<Square height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number called" />)
+            }
             return (<Square height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number" />)
-            //return (<ColoredSquare height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} />)
         })}
       </Flex>);
     };
@@ -160,15 +160,44 @@ class BallBoard extends React.Component {
     </Wrapper>);
   }
 }
-// function mapStateToProps(state, ownProps) {
-//   console.log("BALLBOARD.mapStateToProps state", state);
-//     if(state.balls && state.balls.balls){
-//       return {
+function mapStateToProps(state, ownProps) {
+  console.log("BALLBOARD.mapStateToProps state", state);
+  if(state.balls){
+    if(state.balls.balls){
+      const newProps = {
+          ...ownProps,
+          calledBalls: state.balls.balls
+      };
+      // console.log("newProps", newProps);
+      // console.log("oldProps", ownProps);
+      return newProps;
+    }else if(state.balls.oldNumbers){
+      const newProps = {
+        ...ownProps,
+        calledBalls: state.balls.oldNumbers
+      };
+    return newProps;
+    }
+  }
+  return ownProps;  
+}
+export default connect(mapStateToProps)(BallBoard);
+// export default BallBoard;
+// if(state.balls){
+//   if(state.balls.balls && state.balls.balls.includes(ownProps.ticketNumber)){
+//     const newProps = {
 //         ...ownProps,
-//         calledBalls: state.balls.balls
-//       }
-//     }
-//     return ownProps;    
+//         className: "ticket-number called"
+//     };
+//     // console.log("newProps", newProps);
+//     // console.log("oldProps", ownProps);
+//     return newProps;
+//   }else if(state.balls.oldNumbers && state.balls.oldNumbers.includes(ownProps.ticketNumber)){
+//     const newProps = {
+//       ...ownProps,
+//       className: "ticket-number called"
+//   };
+//   return newProps;
+//   }
 // }
-// export default connect(mapStateToProps)(BallBoard);
-export default BallBoard;
+// return ownProps;

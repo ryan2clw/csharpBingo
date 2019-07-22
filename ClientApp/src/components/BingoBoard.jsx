@@ -40,7 +40,7 @@ class Board extends React.Component {
   }
 
   handleBingo = async () => {
-    for(let i=0;i<=75;i++){
+    for(let i=0;i<=4;i++){
       this.props.dispatch(ballAction.getRounds());
       await(this.sleep(5000));
     }

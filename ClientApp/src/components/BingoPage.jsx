@@ -25,21 +25,20 @@ class BingoPage extends React.Component {
         fetch("http://localhost:5000/api/Bingo/StartGame");
     }
 
-    render() {
-        const ball = (this.props.balls && this.props.balls.ball) || "420";             
+    render() {             
         return (
             <Flex justify='space-evenly' w='80%'>
                 <div>
                     <Flex justify='center'>
                         <BoardHeader>Called Balls</BoardHeader>
                     </Flex>
-                    <BallBoard ball= { ball } />
+                    <BallBoard />
                 </div>
                 <div>
                     <FlexTall column justify='center' align='center'>
                         <BoardHeader>Current Number</BoardHeader>
                         <RoundAlert color="success">
-                            { ball }
+                            { this.props.calledBalls ? this.props.calledBalls[0] : "420" }
                         </RoundAlert>
                     </FlexTall>
                 </div>

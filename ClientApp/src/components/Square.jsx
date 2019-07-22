@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Flex } from 'reflexbox';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import './styles/Square.css';
 
 /**
@@ -46,29 +46,29 @@ Square.propTypes = {
   ticketNumber: PropTypes.string,
   called: PropTypes.bool,
 };
-//export default Square;
-function mapStateToProps(state, ownProps) {
-  //console.log("SQUARE STATE", state);
-  if(state.balls){
-    if(state.balls.balls && state.balls.balls.includes(ownProps.ticketNumber)){
-      const newProps = {
-          ...ownProps,
-          className: "ticket-number called"
-      };
-      // console.log("newProps", newProps);
-      // console.log("oldProps", ownProps);
-      return newProps;
-    }else if(state.balls.oldNumbers && state.balls.oldNumbers.includes(ownProps.ticketNumber)){
-      const newProps = {
-        ...ownProps,
-        className: "ticket-number called"
-    };
-    return newProps;
-    }
-  }
-  return ownProps;
-}
-export default connect(mapStateToProps)(Square);
+export default Square;
+// function mapStateToProps(state, ownProps) {
+//   //console.log("SQUARE STATE", state);
+//   if(state.balls){
+//     if(state.balls.balls && state.balls.balls.includes(ownProps.ticketNumber)){
+//       const newProps = {
+//           ...ownProps,
+//           className: "ticket-number called"
+//       };
+//       // console.log("newProps", newProps);
+//       // console.log("oldProps", ownProps);
+//       return newProps;
+//     }else if(state.balls.oldNumbers && state.balls.oldNumbers.includes(ownProps.ticketNumber)){
+//       const newProps = {
+//         ...ownProps,
+//         className: "ticket-number called"
+//     };
+//     return newProps;
+//     }
+//   }
+//   return ownProps;
+// }
+// export default connect(mapStateToProps)(Square);
 
 
 
