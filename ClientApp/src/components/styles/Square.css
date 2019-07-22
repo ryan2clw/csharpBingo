@@ -1,0 +1,10 @@
+.ticket-number {
+  margin: 1px;
+  color: white;
+}
+  
+.called {
+  transition: all .5s ease-in-out;
+  background-color: green;
+}
+  
