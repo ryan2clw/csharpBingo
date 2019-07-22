@@ -18,6 +18,9 @@ const Wrapper = styled.section`
   border-radius: 15px;
   width: 300px;
 `;
+const ColoredSquare = styled(Square)`
+  background: ${props => props.background};
+`
 
 class Board extends React.Component {
 
@@ -45,13 +48,12 @@ class Board extends React.Component {
         <Flex key={"Row(" + rowNumber + ")"}>
           {[...Array(columnCount)].map((_, i) => {
               let reactKey = "Square(" + rowNumber + "," + i + ")";
-              let isCalled = false;
               let ticketNumber = Object.values(rowJSON)[i].toString();
               if(reactKey==="Square(2,2)"){
-                isCalled = true;
                 ticketNumber = "FREE";
+                return (<ColoredSquare className="ticket-number called" ticketNumber={ticketNumber} key={reactKey} />);
               }
-              return (<Square isCalled={isCalled} ticketNumber={ticketNumber} key={reactKey} />)
+              return (<ColoredSquare className="ticket-number" ticketNumber={ticketNumber} key={reactKey} />);
           })}
         </Flex>) : (
         <Flex key={"Row(" + rowNumber + ")"} justify='center'><h6>----Row data Loading----</h6></Flex>);

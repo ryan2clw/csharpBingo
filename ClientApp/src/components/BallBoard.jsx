@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -19,21 +19,25 @@ const Wrapper = styled.section`
 class BallBoard extends React.Component {
 
   handleBingo = () => {alert('YOU FUCKING WON DUDE')};
-  squares = (rowNumber = "0", columnCount, rowJSON, calledBalls) => {
+  squares = (rowNumber = "0", columnCount, rowJSON) => {
       let numBas = Object.values(rowJSON);
-      console.log("SQUARES CALLED", calledBalls);
+      //const {calledBalls} = this.props;
       return(
       <Flex justify='center' key={"Row(" + rowNumber + ")"}>
         {[...Array(columnCount)].map((_, i) => {
             let reactKey = "Square(" + rowNumber + "," + i + ")";
             let ticketNumber= numBas[i].toString();
-            let isCalled = calledBalls.includes(ticketNumber);
-            return (<Square calledBalls={calledBalls || []} isCalled={isCalled} height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} />)
+            // if(calledBalls && calledBalls.includes(ticketNumber)){
+            //   console.log("CALLED NUMBER", this.props);
+            // }
+            return (<Square height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number" />)
+            //return (<ColoredSquare height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} />)
         })}
       </Flex>);
     };
-  rows = (gameJSON, rowCount = 5, columnCount = 5, calledBalls) => {
-    return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i], calledBalls))
+  rows = (gameJSON, rowCount = 5, columnCount = 5) => {
+    console.log("ROWS");
+    return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i]))
   };
   balls = () => [
     {
@@ -150,20 +154,22 @@ class BallBoard extends React.Component {
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
         { console.log("BALLBOARD RENDERS", this.props)}{
-            this.rows(this.balls(), 15, 5, this.props.calledBalls || [])/* Configurable, can send row and column lengths */ }
+            this.rows(this.balls(), 15, 5)/* Configurable, can send row and column lengths */ }
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
     </Wrapper>);
   }
 }
-function mapStateToProps(state, ownProps) {
-    if(state.balls.hotBalls){
-        return {
-            ...ownProps,
-            calledBalls: state.balls.balls
-        }
-    }
-    return ownProps;    
-}
-export default connect(mapStateToProps)(BallBoard);
+// function mapStateToProps(state, ownProps) {
+//   console.log("BALLBOARD.mapStateToProps state", state);
+//     if(state.balls && state.balls.balls){
+//       return {
+//         ...ownProps,
+//         calledBalls: state.balls.balls
+//       }
+//     }
+//     return ownProps;    
+// }
+// export default connect(mapStateToProps)(BallBoard);
+export default BallBoard;
