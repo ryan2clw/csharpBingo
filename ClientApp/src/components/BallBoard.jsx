@@ -19,18 +19,21 @@ const Wrapper = styled.section`
 class BallBoard extends React.Component {
 
   handleBingo = () => {alert('YOU FUCKING WON DUDE')};
-  squares = (rowNumber = "0", columnCount, rowJSON) => {
+  squares = (rowNumber = "0", columnCount, rowJSON, calledBalls) => {
       let numBas = Object.values(rowJSON);
+      console.log("SQUARES CALLED", calledBalls);
       return(
       <Flex justify='center' key={"Row(" + rowNumber + ")"}>
         {[...Array(columnCount)].map((_, i) => {
             let reactKey = "Square(" + rowNumber + "," + i + ")";
-            return (<Square isCalled={false} height="40px" width="50px" ticketNumber={numBas[i].toString()} key={reactKey} />)
+            let ticketNumber= numBas[i].toString();
+            let isCalled = calledBalls.includes(ticketNumber);
+            return (<Square calledBalls={calledBalls || []} isCalled={isCalled} height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} />)
         })}
       </Flex>);
     };
-  rows = (gameJSON, rowCount = 5, columnCount = 5) => {
-    return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i]))
+  rows = (gameJSON, rowCount = 5, columnCount = 5, calledBalls) => {
+    return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i], calledBalls))
   };
   balls = () => [
     {
@@ -146,8 +149,8 @@ class BallBoard extends React.Component {
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
-        { /* console.log("BALLBOARD RENDERS", this.props)*/}{
-            this.rows(this.balls(), 15, 5)/* Configurable, can send row and column lengths */ }
+        { console.log("BALLBOARD RENDERS", this.props)}{
+            this.rows(this.balls(), 15, 5, this.props.calledBalls || [])/* Configurable, can send row and column lengths */ }
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
@@ -155,10 +158,12 @@ class BallBoard extends React.Component {
   }
 }
 function mapStateToProps(state, ownProps) {
-    //console.log("STATE CHANGE IN BALL BOARD", state);
-    if(ownProps.height === "50px"){
-        console.log("<---------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
-    }    
-    return ownProps;
+    if(state.balls.hotBalls){
+        return {
+            ...ownProps,
+            calledBalls: state.balls.balls
+        }
+    }
+    return ownProps;    
 }
 export default connect(mapStateToProps)(BallBoard);

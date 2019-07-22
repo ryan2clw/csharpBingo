@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Flex } from 'reflexbox';
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 import './styles/Square.css';
 
 /**
@@ -20,17 +20,19 @@ class Square extends React.Component {
 
     constructor(props){
         super(props);
-        if(this.props.height === "50px")
+        console.log("SQUARE MADE", this.props);
+        if(this.props.height === "40px")
             console.log("bingoBoard propSQUARE IS MADE", props);
     }
 
   width = () => this.props.width || "54px";
   height = () => this.props.height || "54px";
+  //back = () => this.props.calledNumbers.includes(this.props.ticketnumber) ? "green" : "black";
   render() {
     return (
       <FlexHeight background={this.props.isCalled ? "green" : "black"} height={this.height()} w={this.width()} p={1} justify='center' align='center' className={'ticket-number'}>
           {this.props.ticketNumber}
-          { /*console.log("CARD SQUARE IS RENDERED")*/}
+          {console.log("SQUARE state", this.state)}
       </FlexHeight>
     );
   }
@@ -39,23 +41,45 @@ Square.propTypes = {
   ticketNumber: PropTypes.string,
   called: PropTypes.bool,
 };
-export default Square;
 // function mapStateToProps(state, ownProps) {
-//     //console.log("Square state", state);
-//     if(state.balls && state.balls.balls){
-//         const { balls } = state.balls;
-//         //console.log("Square state balls", balls);
-//         //console.log("Square state ownProps", ownProps);        
-//         if(balls.includes(ownProps.ticketNumber) && ownProps.isCalled === false){
-//             let newProps = { ...ownProps}; // only toggle once
-//             newProps.isCalled = true;
-//             console.log("WELL PLAYED", newProps);
-//             return newProps;          
-//         }       
+//     if(state.balls.hotBalls && state.balls.hotBalls.includes(ownProps.ticketNumber)){
+//         const newProps = {
+//             ...ownProps,
+//             isCalled: true
+//         };
+//         console.log("newProps", newProps);
+//         return newProps;
 //     }
-//     return ownProps;
+//     //return ownProps;
 // }
-// export default connect(mapStateToProps)(Square);
+export default Square;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //console.log("Square state", state);
+    // if(state.balls && state.balls.balls){
+    //     const { balls } = state.balls;
+    //     //console.log("Square state balls", balls);
+    //     //console.log("Square state ownProps", ownProps);        
+    //     if(balls.includes(ownProps.ticketNumber) && ownProps.isCalled === false){
+    //         let newProps = { ...ownProps}; // only toggle once
+    //         newProps.isCalled = true;
+    //         console.log("WELL PLAYED", newProps);
+    //         return newProps;          
+    //     }       
+    // }
 // if(ownProps.height === "54px"){
 //     console.log("<---------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
 // }  
