@@ -39,15 +39,7 @@ export const ballAction = {
 };
 /* Reducers map actions to state, set the default state to an initial value */
 export const ballsReducer = (state = { balls: [], isLoading: false }, action) => {
-    /* 
-          State is immutable, so you unpack the original state, 
-        then you set the new state.whatever = action.whatever,
-        changing the state's properties but not state itself
-    */
-    function* difference(array, excludes) {
-        for (let x of array) 
-          if (!excludes.includes(x)) yield x;
-      }
+
     switch (action.type) {
         case evnt.ROUND_REQUEST:
             return {
@@ -55,14 +47,12 @@ export const ballsReducer = (state = { balls: [], isLoading: false }, action) =>
                 isLoading: true
             };
         case evnt.ROUND_SUCCESS:
-            /* Successful API call so update dynamic data: state.whatever = action.whatever */
             {       
             const balls = action.numBas;
             const oldNumbers = action.oldNumbers;
             return {
                 oldNumbers: oldNumbers,
-                balls: balls,
-                hotBalls: [...difference(balls, oldNumbers)]
+                balls: balls
             };
         }
         case evnt.ROUND_FAILURE:
@@ -73,28 +63,3 @@ export const ballsReducer = (state = { balls: [], isLoading: false }, action) =>
             return state;
     }
 };
-// export const ballReducer = (state = -1, action) => {
-//     /* 
-//           State is immutable, so you unpack the original state, 
-//         then you set the new state.whatever = action.whatever,
-//         changing the state's properties but not state itself
-//     */
-//     switch (action.type) {
-//         case evnt.ROUND_REQUEST:
-//             return {
-//                 isLoading: true
-//             };
-//         case evnt.ROUND_SUCCESS:
-//             /* Successful API call so update dynamic data: state.whatever = action.whatever */
-//             return {
-//                 ball: action.numBa,
-//                 isLoading: false
-//             };
-//         case evnt.ROUND_FAILURE:
-//             return {
-//                 error: action.error
-//             };
-//         default:
-//             return state;
-//     }
-// };

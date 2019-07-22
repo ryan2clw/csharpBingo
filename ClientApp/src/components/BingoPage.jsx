@@ -21,15 +21,11 @@ const RoundAlert = styled(Alert)`
 
 class BingoPage extends React.Component {
 
-    // componentDidMount(){
-    //     this.numbers();
-    // }
-    // numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
+    componentDidMount(){
+        fetch("http://localhost:5000/api/Bingo/StartGame");
+    }
 
     render() {
-        //const {games} = this.props;
-        // console.log("BINGO PAGE RENDERS PROPS:", this.props);
-        //const balls = (this.props.balls && this.props.balls.balls) || [];
         const ball = (this.props.balls && this.props.balls.ball) || "420";             
         return (
             <Flex justify='space-evenly' w='80%'>

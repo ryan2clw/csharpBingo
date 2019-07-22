@@ -63,8 +63,6 @@ function mapStateToProps(state, ownProps) {
         ...ownProps,
         className: "ticket-number called"
     };
-    // console.log("newProps", newProps);
-    // console.log("oldProps", ownProps);
     return newProps;
     }
   }

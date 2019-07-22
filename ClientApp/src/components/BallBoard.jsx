@@ -36,7 +36,6 @@ class BallBoard extends React.Component {
       </Flex>);
     };
   rows = (gameJSON, rowCount = 5, columnCount = 5) => {
-    console.log("ROWS");
     return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i]))
   };
   balls = () => [

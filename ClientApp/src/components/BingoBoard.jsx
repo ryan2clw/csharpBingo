@@ -31,6 +31,7 @@ class Board extends React.Component {
   }
   componentDidMount(){
     this.numbers();
+    this.handleBingo();
   }
   numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
 
@@ -39,7 +40,7 @@ class Board extends React.Component {
   }
 
   handleBingo = async () => {
-    for(let i=0;i<=5;i++){
+    for(let i=0;i<=75;i++){
       this.props.dispatch(ballAction.getRounds());
       await(this.sleep(5000));
     }
@@ -70,7 +71,7 @@ class Board extends React.Component {
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
         { this.rows(games, 5, 5) /* Configurable, can send row and column lengths */ }
-        <div className="d-flex flex-row justify-content-center mt-1 pointy" onClick={this.handleBingo}>
+        <div className="d-flex flex-row justify-content-center mt-1 pointy"  >
           <img src="/BingoButton.png" alt="Bingo!"/>
         </div>
     </Wrapper>)
