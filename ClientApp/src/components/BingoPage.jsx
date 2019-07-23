@@ -23,16 +23,21 @@ const RoundAlert = styled(Alert)`
 
 class BingoPage extends React.Component {
 
-    numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
+    numbers = () => this.props.dispatch(actionCreators.requestNumbers(2));
     sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
-      }
+    }
     handleBingo = async () => {
-        for(let i=0;i<=4;i++){
-          this.props.dispatch(ballAction.getRounds());
-          await(this.sleep(5000));
+        for (let i = 0; i <= 75; i++) {
+            this.props.dispatch(ballAction.getRounds());
+            await (this.sleep(5000));
         }
-      };
+    };
+    bingoBoards = (cardCount = 2) => {
+        const { cards, calledBalls } = this.props;
+    return [...Array(cardCount)].map((_, i) => {
+        return (<Board calledBalls={calledBalls} games={cards.cards[i] || []} />);
+    })};
 
     componentDidMount(){
         fetch("http://localhost:5000/api/Bingo/StartGame");
@@ -41,7 +46,7 @@ class BingoPage extends React.Component {
     }
 
     render() {
-        const { cards } = this.props;
+        const { cards, calledBalls } = this.props;
         return cards && cards.cards ?
         (
             <Flex justify='space-evenly' w='80%'>
@@ -49,13 +54,13 @@ class BingoPage extends React.Component {
                     <Flex justify='center'>
                         <BoardHeader>Called Balls</BoardHeader>
                     </Flex>
-                    <BallBoard scoreCard={cards.scoreCard} />
+                    <BallBoard calledBalls={calledBalls} scoreCard={cards.scoreCard} />
                 </div>
                 <div>
                     <FlexTall column justify='center' align='center'>
                         <BoardHeader>Current Number</BoardHeader>
                         <RoundAlert color="success">
-                            { this.props.lastNumber ? this.props.lastNumber : "420" }
+                            { this.props.lastNumber ? this.props.lastNumber : "Game started, round 0!" }
                         </RoundAlert>
                     </FlexTall>
                 </div>
@@ -63,7 +68,7 @@ class BingoPage extends React.Component {
                     <Flex justify='center'>
                         <BoardHeader>Bingo Card</BoardHeader>
                     </Flex>
-                    <Board games={cards.cards[0] || []} />
+                    {this.bingoBoards(2)}
                 </div>
             </Flex>
             ) :
@@ -76,14 +81,9 @@ function mapStateToProps(state, ownProps) {
     return {
             ...ownProps,
             cards:games,
-            lastNumber: state.balls.balls[0]
+            lastNumber: state.balls.balls[0],
+            calledBalls: state.balls.balls
     }
-    // const {games, balls, ball} = state;
-    // return {
-    //      games,
-    //      balls,
-    //      ball
-    // };
 }
 export default connect(mapStateToProps)(BingoPage);
 // export default BingoPage;

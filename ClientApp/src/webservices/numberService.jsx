@@ -1,10 +1,11 @@
 import { handleResponse } from '../store/events';
 
-const card = async () => {
+const card = async (cardCount) => {
     const requestOptions = {
         method: 'GET'
     };
-    return fetch("http://localhost:5000/api/Bingo/BingoCards?cardCount=1", requestOptions)
+    const uri = "http://localhost:5000/api/Bingo/BingoCards?cardCount=1" + cardCount;
+    return fetch(uri, requestOptions)
         .then(handleResponse)
         .then(card => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

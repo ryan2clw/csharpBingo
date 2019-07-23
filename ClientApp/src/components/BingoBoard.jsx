@@ -1,10 +1,7 @@
 import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
-//import {actionCreators} from '../store/Numbers';
 import Square from './Square';
-// import {ballAction} from '../store/Balls';
-// import { connect } from 'react-redux';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -18,46 +15,30 @@ const Wrapper = styled.section`
   border-radius: 15px;
   width: 300px;
 `;
-const ColoredSquare = styled(Square)`
-  background: ${props => props.background};
-`
 
 class Board extends React.Component {
 
-  constructor(props){
-    super(props);
-    //this.handleBingo = this.handleBingo.bind(this);
-    console.log("Initial bingoBoard props", this.props);
-  }
-  //componentDidMount(){
-    //this.numbers();
-    //this.handleBingo();
-  //}
-  //numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
-
-  sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  // handleBingo = async () => {
-  //   for(let i=0;i<=4;i++){
-  //     this.props.dispatch(ballAction.getRounds());
-  //     await(this.sleep(5000));
-  //   }
-  // };
-  squares = (rowNumber = "0", columnCount, rowJSON) => rowJSON ? (
-        <Flex key={"Row(" + rowNumber + ")"}>
-          {[...Array(columnCount)].map((_, i) => {
-              let reactKey = "Square(" + rowNumber + "," + i + ")";
-              let ticketNumber = Object.values(rowJSON)[i].toString();
-              if(reactKey==="Square(2,2)"){
-                ticketNumber = "FREE";
-                return (<ColoredSquare className="ticket-number called" ticketNumber={ticketNumber} key={reactKey} />);
-              }
-              return (<ColoredSquare className="ticket-number" ticketNumber={ticketNumber} key={reactKey} />);
-          })}
-        </Flex>) : (
-        <Flex key={"Row(" + rowNumber + ")"} justify='center'><h6>----Row data Loading----</h6></Flex>);
+  squares = (rowNumber = "0", columnCount, rowJSON) => {
+    let numBas = Object.values(rowJSON);
+    const calledBalls = this.props.calledBalls;
+    return(
+    <Flex justify='center' key={"Row(" + rowNumber + ")"}>
+      {[...Array(columnCount)].map((_, i) => {
+          let reactKey = "Square(" + rowNumber + "," + i + ")";
+          let ticketNumber= numBas[i].toString();
+          // console.log("CALLED BALLS", this.props);
+          if(reactKey==="Square(2,2)"){
+            ticketNumber = "FREE";
+            return (<Square className="ticket-number called" ticketNumber={ticketNumber} key={reactKey} />);
+          }
+          if(calledBalls && calledBalls.length && calledBalls.includes(ticketNumber)){
+            //console.log("CALLED NUMBER", this.props);
+            return (<Square ticketNumber={ticketNumber} key={reactKey} className="ticket-number called" />)
+          }
+          return (<Square ticketNumber={ticketNumber} key={reactKey} className="ticket-number" />)
+      })}
+    </Flex>);
+  };
   rows = (gameJSON, rowCount = 5, columnCount = 5) => (
        [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i])))
 
