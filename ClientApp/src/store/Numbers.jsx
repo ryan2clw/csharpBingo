@@ -42,7 +42,7 @@ export const gamesReducer = (state = { games: [], isLoading: false }, action) =>
             /* Successful API call so update dynamic data: state.whatever = action.whatever */
             return {
                 cardCount: action.cardCount,
-                games: action.games.cards[0],
+                games: action.games,
                 isLoading: false
             };
         }

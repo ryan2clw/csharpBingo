@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Board from './BingoBoard';
 import BallBoard from './BallBoard';
 import {actionCreators} from '../store/Numbers';
+import {ballAction} from '../store/Balls';
 //import QuadBounce, {Ball} from './Ball';
 import { Alert } from 'reactstrap';
 
@@ -23,27 +24,38 @@ const RoundAlert = styled(Alert)`
 class BingoPage extends React.Component {
 
     numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
+    sleep = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+    handleBingo = async () => {
+        for(let i=0;i<=4;i++){
+          this.props.dispatch(ballAction.getRounds());
+          await(this.sleep(5000));
+        }
+      };
 
     componentDidMount(){
         fetch("http://localhost:5000/api/Bingo/StartGame");
         this.numbers();
+        this.handleBingo();
     }
 
-
-    render() {             
-        return (
+    render() {
+        const { cards } = this.props;
+        return cards && cards.cards ?
+        (
             <Flex justify='space-evenly' w='80%'>
                 <div>
                     <Flex justify='center'>
                         <BoardHeader>Called Balls</BoardHeader>
                     </Flex>
-                    <BallBoard />
+                    <BallBoard scoreCard={cards.scoreCard} />
                 </div>
                 <div>
                     <FlexTall column justify='center' align='center'>
                         <BoardHeader>Current Number</BoardHeader>
                         <RoundAlert color="success">
-                            { this.props.calledBalls ? this.props.calledBalls[0] : "420" }
+                            { this.props.lastNumber ? this.props.lastNumber : "420" }
                         </RoundAlert>
                     </FlexTall>
                 </div>
@@ -51,21 +63,20 @@ class BingoPage extends React.Component {
                     <Flex justify='center'>
                         <BoardHeader>Bingo Card</BoardHeader>
                     </Flex>
-                    <Board games={this.props.games || []} />
+                    <Board games={cards.cards[0] || []} />
                 </div>
             </Flex>
-            ); //:
-            //<h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>
-        //);
+            ) :
+            (<h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>);
     }
 }
 function mapStateToProps(state, ownProps) {
     const { games } = state.games;
-    console.log("IDFK props", ownProps);
-    console.log("IDFK state", state);
+    console.log("BingoPage state", state.balls);
     return {
             ...ownProps,
-            games:games
+            cards:games,
+            lastNumber: state.balls.balls[0]
     }
     // const {games, balls, ball} = state;
     // return {

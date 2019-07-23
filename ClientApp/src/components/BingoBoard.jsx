@@ -1,9 +1,9 @@
 import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
-import {actionCreators} from '../store/Numbers';
+//import {actionCreators} from '../store/Numbers';
 import Square from './Square';
-import {ballAction} from '../store/Balls';
+// import {ballAction} from '../store/Balls';
 // import { connect } from 'react-redux';
 
 // Create a Title component that'll render an <h1> tag with some styles
@@ -26,25 +26,25 @@ class Board extends React.Component {
 
   constructor(props){
     super(props);
-    this.handleBingo = this.handleBingo.bind(this);
-    //console.log("Initial bingoBoard props", this.props);
+    //this.handleBingo = this.handleBingo.bind(this);
+    console.log("Initial bingoBoard props", this.props);
   }
-  componentDidMount(){
+  //componentDidMount(){
     //this.numbers();
-    this.handleBingo();
-  }
-  numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
+    //this.handleBingo();
+  //}
+  //numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
 
   sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  handleBingo = async () => {
-    for(let i=0;i<=4;i++){
-      this.props.dispatch(ballAction.getRounds());
-      await(this.sleep(5000));
-    }
-  };
+  // handleBingo = async () => {
+  //   for(let i=0;i<=4;i++){
+  //     this.props.dispatch(ballAction.getRounds());
+  //     await(this.sleep(5000));
+  //   }
+  // };
   squares = (rowNumber = "0", columnCount, rowJSON) => rowJSON ? (
         <Flex key={"Row(" + rowNumber + ")"}>
           {[...Array(columnCount)].map((_, i) => {

@@ -30,7 +30,7 @@ class Square extends React.Component {
     return (
       <FlexHeight height={this.height()} w={this.width()} p={1} justify='center' align='center' className={className }>
           {this.props.ticketNumber}
-          {console.log("SQUARE RENDERS")}
+          {/* {console.log("SQUARE RENDERS")} */}
       </FlexHeight>
     );
   }

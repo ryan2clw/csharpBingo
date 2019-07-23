@@ -78,7 +78,7 @@ namespace SpaBingo.Controllers
         [HttpGet("[action]")]
         public IEnumerable<string> GetNumbas()
         {
-            return _context.BingoNumbers.Where(x => x.IsPlayed).Select(item => item.NumValue).ToArray();
+            return _context.BingoNumbers.Where(x => x.IsPlayed).OrderByDescending(x=>x.Updated).Select(item => item.NumValue).ToArray();
         }
         [HttpGet("[action]")]
         public string GetNumba()
