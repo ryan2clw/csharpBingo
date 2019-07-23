@@ -30,6 +30,7 @@ export const gamesReducer = (state = { games: [], isLoading: false }, action) =>
     switch (action.type) {
         case evnt.NUMBERS_REQUEST:
             return {
+                games: action.games,
                 cardCount: action.cardCount,
                 isLoading: true
             };

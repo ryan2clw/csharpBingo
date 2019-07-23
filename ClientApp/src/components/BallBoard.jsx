@@ -162,42 +162,11 @@ class BallBoard extends React.Component {
 }
 function mapStateToProps(state, ownProps) {
   console.log("BALLBOARD.mapStateToProps state", state);
-  if(state.balls){
-    if(state.balls.balls){
       const newProps = {
           ...ownProps,
           calledBalls: state.balls.balls
       };
-      // console.log("newProps", newProps);
-      // console.log("oldProps", ownProps);
       return newProps;
-    }else if(state.balls.oldNumbers){
-      const newProps = {
-        ...ownProps,
-        calledBalls: state.balls.oldNumbers
-      };
-    return newProps;
     }
-  }
-  return ownProps;  
-}
 export default connect(mapStateToProps)(BallBoard);
 // export default BallBoard;
-// if(state.balls){
-//   if(state.balls.balls && state.balls.balls.includes(ownProps.ticketNumber)){
-//     const newProps = {
-//         ...ownProps,
-//         className: "ticket-number called"
-//     };
-//     // console.log("newProps", newProps);
-//     // console.log("oldProps", ownProps);
-//     return newProps;
-//   }else if(state.balls.oldNumbers && state.balls.oldNumbers.includes(ownProps.ticketNumber)){
-//     const newProps = {
-//       ...ownProps,
-//       className: "ticket-number called"
-//   };
-//   return newProps;
-//   }
-// }
-// return ownProps;

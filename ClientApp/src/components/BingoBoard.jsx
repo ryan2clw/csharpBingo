@@ -80,15 +80,7 @@ class Board extends React.Component {
     );
   }
 }
-function mapStateToProps(state, ownProps) {
-    //console.log("Bingo board mapStateToProps state", state);
-    // console.log("Bingo board mapStateToProps ownProps", {
-    //     ...ownProps,
-    //     games: state.games ? state.games.games : []
-    // });    
-    // if(ownProps.height === "50px"){
-    //     console.log("<---------Initializes with SQUARE RENDERED below, # of Squares that this function checks--------------------------------------------->", ownProps);
-    // }    
+function mapStateToProps(state, ownProps) {  
     return {
         ...ownProps,
         games:state.games ? state.games.games : []

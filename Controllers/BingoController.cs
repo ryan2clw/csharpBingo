@@ -4,9 +4,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers;
 using WebApi.Entities;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Threading;
 
 namespace SpaBingo.Controllers
 {
@@ -106,28 +103,56 @@ namespace SpaBingo.Controllers
                 O = o[rng.Next(o.Length)]
             }));
         }
+        private List<Numba> ScoreCard()
+        {
+            var myList = new List<Numba>();
+            var B = 1;
+            var I = 16;
+            var N = 31;
+            var G = 46;
+            var O = 61;
+            for(var i=0;i<15;i++){
+                myList.Add(new Numba(){
+                    B = B.ToString(),
+                    I = I.ToString(),
+                    N = N.ToString(),
+                    G = G.ToString(),
+                    O = O.ToString()
+                });
+                B++;
+                I++;
+                N++;
+                G++;
+                O++;
+
+            }
+            return myList;
+        }
         [HttpGet("[action]")]
-        public IEnumerable<Numba> BingoCards(int cardCount)
+        public IEnumerable<IEnumerable<Numba>> BingoCards(int cardCount)
         {
             // MARK TO DO: MAKE AN ARRAY OF CARDS
-            // var arr = new List<Object>();
+            var arr = new List<IEnumerable<Numba>>();
+            var scoreCard = ScoreCard();
+            arr.Add(scoreCard);
             // for(var j =0; j <cardCount; j++){
-                var rng = new Random();
-                var b = BallNumbers(1, 15);
-                var i = BallNumbers(16, 30);
-                var n = BallNumbers(31,45);
-                var g = BallNumbers(46,60);
-                var o = BallNumbers(61, 75);
-                return (Enumerable.Range(1, 5).Select(index => new Numba
-                {
-                    B = b[rng.Next(b.Length)],
-                    I = i[rng.Next(i.Length)],
-                    N = n[rng.Next(n.Length)],
-                    G = g[rng.Next(g.Length)],
-                    O = o[rng.Next(o.Length)]
-                }));
+            //     var rng = new Random();
+            //     var b = BallNumbers(1, 15);
+            //     var i = BallNumbers(16, 30);
+            //     var n = BallNumbers(31,45);
+            //     var g = BallNumbers(46,60);
+            //     var o = BallNumbers(61, 75);
+            //     // MARK TO DO: POP USED NUMBERS TO AVOID DUPLICATES
+            //     arr.Add(Enumerable.Range(1, 5).Select(index => new Numba
+            //     {
+            //         B = b[rng.Next(b.Length)],
+            //         I = i[rng.Next(i.Length)],
+            //         N = n[rng.Next(n.Length)],
+            //         G = g[rng.Next(g.Length)],
+            //         O = o[rng.Next(o.Length)]
+            //     }));
             // }
-            // return arr.Cast;
+            return arr;
         }
 
         [HttpGet("[action]")]
