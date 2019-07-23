@@ -85,8 +85,7 @@ namespace SpaBingo.Controllers
         {
             return _context.BingoNumbers.Where(x => x.IsPlayed).OrderByDescending(x=>x.Updated).Select(item => item.NumValue).FirstOrDefault();
         }
-        [HttpGet("[action]")]
-        public IEnumerable<Numba> BingoCard(int cardCount)
+        private Card BingoCard()
         {
             var rng = new Random();
             var b = BallNumbers(1, 15);
@@ -94,7 +93,8 @@ namespace SpaBingo.Controllers
             var n = BallNumbers(31,45);
             var g = BallNumbers(46,60);
             var o = BallNumbers(61, 75);
-            return (Enumerable.Range(1, 5).Select(index => new Numba
+            Card bingoCard = new Card();
+            var ret = (Enumerable.Range(1, 5).Select(index => new Row
             {
                 B = b[rng.Next(b.Length)],
                 I = i[rng.Next(i.Length)],
@@ -102,17 +102,20 @@ namespace SpaBingo.Controllers
                 G = g[rng.Next(g.Length)],
                 O = o[rng.Next(o.Length)]
             }));
+            bingoCard.Rows = ret.ToList();
+            return bingoCard;
         }
-        private List<Numba> ScoreCard()
+        private Card ScoreCard()
         {
-            var myList = new List<Numba>();
+            var myCard=  new Card();
+            var myList = new List<Row>();
             var B = 1;
             var I = 16;
             var N = 31;
             var G = 46;
             var O = 61;
             for(var i=0;i<15;i++){
-                myList.Add(new Numba(){
+                myList.Add(new Row(){
                     B = B.ToString(),
                     I = I.ToString(),
                     N = N.ToString(),
@@ -126,33 +129,22 @@ namespace SpaBingo.Controllers
                 O++;
 
             }
-            return myList;
+            myCard.Rows = myList;
+            return myCard;
         }
         [HttpGet("[action]")]
-        public IEnumerable<IEnumerable<Numba>> BingoCards(int cardCount)
+        public IActionResult BingoCards(int cardCount)
         {
-            // MARK TO DO: MAKE AN ARRAY OF CARDS
-            var arr = new List<IEnumerable<Numba>>();
-            var scoreCard = ScoreCard();
-            arr.Add(scoreCard);
-            // for(var j =0; j <cardCount; j++){
-            //     var rng = new Random();
-            //     var b = BallNumbers(1, 15);
-            //     var i = BallNumbers(16, 30);
-            //     var n = BallNumbers(31,45);
-            //     var g = BallNumbers(46,60);
-            //     var o = BallNumbers(61, 75);
-            //     // MARK TO DO: POP USED NUMBERS TO AVOID DUPLICATES
-            //     arr.Add(Enumerable.Range(1, 5).Select(index => new Numba
-            //     {
-            //         B = b[rng.Next(b.Length)],
-            //         I = i[rng.Next(i.Length)],
-            //         N = n[rng.Next(n.Length)],
-            //         G = g[rng.Next(g.Length)],
-            //         O = o[rng.Next(o.Length)]
-            //     }));
-            // }
-            return arr;
+            CardData cardData = new CardData();
+            Card scoreCard = ScoreCard();
+            cardData.ScoreCard = scoreCard;
+            List<Card> cards = new List<Card>();
+            for(var j =0; j <cardCount; j++){
+                Card newCard = BingoCard();
+                cards.Add(newCard);
+            }
+            cardData.Cards = cards;
+            return Ok(cardData);
         }
 
         [HttpGet("[action]")]
@@ -166,11 +158,16 @@ namespace SpaBingo.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
         }
+        public class CardData
+        {
+            public Card ScoreCard { get; set; }
+            public List<Card> Cards { get; set; }
+        }
         public class Card
         {
-            public List<Numba> numbas = new List<Numba>();
+            public List<Row> Rows = new List<Row>();
         }
-        public class Numba        
+        public class Row        
         {
             public string B { get; set; }
             public string I { get; set; }
