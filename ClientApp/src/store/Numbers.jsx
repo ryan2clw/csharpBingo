@@ -4,7 +4,7 @@ import { danger } from './Message';
 
 export const actionCreators = {
     requestNumbers: (cardCount=1, games = []) => async (dispatch, getState) => {
-        function request(games) { return { type: evnt.NUMBERS_REQUEST, games } }
+        function request(cardCount, games) { return { type: evnt.NUMBERS_REQUEST, cardCount, games } }
         function success(games) {  return {  type: evnt.NUMBERS_SUCCESS, games } }
         function failure(error) { return { type: evnt.NUMBERS_FAILURE, error } }
         console.log("requestNumbers", cardCount);

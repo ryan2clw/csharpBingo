@@ -4,7 +4,7 @@ const card = async (cardCount) => {
     const requestOptions = {
         method: 'GET'
     };
-    const uri = "http://localhost:5000/api/Bingo/BingoCards?cardCount=1" + cardCount;
+    const uri = "http://localhost:5000/api/Bingo/BingoCards?cardCount=" + cardCount;
     return fetch(uri, requestOptions)
         .then(handleResponse)
         .then(card => {

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const GreyDiv = styled.div`
     background: #eeeeee;
-    min-height: 870px;
+    height: 900px;
 `
 
 export const Layout = (props) => (

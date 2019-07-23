@@ -44,7 +44,7 @@ class App extends React.Component {
                       <Route path='/home' component={HomePage} />
                       <Route path='/counter' component={CounterPage} />
                       <Route path='/fetch-data/:startDateIndex?' component={WeatherPage} />
-                      <Route path='/play' component={BingoPage}  />
+                      <Route path='/play' render={(props) => <BingoPage {...props} cardCount={6} />}/>
                   </Layout>
               </Router>
           </div>
