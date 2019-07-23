@@ -21,14 +21,15 @@ class BallBoard extends React.Component {
   handleBingo = () => {alert('YOU FUCKING WON DUDE')};
   squares = (rowNumber = "0", columnCount, rowJSON) => {
       let numBas = Object.values(rowJSON);
-      const {calledBalls} = this.props;
+      const calledBalls = this.props.calledBalls;
       return(
       <Flex justify='center' key={"Row(" + rowNumber + ")"}>
         {[...Array(columnCount)].map((_, i) => {
             let reactKey = "Square(" + rowNumber + "," + i + ")";
             let ticketNumber= numBas[i].toString();
-            if(calledBalls && calledBalls.includes(ticketNumber)){
-              console.log("CALLED NUMBER", this.props);
+            // console.log("CALLED BALLS", this.props);
+            if(calledBalls.length && calledBalls.includes(ticketNumber)){
+              //console.log("CALLED NUMBER", this.props);
               return (<Square height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number called" />)
             }
             return (<Square height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number" />)
@@ -152,8 +153,9 @@ class BallBoard extends React.Component {
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
-        { console.log("BALLBOARD RENDERS", this.props)}{
-            this.rows(this.balls(), 15, 5)/* Configurable, can send row and column lengths */ }
+        {
+          this.rows(this.balls(), 15, 5)/* Configurable, can send row and column lengths */ 
+        }
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
@@ -161,7 +163,7 @@ class BallBoard extends React.Component {
   }
 }
 function mapStateToProps(state, ownProps) {
-  console.log("BALLBOARD.mapStateToProps state", state);
+  //console.log("BALLBOARD.mapStateToProps state", state);
       const newProps = {
           ...ownProps,
           calledBalls: state.balls.balls

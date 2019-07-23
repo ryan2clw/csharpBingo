@@ -33,6 +33,7 @@ const logout = () => localStorage.removeItem('user');// remove user from local s
 /* Global parsing and error handling for AJAX requests */
 export const handleResponse = response => {
     return response.text().then(text => {
+        //console.log("handleResponse", text);
         const data = text && JSON.parse(text);
         if (!response.ok) {
             if (response.status === 401) {

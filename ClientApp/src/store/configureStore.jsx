@@ -14,8 +14,8 @@ export default function configureStore(history, initialState) {
     const reducers = {
         alert: messageReducer,
         authentication: loginReducer,
-        counter: counterReducer,
-        weatherForecasts: weatherReducer,
+        //counter: counterReducer,
+        //weatherForecasts: weatherReducer,
         games: gamesReducer,
         balls: ballsReducer
     };

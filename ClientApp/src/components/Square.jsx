@@ -20,14 +20,7 @@ class Square extends React.Component {
 
     constructor(props){
         super(props);
-        if(this.props.height === "40px")
-            console.log("bingoBoard propSQUARE IS MADE", props);
     }
-  //   componentWillReceiveProps(nextProps){
-  //     if(nextProps.value !== this.props.value){
-  //         this.setState({className:nextProps.value});
-  //     }
-  // }
 
   width = () => this.props.width || "54px";
   height = () => this.props.height || "54px";

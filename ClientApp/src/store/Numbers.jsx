@@ -3,14 +3,16 @@ import {numberService} from '../webservices/numberService';
 import { danger } from './Message';
 
 export const actionCreators = {
-    requestNumbers: (cardCount=1, games) => async (dispatch, getState) => {
-        function request(games) { return { type: evnt.NUMBERS_REQUEST, games, cardCount } }
-        function success(games) {  return {  type: evnt.NUMBERS_SUCCESS, games, cardCount } }
+    requestNumbers: (cardCount=1, games = []) => async (dispatch, getState) => {
+        console.log("requestNumbers", getState().games);
+        function request(games) { return { type: evnt.NUMBERS_REQUEST, games } }
+        function success(games) {  return {  type: evnt.NUMBERS_SUCCESS, games } }
         function failure(error) { return { type: evnt.NUMBERS_FAILURE, error } }
-        dispatch(request({games}));
+        dispatch(request(games));
         numberService.card(cardCount)
             .then(
-                games => { 
+                games => {
+                    console.log("games-----------------------------", games);
                     return dispatch(success(games));
                 },
                 error => {
@@ -36,10 +38,11 @@ export const gamesReducer = (state = { games: [], isLoading: false }, action) =>
             };
         case evnt.NUMBERS_SUCCESS:
         {
+            console.log("NUMBERS SUCCESS DUDE", action);
             /* Successful API call so update dynamic data: state.whatever = action.whatever */
             return {
                 cardCount: action.cardCount,
-                games: action.games || [],
+                games: action.games.cards[0],
                 isLoading: false
             };
         }

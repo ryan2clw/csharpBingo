@@ -62,8 +62,8 @@ class Board extends React.Component {
        [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i])))
 
   render(){
-    const games = this.props.games;
-    //console.log("bingoBoard's render props:", games);
+    const games = this.props.games.rows;
+    console.log("bingoBoard's render props:", games);
     return games ?
     (
     <Wrapper className="align-content-center">
