@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {actionCreators} from '../store/Numbers';
 import Square from './Square';
 import {ballAction} from '../store/Balls';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -30,7 +30,7 @@ class Board extends React.Component {
     //console.log("Initial bingoBoard props", this.props);
   }
   componentDidMount(){
-    this.numbers();
+    //this.numbers();
     this.handleBingo();
   }
   numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
@@ -62,15 +62,14 @@ class Board extends React.Component {
        [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i])))
 
   render(){
-    const games = this.props.games.rows;
-    console.log("bingoBoard's render props:", games);
-    return games ?
+    const games = this.props.games;
+    return games && games.rows ?
     (
     <Wrapper className="align-content-center">
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
-        { this.rows(games, 5, 5) /* Configurable, can send row and column lengths */ }
+        { this.rows(games.rows, 5, 5) /* Configurable, can send row and column lengths */ }
         <div className="d-flex flex-row justify-content-center mt-1 pointy"  >
           <img src="/BingoButton.png" alt="Bingo!"/>
         </div>
@@ -80,10 +79,4 @@ class Board extends React.Component {
     );
   }
 }
-function mapStateToProps(state, ownProps) {  
-    return {
-        ...ownProps,
-        games:state.games ? state.games.games : []
-    };
-}
-export default connect(mapStateToProps)(Board);
+export default Board;

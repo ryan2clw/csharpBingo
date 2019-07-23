@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'reflexbox';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import Board from './BingoBoard';
 import BallBoard from './BallBoard';
+import {actionCreators} from '../store/Numbers';
 //import QuadBounce, {Ball} from './Ball';
 import { Alert } from 'reactstrap';
 
@@ -21,9 +22,13 @@ const RoundAlert = styled(Alert)`
 
 class BingoPage extends React.Component {
 
+    numbers = () => this.props.dispatch(actionCreators.requestNumbers(1));
+
     componentDidMount(){
         fetch("http://localhost:5000/api/Bingo/StartGame");
+        this.numbers();
     }
+
 
     render() {             
         return (
@@ -46,7 +51,7 @@ class BingoPage extends React.Component {
                     <Flex justify='center'>
                         <BoardHeader>Bingo Card</BoardHeader>
                     </Flex>
-                    <Board />
+                    <Board games={this.props.games || []} />
                 </div>
             </Flex>
             ); //:
@@ -54,18 +59,20 @@ class BingoPage extends React.Component {
         //);
     }
 }
-// function mapStateToProps(state, ownProps) {
-//     const { games } = state;
-//     return {
-//         ...ownProps,
-//         games:games
-//     }
-//     // const {games, balls, ball} = state;
-//     // return {
-//     //      games,
-//     //      balls,
-//     //      ball
-//     // };
-// }
-// export default connect(mapStateToProps)(BingoPage);
-export default BingoPage;
+function mapStateToProps(state, ownProps) {
+    const { games } = state.games;
+    console.log("IDFK props", ownProps);
+    console.log("IDFK state", state);
+    return {
+            ...ownProps,
+            games:games
+    }
+    // const {games, balls, ball} = state;
+    // return {
+    //      games,
+    //      balls,
+    //      ball
+    // };
+}
+export default connect(mapStateToProps)(BingoPage);
+// export default BingoPage;

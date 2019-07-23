@@ -28,7 +28,7 @@ class BallBoard extends React.Component {
             let reactKey = "Square(" + rowNumber + "," + i + ")";
             let ticketNumber= numBas[i].toString();
             // console.log("CALLED BALLS", this.props);
-            if(calledBalls.length && calledBalls.includes(ticketNumber)){
+            if(calledBalls && calledBalls.length && calledBalls.includes(ticketNumber)){
               //console.log("CALLED NUMBER", this.props);
               return (<Square height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number called" />)
             }
@@ -162,13 +162,13 @@ class BallBoard extends React.Component {
     </Wrapper>);
   }
 }
-function mapStateToProps(state, ownProps) {
-  //console.log("BALLBOARD.mapStateToProps state", state);
-      const newProps = {
-          ...ownProps,
-          calledBalls: state.balls.balls
-      };
-      return newProps;
-    }
-export default connect(mapStateToProps)(BallBoard);
-// export default BallBoard;
+// function mapStateToProps(state, ownProps) {
+//   //console.log("BALLBOARD.mapStateToProps state", state);
+//       const newProps = {
+//           ...ownProps,
+//           calledBalls: state.balls.balls
+//       };
+//       return newProps;
+//     }
+// export default connect(mapStateToProps)(BallBoard);
+export default BallBoard;

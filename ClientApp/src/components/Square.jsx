@@ -18,9 +18,9 @@ const FlexHeight = styled(Flex)`
 
 class Square extends React.Component {
 
-    constructor(props){
-        super(props);
-    }
+    // constructor(props){
+    //     super(props);
+    // }
 
   width = () => this.props.width || "54px";
   height = () => this.props.height || "54px";

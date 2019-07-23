@@ -4,8 +4,8 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import { createLogger} from 'redux-logger';
 import { messageReducer } from './Message';
 import { loginReducer } from './User';
-import { counterReducer } from './Counter';
-import { weatherReducer } from './WeatherForecasts';
+// import { counterReducer } from './Counter';
+// import { weatherReducer } from './WeatherForecasts';
 import { gamesReducer } from './Numbers';
 import { ballsReducer } from './Balls';
 
