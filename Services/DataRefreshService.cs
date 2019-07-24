@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 public class DataRefreshService : HostedService
 {
     private readonly BallBlower _ballBlower;
-
     public DataRefreshService(BallBlower ballBlower)
     {
         _ballBlower = ballBlower;

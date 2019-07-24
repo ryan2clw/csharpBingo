@@ -51,7 +51,17 @@ namespace SpaBingo.Controllers
         public string Get()
         {
             return _ballBlower.RandomString;
-            //return "PONG!";
+        }
+        [HttpGet("blowBalls")]
+        public IActionResult BlowBallsAsync()
+        {  
+            var rng = new Random();
+            var myBalls = _context.BingoNumbers.Where(b => b.IsPlayed == false).ToArray();
+            var index = rng.Next(myBalls.Length);
+            myBalls[index].IsPlayed = true;
+            myBalls[index].Updated = DateTime.Now;
+            _context.SaveChanges();
+            return Ok("Blew balls: " + DateTime.Now.ToString());
         }
         [HttpGet("[action]")]
         public IActionResult StartGame()
@@ -62,28 +72,24 @@ namespace SpaBingo.Controllers
                 numBa.IsPlayed = false;
             }
             _context.SaveChanges();
-            //Thread t = new Thread(()=>{
-             BlowBalls();
-            //});
-            //t.Start();
-            //ThreadPool.QueueUserWorkItem(x => BlowBalls());
+            //BlowBalls();
             return Ok();
         }
         // Blows Balls once every 5 seconds for 6.25 minutes
-        private void BlowBalls()
-        {
-            var startTime = DateTime.UtcNow;
-            while (DateTime.UtcNow - startTime < TimeSpan.FromMinutes(7))
-            {
-                System.Threading.Thread.Sleep(5000);
-                var rng = new Random();
-                var myBalls = _context.BingoNumbers.Where(b => b.IsPlayed == false).ToArray();
-                var index = rng.Next(myBalls.Length);
-                myBalls[index].IsPlayed = true;
-                myBalls[index].Updated = DateTime.Now;
-                _context.SaveChanges();
-            }
-        }
+        // private void BlowBalls()
+        // {
+        //     var startTime = DateTime.UtcNow;
+        //     while (DateTime.UtcNow - startTime < TimeSpan.FromMinutes(7))
+        //     {
+        //         System.Threading.Thread.Sleep(5000);
+        //         var rng = new Random();
+        //         var myBalls = _context.BingoNumbers.Where(b => b.IsPlayed == false).ToArray();
+        //         var index = rng.Next(myBalls.Length);
+        //         myBalls[index].IsPlayed = true;
+        //         myBalls[index].Updated = DateTime.Now;
+        //         _context.SaveChanges();
+        //     }
+        // }
         [HttpGet("[action]")]
         public IEnumerable<string> GetNumbas()
         {
