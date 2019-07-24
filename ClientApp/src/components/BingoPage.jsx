@@ -11,11 +11,11 @@ import './BingoPage.css';
 
 const BoardHeader = styled.div`
     color:#337ab7;
-    font-size: 30px;
+    font-size: 24px;
 `;
 const FlexTall = styled(Flex)`
     height:50%;
-    font-size: 40px;
+    font-size: 20px;
 `
 const RoundAlert = styled(Alert)`
     border-radius: 50px;
@@ -50,14 +50,13 @@ class BingoPage extends React.Component {
         const { cards, calledBalls } = this.props;
         return cards && cards.cards ?
         (
-            <Flex justify='space-evenly'>
-                { console.log("Bingo Page props", this.props)}
-                <div className="container">
+            <Flex justify='space-evenly' className="row">
+                <div className="col-md-7">
                     <div className="row d-flex flex-row justify-content-center align-items-center">
                         {this.bingoBoards(cards.cards.length)}
                     </div>
                 </div>
-                <div className="col-md-1 mr-4">
+                <div className="col-md-2 text-center">
                     <FlexTall column justify='flex-start' align='center'>
                         <BoardHeader>Current Number</BoardHeader>
                         <RoundAlert color="success">
@@ -65,7 +64,7 @@ class BingoPage extends React.Component {
                         </RoundAlert>
                     </FlexTall>
                 </div>
-                <div className="mr-4">
+                <div className="col-md-3 d-flex flex-column align-items-center">
                     <Flex justify='center'>
                         <BoardHeader>Called Balls</BoardHeader>
                     </Flex>
