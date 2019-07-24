@@ -191,7 +191,7 @@ namespace SpaBingo.Controllers
             public string N { get; set; }
             public string G { get; set; }
             public string O { get; set; }
-
+            public int CardID { get; set; }
         }
         public class WeatherForecast
         {
