@@ -88,19 +88,33 @@ namespace SpaBingo.Controllers
         private Card BingoCard()
         {
             var rng = new Random();
-            var b = BallNumbers(1, 15);
-            var i = BallNumbers(16, 30);
-            var n = BallNumbers(31,45);
-            var g = BallNumbers(46,60);
-            var o = BallNumbers(61, 75);
+            var b = BallNumbers(1, 15).ToList();
+            var i = BallNumbers(16, 30).ToList();
+            var n = BallNumbers(31,45).ToList();
+            var g = BallNumbers(46,60).ToList();
+            var o = BallNumbers(61, 75).ToList();
             Card bingoCard = new Card();
-            var ret = (Enumerable.Range(1, 5).Select(index => new Row
+            var ret = (Enumerable.Range(1, 5).Select(index => 
             {
-                B = b[rng.Next(b.Length)],
-                I = i[rng.Next(i.Length)],
-                N = n[rng.Next(n.Length)],
-                G = g[rng.Next(g.Length)],
-                O = o[rng.Next(o.Length)]
+                var bRemove = rng.Next(b.Count);
+                var iRemove = rng.Next(i.Count);
+                var nRemove = rng.Next(n.Count);
+                var gRemove = rng.Next(g.Count);
+                var oRemove = rng.Next(o.Count);
+                var innerRet = new Row()
+                {
+                    B = b[bRemove],
+                    I = i[iRemove],
+                    N = n[nRemove],
+                    G = g[gRemove],
+                    O = o[oRemove]
+                };
+                b.RemoveAt(bRemove);
+                i.RemoveAt(iRemove);
+                n.RemoveAt(nRemove);
+                g.RemoveAt(gRemove);
+                o.RemoveAt(oRemove);
+                return innerRet;
             }));
             bingoCard.Rows = ret.ToList();
             return bingoCard;

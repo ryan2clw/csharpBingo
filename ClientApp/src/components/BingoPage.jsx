@@ -50,14 +50,16 @@ class BingoPage extends React.Component {
         const { cards, calledBalls } = this.props;
         return cards && cards.cards ?
         (
-            <Flex justify='space-evenly' w='80%'>
+            <Flex justify='space-evenly'>
                 { console.log("Bingo Page props", this.props)}
-                <Flex>
-                    <Flex justify='center'>
-                        <BoardHeader>Bingo Cards</BoardHeader>
-                    </Flex>
-                    {this.bingoBoards(cards.cards.length)}
-                </Flex>
+                    <div>
+                        <div>
+                            <Flex justify='center'>
+                                <BoardHeader>Bingo Cards</BoardHeader>
+                                {this.bingoBoards(cards.cards.length)}
+                            </Flex>
+                        </div>
+                    </div>
                 <div>
                     <FlexTall column justify='flex-start' align='center'>
                         <BoardHeader>Current Number</BoardHeader>
