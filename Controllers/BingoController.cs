@@ -104,13 +104,14 @@ namespace SpaBingo.Controllers
                 var nRemove = rng.Next(n.Count);
                 var gRemove = rng.Next(g.Count);
                 var oRemove = rng.Next(o.Count);
-                var innerRet = new Row()
+                Row innerRet = new Row()
                 {
                     B = b[bRemove],
                     I = i[iRemove],
                     N = n[nRemove],
                     G = g[gRemove],
-                    O = o[oRemove]
+                    O = o[oRemove],
+                    CardID = bingoCard.Id
                 };
                 b.RemoveAt(bRemove);
                 i.RemoveAt(iRemove);
@@ -120,6 +121,12 @@ namespace SpaBingo.Controllers
                 return innerRet;
             }));
             bingoCard.Rows = ret.ToList();
+            try{
+                _context.Cards.Add(bingoCard);
+                _context.SaveChanges();
+            }catch(Exception ex){
+                throw(ex); // fatal error, customer has no card
+            }
             return bingoCard;
         }
         private Card ScoreCard()
@@ -144,9 +151,14 @@ namespace SpaBingo.Controllers
                 N++;
                 G++;
                 O++;
-
             }
             myCard.Rows = myList;
+            try{
+                _context.Cards.Add(myCard);
+                _context.SaveChanges();
+            }catch(Exception ex){
+                throw(ex); // fatal error, customer has no card
+            }
             return myCard;
         }
         [HttpGet("[action]")]
@@ -180,19 +192,19 @@ namespace SpaBingo.Controllers
             public Card ScoreCard { get; set; }
             public List<Card> Cards { get; set; }
         }
-        public class Card
-        {
-            public List<Row> Rows = new List<Row>();
-        }
-        public class Row        
-        {
-            public string B { get; set; }
-            public string I { get; set; }
-            public string N { get; set; }
-            public string G { get; set; }
-            public string O { get; set; }
-            public int CardID { get; set; }
-        }
+        // public class Card
+        // {
+        //     public List<Row> Rows = new List<Row>();
+        // }
+        // public class Row        
+        // {
+        //     public string B { get; set; }
+        //     public string I { get; set; }
+        //     public string N { get; set; }
+        //     public string G { get; set; }
+        //     public string O { get; set; }
+        //     public int CardID { get; set; }
+        // }
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }
