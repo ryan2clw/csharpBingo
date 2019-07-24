@@ -52,15 +52,12 @@ class BingoPage extends React.Component {
         (
             <Flex justify='space-evenly'>
                 { console.log("Bingo Page props", this.props)}
-                    <div>
-                        <div>
-                            <Flex justify='center'>
-                                <BoardHeader>Bingo Cards</BoardHeader>
-                                {this.bingoBoards(cards.cards.length)}
-                            </Flex>
-                        </div>
+                <div className="container">
+                    <div className="row d-flex flex-row justify-content-center align-items-center">
+                        {this.bingoBoards(cards.cards.length)}
                     </div>
-                <div>
+                </div>
+                <div className="col-md-1 mr-4">
                     <FlexTall column justify='flex-start' align='center'>
                         <BoardHeader>Current Number</BoardHeader>
                         <RoundAlert color="success">
@@ -68,7 +65,7 @@ class BingoPage extends React.Component {
                         </RoundAlert>
                     </FlexTall>
                 </div>
-                <div>
+                <div className="mr-4">
                     <Flex justify='center'>
                         <BoardHeader>Called Balls</BoardHeader>
                     </Flex>

@@ -10,7 +10,7 @@ const GreyDiv = styled.div`
 export const Layout = (props) => (
     <div>
         <NavMenu />
-        <GreyDiv className="d-flex flex-column justify-content-flex-start align-items-center">
+        <GreyDiv>
             {props.children}
             {/* {console.log("Layout props", props)} */}
         </GreyDiv>

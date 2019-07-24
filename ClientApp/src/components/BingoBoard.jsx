@@ -46,7 +46,7 @@ class Board extends React.Component {
     const games = this.props.games;
     return games && games.rows ?
     (
-    <Wrapper className="align-content-center m-1">
+    <Wrapper className="align-content-center mx-1 mt-2 mb-4">
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>

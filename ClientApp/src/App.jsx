@@ -10,11 +10,8 @@ import CounterPage from './components/CounterPage';
 import WeatherPage from './components/WeatherPage';
 import BingoPage  from './components/BingoPage';
 import PrivateRoute from './components/PrivateRoute';
-import styled from 'styled-components';
-
-const BingoHeader = styled.div`
-margin-bottom:5px;
-`;
+import { Flex } from 'reflexbox';
+//import styled from 'styled-components';
 
 class App extends React.Component {
   constructor(props) {
@@ -32,13 +29,15 @@ class App extends React.Component {
           <div>
               <Router history={history}>
                   <Layout>
-                    <BingoHeader>
-                        {alert.type &&
-                            <div className={`alert ${alert.type}`}>
-                                {alert.message}
-                            </div>
-                        }
-                    </BingoHeader>
+                      <Flex justify='center'>
+                        <div className="col-md-6 pt-3">
+                            {alert.type &&
+                                <div className={`alert ${alert.type}`}>
+                                    {alert.message}
+                                </div>
+                            }
+                        </div>
+                      </Flex>
                       <PrivateRoute exact path="/" component={HomePage} />
                       <Route path="/login" component={LoginPage} />
                       <Route path='/home' component={HomePage} />
