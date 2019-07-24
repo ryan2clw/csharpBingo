@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.Helpers;
 using Microsoft.EntityFrameworkCore;
-
+using host = Microsoft.Extensions.Hosting;
 namespace SpaBingo
 {
     public class Startup
@@ -30,6 +30,9 @@ namespace SpaBingo
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            
+            services.AddSingleton<BallBlower>();
+            services.AddSingleton<host.IHostedService, DataRefreshService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

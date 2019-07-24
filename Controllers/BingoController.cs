@@ -11,8 +11,11 @@ namespace SpaBingo.Controllers
     public class BingoController : Controller
     {
         private DataContext _context;
+        private readonly BallBlower _ballBlower;
 
-        public BingoController(DataContext context){
+        public BingoController(DataContext context, BallBlower ballBlower)
+        {
+            _ballBlower = ballBlower;
             _context = context;
         }
 
@@ -43,6 +46,12 @@ namespace SpaBingo.Controllers
             _context.AddRange(entities: arr);
             _context.SaveChanges();
             return arr.ToArray();
+        }
+        [HttpGet("balls")]
+        public string Get()
+        {
+            return _ballBlower.RandomString;
+            //return "PONG!";
         }
         [HttpGet("[action]")]
         public IActionResult StartGame()

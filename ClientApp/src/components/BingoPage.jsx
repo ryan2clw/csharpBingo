@@ -83,7 +83,7 @@ function mapStateToProps(state, ownProps) {
     const { games } = state.games;
     return {
             cards:games,
-            lastNumber: state.balls.balls[0],
+            lastNumber: state.balls.balls ? state.balls.balls[0] : "New Game",
             calledBalls: state.balls.balls
     }
 }
