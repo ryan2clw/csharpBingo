@@ -13,7 +13,7 @@ const Wrapper = styled.section`
   padding: 1rem;
   background: #d6d2cb center url("WoodBack.png");
   border-radius: 15px;
-  width: 300px;
+  width: 270px;
 `;
 
 class BallBoard extends React.Component {

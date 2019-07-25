@@ -6,22 +6,24 @@ import Board from './BingoBoard';
 import BallBoard from './BallBoard';
 import {actionCreators} from '../store/Numbers';
 import {ballAction} from '../store/Balls';
-import { Alert, Toast } from 'reactstrap';
+import { Alert } from 'reactstrap';
 import './BingoPage.css';
 
 const BoardHeader = styled.div`
     font-size: 18px;
+    padding: 5px;
 `;
 const FlexTall = styled(Flex)`
     height:50%;
     font-size: 20px;
 `
 const RoundAlert = styled(Alert)`
-    border-radius: 50px;
+    border-radius: 10px;
 `
 const Card = styled.div`
     border-radius: 10px;
     background: #d6d2cb center url("WoodBack.png");
+    width:210px;
 `
 
 class BingoPage extends React.Component {
@@ -59,25 +61,19 @@ class BingoPage extends React.Component {
                         {this.bingoBoards(cards.cards.length)}
                     </div>
                 </div>
-                <div className="col-md-2 text-center">
-                    <FlexTall column justify='flex-start' align='center'>
-                        <Card className="pt-3 px-2"> 
-                            <RoundAlert color="info">
-                                <BoardHeader>Current Number</BoardHeader>
-                                { this.props.lastNumber ? this.props.lastNumber : "Game started, round 0!" }
-                            </RoundAlert>
-                        </Card>
-                    </FlexTall>
-                </div>
                 <div className="col-md-3 d-flex flex-column align-items-center">
-                    <Flex justify='center'>
-                        <BoardHeader>Called Balls</BoardHeader>
-                    </Flex>
+                    <Card>
+                        <RoundAlert color="success" className="d-flex flex-row m-2 p-1">
+                            <BoardHeader>Current Number: </BoardHeader>
+                            <div className="m-one">
+                                {this.props.lastNumber ? this.props.lastNumber : "N/A"}
+                            </div>
+                        </RoundAlert>
+                    </Card>
                     <BallBoard calledBalls={calledBalls} scoreCard={cards.scoreCard} />
                 </div>
-            </Flex>
-            ) :
-            (<h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>);
+            </Flex>) :
+        <h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>;
     }
 }
 function mapStateToProps(state, ownProps) {

@@ -22,7 +22,7 @@ export default class NavMenu extends React.Component {
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow" light >
           <Container>
-            <NavbarBrand tag={Link} to="/">SpaBingo</NavbarBrand>
+            <NavbarBrand tag={Link} to="http://www.4leaflotto.com/"><img src="/4ll-logo@1x.png" alt="Logo" /></NavbarBrand>
             <NavbarToggler onClick={this.toggle} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
               <ul className="navbar-nav flex-grow">
