@@ -3,7 +3,7 @@ import NavMenu from './NavMenu';
 import styled from 'styled-components';
 
 const GreyDiv = styled.div`
-    background: #eeeeee;
+    background: #d6d2cb center url("OceanWater.jpg");;
     height: 900px;
 `
 

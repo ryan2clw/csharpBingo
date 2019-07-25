@@ -6,12 +6,11 @@ import Board from './BingoBoard';
 import BallBoard from './BallBoard';
 import {actionCreators} from '../store/Numbers';
 import {ballAction} from '../store/Balls';
-import { Alert } from 'reactstrap';
+import { Alert, Toast } from 'reactstrap';
 import './BingoPage.css';
 
 const BoardHeader = styled.div`
-    color:#337ab7;
-    font-size: 24px;
+    font-size: 18px;
 `;
 const FlexTall = styled(Flex)`
     height:50%;
@@ -19,6 +18,10 @@ const FlexTall = styled(Flex)`
 `
 const RoundAlert = styled(Alert)`
     border-radius: 50px;
+`
+const Card = styled.div`
+    border-radius: 10px;
+    background: #d6d2cb center url("WoodBack.png");
 `
 
 class BingoPage extends React.Component {
@@ -58,10 +61,12 @@ class BingoPage extends React.Component {
                 </div>
                 <div className="col-md-2 text-center">
                     <FlexTall column justify='flex-start' align='center'>
-                        <BoardHeader>Current Number</BoardHeader>
-                        <RoundAlert color="success">
-                            { this.props.lastNumber ? this.props.lastNumber : "Game started, round 0!" }
-                        </RoundAlert>
+                        <Card className="pt-3 px-2"> 
+                            <RoundAlert color="info">
+                                <BoardHeader>Current Number</BoardHeader>
+                                { this.props.lastNumber ? this.props.lastNumber : "Game started, round 0!" }
+                            </RoundAlert>
+                        </Card>
                     </FlexTall>
                 </div>
                 <div className="col-md-3 d-flex flex-column align-items-center">
