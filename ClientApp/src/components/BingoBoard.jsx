@@ -11,9 +11,9 @@ const BingoHeader = styled.div`
 const Wrapper = styled.section`
   padding: 1rem;
   background: #d6d2cb center url("WoodBack.png");
-  height: 390px;
+  height: 315px;
   border-radius: 15px;
-  width: 300px;
+  width: 270px;
 `;
 
 class Board extends React.Component {
