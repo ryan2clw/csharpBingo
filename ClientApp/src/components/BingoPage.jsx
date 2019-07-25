@@ -7,6 +7,7 @@ import BallBoard from './BallBoard';
 import {actionCreators} from '../store/Numbers';
 import {ballAction} from '../store/Balls';
 import { Alert } from 'reactstrap';
+import { danger } from '../store/Message';
 import './BingoPage.css';
 
 const BoardHeader = styled.div`
@@ -28,11 +29,16 @@ const Card = styled.div`
 
 class BingoPage extends React.Component {
 
+    handleClick = () => {
+        alert('Click happened');
+        console.log('Click happened', this.props);
+    };
+
     numbers = (cardCount = 2) => this.props.dispatch(actionCreators.requestNumbers(cardCount));
     sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-    handleBingo = async () => {
+    drawRound = async () => {
         for (let i = 0; i <= 75; i++) {
             this.props.dispatch(ballAction.getRounds());
             await (this.sleep(5000));
@@ -41,14 +47,14 @@ class BingoPage extends React.Component {
     bingoBoards = (cardCount = 2) => {
         const { cards, calledBalls } = this.props;
         return [...Array(cardCount)].map((_, i) => {
-            return (<Board calledBalls={calledBalls} key={"Card-" + i.toString()} games={cards.cards[i] || []} />);
+            return (<Board onClick={this.handleClick} calledBalls={calledBalls} key={"Card-" + i.toString()} games={cards.cards[i] || []} />);
         });
     };
 
     componentDidMount(){
         fetch("http://localhost:5000/api/Bingo/StartGame");
         this.numbers(this.props.cardCount);
-        this.handleBingo();
+        this.drawRound();
     }
 
     render() {
@@ -80,7 +86,7 @@ function mapStateToProps(state, ownProps) {
     const { games } = state.games;
     return {
             cards:games,
-            lastNumber: state.balls.balls ? state.balls.balls[0] : "New Game",
+            lastNumber: state.balls.balls ? state.balls.balls[0] : "N/A",
             calledBalls: state.balls.balls
     }
 }

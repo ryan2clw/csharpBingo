@@ -2,6 +2,8 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
+import { Modal } from 'reactstrap';
+import { danger } from '../store/Message';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -13,16 +15,18 @@ const Wrapper = styled.section`
   background: #d6d2cb center url("WoodBack.png");
   height: 315px;
   border-radius: 15px;
-  width: 270px;
+  width: 249px;
 `;
 
 class Board extends React.Component {
+
+  handleClick = () => alert("YOU WON DUDE!");
 
   squares = (rowNumber = "0", columnCount, rowJSON) => {
     let numBas = Object.values(rowJSON);
     const calledBalls = this.props.calledBalls;
     return(
-    <Flex justify='center' key={"Row(" + rowNumber + ")"}>
+    <Flex justify='center' key={"Row(" + rowNumber + ")"} className="aqua">
       {[...Array(columnCount)].map((_, i) => {
           let reactKey = "Square(" + rowNumber + "," + i + ")";
           let ticketNumber= numBas[i].toString();
@@ -46,12 +50,12 @@ class Board extends React.Component {
     const games = this.props.games;
     return games && games.rows ?
     (
-    <Wrapper className="align-content-center mx-1 mt-2 mb-4">
+    <Wrapper className="align-content-center mx-3 mt-3 mb-5">
       <BingoHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </BingoHeader>
         { this.rows(games.rows, 5, 5) /* Configurable, can send row and column lengths */ }
-        <div className="d-flex flex-row justify-content-center mt-1 pointy"  >
+        <div className="d-flex flex-row justify-content-center mt-1 pointy" onClick={this.handleClick}>
           <img src="/BingoButton.png" alt="Bingo!"/>
         </div>
     </Wrapper>)

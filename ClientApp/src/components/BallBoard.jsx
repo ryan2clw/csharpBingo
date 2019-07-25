@@ -18,21 +18,20 @@ const Wrapper = styled.section`
 
 class BallBoard extends React.Component {
 
-  handleBingo = () => {alert('YOU FUCKING WON DUDE')};
   squares = (rowNumber = "0", columnCount, rowJSON) => {
       let numBas = Object.values(rowJSON);
       const calledBalls = this.props.calledBalls;
       return(
-      <Flex justify='center' key={"Row(" + rowNumber + ")"}>
+        <Flex justify='center' key={"Row(" + rowNumber + ")"} className="aqua">
         {[...Array(columnCount)].map((_, i) => {
             let reactKey = "Square(" + rowNumber + "," + i + ")";
             let ticketNumber= numBas[i].toString();
             // console.log("CALLED BALLS", this.props);
             if(calledBalls && calledBalls.length && calledBalls.includes(ticketNumber)){
               //console.log("CALLED NUMBER", this.props);
-              return (<Square height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number called" />)
+              return (<Square height="30px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number called" />)
             }
-            return (<Square height="40px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number" />)
+            return (<Square height="30px" width="50px" ticketNumber={ticketNumber} key={reactKey} className="ticket-number" />)
         })}
       </Flex>);
     };
