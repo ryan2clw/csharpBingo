@@ -1,5 +1,5 @@
 import React from 'react';
-//import styled from 'styled-components';
+import styled from 'styled-components';
 import { Flex } from 'reflexbox';
 import { connect } from 'react-redux';
 import Board from './BingoBoard';
@@ -9,20 +9,20 @@ import {ballAction} from '../store/Balls';
 //import { Alert } from 'reactstrap';
 //import { danger } from '../store/Message';
 import './BingoPage.css';
+import { danger } from '../store/Message';
 
 // const BoardHeader = styled.div`
 //     font-size: 18px;
 //     padding: 5px;
 // `;
-// const RoundAlert = styled(Alert)`
-//     border-radius: 22px;
-// `
+const TallFlex = styled(Flex)`
+    min-height: 783px;
+`
 
 class BingoPage extends React.Component {
 
-    handleClick = () => {
-        alert('Click happened');
-        console.log('Click happened', this.props);
+    updateBingo = () => {
+        this.props.dispatch(danger("You did not win the bingo game, nice try though!"));
     };
 
     numbers = (cardCount = 2) => this.props.dispatch(actionCreators.requestNumbers(cardCount));
@@ -38,7 +38,7 @@ class BingoPage extends React.Component {
     bingoBoards = (cardCount = 2) => {
         const { cards, calledBalls } = this.props;
         return [...Array(cardCount)].map((_, i) => {
-            return (<Board onClick={this.handleClick} calledBalls={calledBalls} key={"Card-" + i.toString()} games={cards.cards[i] || []} />);
+            return (<Board updateBingo={this.updateBingo} calledBalls={calledBalls} key={"Card-" + i.toString()} games={cards.cards[i] || []} />);
         });
     };
 
@@ -51,9 +51,8 @@ class BingoPage extends React.Component {
     render() {
         const { cards, calledBalls } = this.props;
         return cards && cards.cards ?
-        (
-            <Flex justify='space-evenly' className="row w-100">
-                <div className="col-md-8">
+            <TallFlex justify='space-evenly' align='center' className="row w-100">
+                <div className="col-md-7">
                     <div className="row d-flex flex-row justify-content-center align-items-center">
                         {this.bingoBoards(cards.cards.length)}
                     </div>
@@ -61,8 +60,10 @@ class BingoPage extends React.Component {
                 <div className="col-md-3 d-flex flex-column align-items-center">
                     <BallBoard lastNumber={this.props.lastNumber ? this.props.lastNumber : "N/A"} calledBalls={calledBalls} scoreCard={cards.scoreCard} />
                 </div>
-            </Flex>) :
-        <h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>;
+            </TallFlex>:
+            <Flex justify='space-evenly' className="row w-100">
+                <h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>
+            </Flex>;
     }
 }
 function mapStateToProps(state, ownProps) {

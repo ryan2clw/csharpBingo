@@ -21,8 +21,11 @@ const Wrapper = styled.section`
 `;
 
 class Board extends React.Component {
+    
+    bingo = () => {
+        this.props.updateBingo();
+    }
 
-    handleClick = () => alert("YOU WON DUDE!");
     squares = (rowNumber = "0", columnCount, rowJSON) => {
         let numBas = Object.values(rowJSON);
         const calledBalls = this.props.calledBalls;
@@ -45,10 +48,7 @@ class Board extends React.Component {
             </Flex>);
     };
 
-    rows = (gameJSON, rowCount = 5, columnCount = 5) => (
-        [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i])))
-
-    
+    rows = (gameJSON, rowCount = 5, columnCount = 5) => [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i]))
 
     render() {
         const games = this.props.games;
@@ -59,7 +59,7 @@ class Board extends React.Component {
                         <img src='/BingoBalls.png' alt="Ball Columns" width="100%" />
                     </BingoHeader>
                     {this.rows(games.rows, 5, 5) /* Configurable, can send row and column lengths */}
-                    <div className="d-flex flex-row justify-content-center mt-1 pointy" onClick={this.handleClick}>
+                    <div className="d-flex flex-row justify-content-center mt-1 pointy" onClick={this.bingo}>
                         <img src="/BingoButton.png" alt="Bingo!" />
                     </div>
                 </Wrapper>)

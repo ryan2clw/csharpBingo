@@ -30,9 +30,9 @@ class App extends React.Component {
               <Router history={history}>
                   <Layout>
                       <Flex justify='center'>
-                        <div className="col-md-6 pt-3">
+                        <div className="pt-3">
                             {alert.type &&
-                                <div className={`alert ${alert.type}`}>
+                                <div className={`text-center alert ${alert.type}`}>
                                     {alert.message}
                                 </div>
                             }
