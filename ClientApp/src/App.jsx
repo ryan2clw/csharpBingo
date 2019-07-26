@@ -41,8 +41,6 @@ class App extends React.Component {
                       <PrivateRoute exact path="/" component={HomePage} />
                       <Route path="/login" component={LoginPage} />
                       <Route path='/home' component={HomePage} />
-                      <Route path='/counter' component={CounterPage} />
-                      <Route path='/fetch-data/:startDateIndex?' component={WeatherPage} />
                       <Route path='/play' render={(props) => <BingoPage {...props} cardCount={6} />}/>
                   </Layout>
               </Router>
