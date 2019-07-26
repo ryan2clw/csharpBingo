@@ -32,7 +32,7 @@ class App extends React.Component {
                       <Flex justify='center'>
                         <div className="col-md-6 pt-3">
                             {alert.type &&
-                                <div className={`alert ${alert.type}`}>
+                                <div className={`text-center alert ${alert.type}`}>
                                     {alert.message}
                                 </div>
                             }

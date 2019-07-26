@@ -59,8 +59,8 @@ class Board extends React.Component {
                         <img src='/BingoBalls.png' alt="Ball Columns" width="100%" />
                     </BingoHeader>
                     {this.rows(games.rows, 5, 5) /* Configurable, can send row and column lengths */}
-                    <div className="d-flex flex-row justify-content-center mt-1 pointy" onClick={this.handleClick}>
-                        <img src="/BingoButton.png" alt="Bingo!" />
+                    <div className="d-flex flex-column justify-content-center mt-1 " onClick={this.handleClick}>
+                        <img src="/BingoButton.png" alt="Bingo!" className="bingo-button"/>
                     </div>
                 </Wrapper>)
             : (

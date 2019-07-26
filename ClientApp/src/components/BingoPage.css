@@ -18,8 +18,9 @@
       .glyphicon-heart{
         color:crimson;
       }
-      .pointy{
+      .bingo-button{
         cursor: pointer;
+        max-height:54px;
       }
       .m-one {
         margin: 5px;
