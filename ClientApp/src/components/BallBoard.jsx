@@ -2,7 +2,14 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
+import { Alert } from 'reactstrap';
+
 //import { connect } from 'react-redux';
+const TopHeader = styled.div`
+	width: 132%;
+	margin-left: -15%;
+	margin-top: -13%;
+`
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -16,6 +23,14 @@ const Wrapper = styled.section`
     background: #d6d2cb center url("WoodBack.png");
     border-radius: 15px;
     width: 249px;
+    height:600px;
+`;
+const StatusDiv = styled.div`
+    border-radius: 22px;
+`
+const BoardHeader = styled.div`
+    font-size: 17px;
+    padding: 5px;
 `;
 
 class BallBoard extends React.Component {
@@ -45,9 +60,15 @@ class BallBoard extends React.Component {
     const games = this.props.scoreCard;   
     return games && games.rows ?
     (<Wrapper className="align-content-center">
-      <BingoHeader>
+      <TopHeader>
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
-      </BingoHeader>
+      </TopHeader>
+      <StatusDiv className="d-flex flex-row justify-content-center p-1 current-number">
+        <BoardHeader>Current Number: </BoardHeader>
+        <div className="m-one">
+            {this.props.lastNumber}
+        </div>
+      </StatusDiv>
         {
           this.rows(games.rows, 15, 5)/* Configurable, can send row and column lengths */ 
         }

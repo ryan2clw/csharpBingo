@@ -1,31 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
+//import styled from 'styled-components';
 import { Flex } from 'reflexbox';
 import { connect } from 'react-redux';
 import Board from './BingoBoard';
 import BallBoard from './BallBoard';
 import {actionCreators} from '../store/Numbers';
 import {ballAction} from '../store/Balls';
-import { Alert } from 'reactstrap';
-import { danger } from '../store/Message';
+//import { Alert } from 'reactstrap';
+//import { danger } from '../store/Message';
 import './BingoPage.css';
 
-const BoardHeader = styled.div`
-    font-size: 18px;
-    padding: 5px;
-`;
-const FlexTall = styled(Flex)`
-    height:50%;
-    font-size: 20px;
-`
-const RoundAlert = styled(Alert)`
-    border-radius: 22px;
-`
-const Card = styled.div`
-    border-radius: 45px;
-    background: #d6d2cb center url("WoodBack.png");
-    width:255px;
-`
+// const BoardHeader = styled.div`
+//     font-size: 18px;
+//     padding: 5px;
+// `;
+// const RoundAlert = styled(Alert)`
+//     border-radius: 22px;
+// `
 
 class BingoPage extends React.Component {
 
@@ -68,15 +59,7 @@ class BingoPage extends React.Component {
                     </div>
                 </div>
                 <div className="col-md-3 d-flex flex-column align-items-center">
-                    <Card>
-                        <RoundAlert color="success" className="d-flex flex-row m-4 p-1">
-                            <BoardHeader>Current Number: </BoardHeader>
-                            <div className="m-one">
-                                {this.props.lastNumber ? this.props.lastNumber : "N/A"}
-                            </div>
-                        </RoundAlert>
-                    </Card>
-                    <BallBoard calledBalls={calledBalls} scoreCard={cards.scoreCard} />
+                    <BallBoard lastNumber={this.props.lastNumber ? this.props.lastNumber : "N/A"} calledBalls={calledBalls} scoreCard={cards.scoreCard} />
                 </div>
             </Flex>) :
         <h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>;

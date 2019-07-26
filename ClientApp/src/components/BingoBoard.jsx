@@ -7,15 +7,15 @@ import { danger } from '../store/Message';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
-    margin-bottom: 1px;
-    width: 132%;
-    margin-left: -15%;
-`;
+	width: 132%;
+	margin-left: -15%;
+	margin-top: -13%;
+`
 // Create a Wrapper component that'll render a <section> tag with some styles
 const Wrapper = styled.section`
     padding: 1rem;
     background: #d6d2cb center url("WoodBack.png");
-    height: 332px;
+    height: 300px;
     border-radius: 15px;
     width: 249px;
 `;
