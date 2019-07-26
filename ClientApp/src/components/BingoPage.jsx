@@ -19,12 +19,12 @@ const FlexTall = styled(Flex)`
     font-size: 20px;
 `
 const RoundAlert = styled(Alert)`
-    border-radius: 10px;
+    border-radius: 22px;
 `
 const Card = styled.div`
-    border-radius: 10px;
+    border-radius: 45px;
     background: #d6d2cb center url("WoodBack.png");
-    width:210px;
+    width:255px;
 `
 
 class BingoPage extends React.Component {
@@ -61,15 +61,15 @@ class BingoPage extends React.Component {
         const { cards, calledBalls } = this.props;
         return cards && cards.cards ?
         (
-            <Flex justify='space-evenly' className="row">
-                <div className="col-md-7">
+            <Flex justify='space-evenly' className="row w-100">
+                <div className="col-md-8">
                     <div className="row d-flex flex-row justify-content-center align-items-center">
                         {this.bingoBoards(cards.cards.length)}
                     </div>
                 </div>
                 <div className="col-md-3 d-flex flex-column align-items-center">
                     <Card>
-                        <RoundAlert color="success" className="d-flex flex-row m-2 p-1">
+                        <RoundAlert color="success" className="d-flex flex-row m-4 p-1">
                             <BoardHeader>Current Number: </BoardHeader>
                             <div className="m-one">
                                 {this.props.lastNumber ? this.props.lastNumber : "N/A"}

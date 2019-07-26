@@ -6,14 +6,16 @@ import Square from './Square';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
-    margin-bottom:5px;
+    margin-bottom: 1px;
+    width: 132%;
+    margin-left: -15%;
 `;
 // Create a Wrapper component that'll render a <section> tag with some styles
 const Wrapper = styled.section`
-  padding: 1rem;
-  background: #d6d2cb center url("WoodBack.png");
-  border-radius: 15px;
-  width: 270px;
+    padding: 1rem;
+    background: #d6d2cb center url("WoodBack.png");
+    border-radius: 15px;
+    width: 249px;
 `;
 
 class BallBoard extends React.Component {
