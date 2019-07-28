@@ -129,17 +129,17 @@ namespace SpaBingo.Controllers
             }
             return bingoCard;
         }
-        private Card ScoreCard()
+        private FakeCard ScoreCard()
         {
-            var myCard=  new Card();
-            var myList = new List<Row>();
+            var myCard=  new FakeCard();
+            var myList = new List<FakeRow>();
             var B = 1;
             var I = 16;
             var N = 31;
             var G = 46;
             var O = 61;
             for(var i=0;i<15;i++){
-                myList.Add(new Row(){
+                myList.Add(new FakeRow(){
                     B = B.ToString(),
                     I = I.ToString(),
                     N = N.ToString(),
@@ -153,19 +153,13 @@ namespace SpaBingo.Controllers
                 O++;
             }
             myCard.Rows = myList;
-            try{
-                _context.Cards.Add(myCard);
-                _context.SaveChanges();
-            }catch(Exception ex){
-                throw(ex); // fatal error, customer has no card
-            }
             return myCard;
         }
         [HttpGet("[action]")]
         public IActionResult BingoCards(int cardCount)
         {
-            CardData cardData = new CardData();
-            Card scoreCard = ScoreCard();
+            CardData cardData = new CardData(); // Cards are persistent entities, the rest is for JSON
+            FakeCard scoreCard = ScoreCard();
             cardData.ScoreCard = scoreCard;
             List<Card> cards = new List<Card>();
             for(var j =0; j <cardCount; j++){
@@ -189,22 +183,24 @@ namespace SpaBingo.Controllers
         }
         public class CardData
         {
-            public Card ScoreCard { get; set; }
+            public FakeCard ScoreCard { get; set; }
             public List<Card> Cards { get; set; }
         }
-        // public class Card
-        // {
-        //     public List<Row> Rows = new List<Row>();
-        // }
-        // public class Row        
-        // {
-        //     public string B { get; set; }
-        //     public string I { get; set; }
-        //     public string N { get; set; }
-        //     public string G { get; set; }
-        //     public string O { get; set; }
-        //     public int CardID { get; set; }
-        // }
+
+        public class FakeCard // non-persistent data
+        {
+            public List<FakeRow> Rows = new List<FakeRow>();
+        }
+
+        public class FakeRow        
+        {
+            public string B { get; set; }
+            public string I { get; set; }
+            public string N { get; set; }
+            public string G { get; set; }
+            public string O { get; set; }
+        }
+
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }

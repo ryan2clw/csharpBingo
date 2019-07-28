@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace WebApi.Entities
@@ -9,7 +10,6 @@ namespace WebApi.Entities
         [DataMember]
         public string B { get; set; }
         [DataMember]
-
         public string I { get; set; }
         [DataMember]
         public string N { get; set; }
@@ -17,6 +17,9 @@ namespace WebApi.Entities
         public string G { get; set; }
         [DataMember] 
         public string O { get; set; }
+
         public int CardID { get; set; }
+
+        public virtual ICollection<BallMatch> BallMatches { get; set; }
     }
 }
