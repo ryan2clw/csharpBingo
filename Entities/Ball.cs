@@ -9,6 +9,6 @@ namespace WebApi.Entities
         public string NumValue { get; set; }
         public bool IsPlayed { get; set; }
         public DateTime Updated { get; set; }
-        public virtual ICollection<BallMatch> BallMatches { get; set; }
+        public virtual ICollection<BallMatch> BallMatch { get; set; }
     }
 }

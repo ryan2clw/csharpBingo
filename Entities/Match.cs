@@ -1,23 +1,16 @@
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace WebApi.Entities
 {
-    [DataContract]
-    public class Row
+    public class Match
     {
         public int Id { get; set; }
-        [DataMember]
         public string B { get; set; }
-        [DataMember]
         public string I { get; set; }
-        [DataMember]
         public string N { get; set; }
-        [DataMember]
         public string G { get; set; }
-        [DataMember] 
         public string O { get; set; }
-
         public int CardID { get; set; }
+        public virtual ICollection<BallMatch> BallMatch { get; set; }
     }
 }
