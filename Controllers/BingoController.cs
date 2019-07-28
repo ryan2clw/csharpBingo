@@ -19,25 +19,22 @@ namespace SpaBingo.Controllers
             _context = context;
         }
 
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
         private static string[] BallNumbers(int min, int max)
         {
             var arr = new List<string>();
-            for(var i =min; i <max; i++){
+            for (var i = min; i < max; i++)
+            {
                 arr.Add(i.ToString());
             }
             return arr.ToArray();
         }
         [HttpGet("[action]")]
-        public IEnumerable<BingoNumber> InitGame(int startNumber, int endNumber)
+        public IEnumerable<Ball> InitGame(int startNumber, int endNumber)
         {
-            var arr = new List<BingoNumber>();
+            var arr = new List<Ball>();
             for (var i = startNumber; i <= endNumber; i++)
             {
-                arr.Add(new BingoNumber()
+                arr.Add(new Ball()
                 {
                     NumValue = i.ToString(),
                     IsPlayed = false
@@ -55,49 +52,47 @@ namespace SpaBingo.Controllers
         [HttpGet("blowBalls")]
         public IActionResult BlowBallsAsync()
         {
-            try{
+            try
+            {
                 var rng = new Random();
-                var myBalls = _context.BingoNumbers.Where(b => b.IsPlayed == false).ToArray();
-                var index = rng.Next(myBalls.Length -1);
+                var myBalls = _context.Balls.Where(b => b.IsPlayed == false).ToArray();
+                var index = rng.Next(myBalls.Length - 1);
                 myBalls[index].IsPlayed = true;
                 myBalls[index].Updated = DateTime.Now;
                 _context.SaveChanges();
                 return Ok("Last blown ball: " + DateTime.Now.ToString());
-            }catch(Exception ex){
+            }
+            catch (Exception ex)
+            {
                 return Ok("Ball blowing failure: " + ex.ToString());
             }
         }
         [HttpGet("[action]")]
         public IActionResult StartGame()
         {
-            BingoNumber[] numBas = _context.BingoNumbers.ToArray();
-            foreach (BingoNumber numBa in numBas)
+            Ball[] balls = _context.Balls.ToArray();
+            foreach (Ball ball in balls)
             {
-                numBa.IsPlayed = false;
+                ball.IsPlayed = false;
             }
             _context.SaveChanges();
             return Ok();
         }
         [HttpGet("[action]")]
-        public IEnumerable<string> GetNumbas()
+        public IEnumerable<string> Balls()
         {
-            return _context.BingoNumbers.Where(x => x.IsPlayed).OrderByDescending(x=>x.Updated).Select(item => item.NumValue).ToArray();
-        }
-        [HttpGet("[action]")]
-        public string GetNumba()
-        {
-            return _context.BingoNumbers.Where(x => x.IsPlayed).OrderByDescending(x=>x.Updated).Select(item => item.NumValue).FirstOrDefault();
+            return _context.Balls.Where(x => x.IsPlayed).OrderByDescending(x => x.Updated).Select(item => item.NumValue).ToArray();
         }
         private Card BingoCard()
         {
             var rng = new Random();
             var b = BallNumbers(1, 15).ToList();
             var i = BallNumbers(16, 30).ToList();
-            var n = BallNumbers(31,45).ToList();
-            var g = BallNumbers(46,60).ToList();
+            var n = BallNumbers(31, 45).ToList();
+            var g = BallNumbers(46, 60).ToList();
             var o = BallNumbers(61, 75).ToList();
             Card bingoCard = new Card();
-            var ret = (Enumerable.Range(1, 5).Select(index => 
+            var ret = (Enumerable.Range(1, 5).Select(index =>
             {
                 var bRemove = rng.Next(b.Count);
                 var iRemove = rng.Next(i.Count);
@@ -121,25 +116,30 @@ namespace SpaBingo.Controllers
                 return innerRet;
             }));
             bingoCard.Rows = ret.ToList();
-            try{
+            try
+            {
                 _context.Cards.Add(bingoCard);
                 _context.SaveChanges();
-            }catch(Exception ex){
-                throw(ex); // fatal error, customer has no card
+            }
+            catch (Exception ex)
+            {
+                throw (ex); // fatal error, customer has no card
             }
             return bingoCard;
         }
         private FakeCard ScoreCard()
         {
-            var myCard=  new FakeCard();
+            var myCard = new FakeCard();
             var myList = new List<FakeRow>();
             var B = 1;
             var I = 16;
             var N = 31;
             var G = 46;
             var O = 61;
-            for(var i=0;i<15;i++){
-                myList.Add(new FakeRow(){
+            for (var i = 0; i < 15; i++)
+            {
+                myList.Add(new FakeRow()
+                {
                     B = B.ToString(),
                     I = I.ToString(),
                     N = N.ToString(),
@@ -162,24 +162,13 @@ namespace SpaBingo.Controllers
             FakeCard scoreCard = ScoreCard();
             cardData.ScoreCard = scoreCard;
             List<Card> cards = new List<Card>();
-            for(var j =0; j <cardCount; j++){
+            for (var j = 0; j < cardCount; j++)
+            {
                 Card newCard = BingoCard();
                 cards.Add(newCard);
             }
             cardData.Cards = cards;
             return Ok(cardData);
-        }
-
-        [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                DateFormatted = DateTime.Now.AddDays(index + startDateIndex).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
         }
         public class CardData
         {
@@ -192,28 +181,13 @@ namespace SpaBingo.Controllers
             public List<FakeRow> Rows = new List<FakeRow>();
         }
 
-        public class FakeRow        
+        public class FakeRow
         {
             public string B { get; set; }
             public string I { get; set; }
             public string N { get; set; }
             public string G { get; set; }
             public string O { get; set; }
-        }
-
-        public class WeatherForecast
-        {
-            public string DateFormatted { get; set; }
-            public int TemperatureC { get; set; }
-            public string Summary { get; set; }
-
-            public int TemperatureF
-            {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
-            }
         }
     }
 }

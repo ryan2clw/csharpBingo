@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace WebApi.Entities
@@ -6,6 +7,8 @@ namespace WebApi.Entities
     {
         public int Id { get; set; }
         public string NumValue { get; set; }
+        public bool IsPlayed { get; set; }
+        public DateTime Updated { get; set; }
         public virtual ICollection<BallMatch> BallMatches { get; set; }
     }
 }
