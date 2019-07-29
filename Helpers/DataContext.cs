@@ -15,14 +15,22 @@ namespace WebApi.Helpers
         public DbSet<BallMatch> BallMatch { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Ball>().HasMany(m => m.BallMatch).WithOne(m => m.Ball).HasForeignKey(k => k.BallId);
-            modelBuilder.Entity<Match>().HasMany(r => r.BallMatch).WithOne(m => m.Match).HasForeignKey(k => k.MatchId);
-            modelBuilder.Entity<BallMatch>().HasOne(m => m.Match).WithMany(m => m.BallMatch).HasForeignKey(k => k.MatchId);
-            modelBuilder.Entity<BallMatch>().HasOne(m => m.Ball).WithMany(m => m.BallMatch).HasForeignKey(k => k.BallId);
-        //         modelBuilder.Entity<Match>()
-        // .HasOne(m => m.Row)
-        // .WithOne(r => r.Match)
-        // .HasForeignKey<AuthorBiography>(b => b.AuthorRef);     
+            modelBuilder.Entity<Ball>()
+                .HasMany(m => m.BallMatch)
+                .WithOne(m => m.Ball)
+                .HasForeignKey(k => k.BallId);
+            modelBuilder.Entity<Match>()
+                .HasMany(r => r.BallMatch)
+                .WithOne(m => m.Match)
+                .HasForeignKey(k => k.MatchId);
+            modelBuilder.Entity<BallMatch>()
+                .HasOne(m => m.Match)
+                .WithMany(m => m.BallMatch)
+                .HasForeignKey(k => k.MatchId);
+            modelBuilder.Entity<BallMatch>()
+                .HasOne(m => m.Ball)
+                .WithMany(m => m.BallMatch)
+                .HasForeignKey(k => k.BallId);   
         }
     }
 }

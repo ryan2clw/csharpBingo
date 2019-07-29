@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers;
 using WebApi.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace SpaBingo.Controllers
 {
@@ -47,51 +48,90 @@ namespace SpaBingo.Controllers
         [HttpGet("playCards")]
         public IActionResult Get(List<int> cards)
         {
-            var myCards = _context.Card.Where(c => cards.Contains(c.Id)).ToArray();
+            var myCards = _context.Card.Where(c => cards.Contains(c.Id)).Include(c => c.Rows).ToArray();
             //var rows = _context.Rows.Where(r => cards.Contains(r.CardID)).OrderBy(r=>r.CardID).ThenBy(r=>r.Id).ToArray();
             List<Match> matches = new List<Match>();
             for (var i = 0; i < myCards.Count(); i++)
             {
                 var rows = myCards[i].Rows.ToList();
-                rows.Add(myCards[i].OnDiagonal);
-                rows.Add(myCards[i].OffDiagonal);
                 // should have seven possible win rows to add to the match table, MARK TO DO: UNIT TEST THIS
                 for (var j = 0; j < rows.Count(); j++)
                 {
                     Match match = new Match()
                     {
-                        B = rows[i].B,
-                        I = rows[i].I,
-                        N = rows[i].N,
-                        G = rows[i].G,
-                        O = rows[i].O,
-                        CardID = rows[i].CardID,
-                        RowId = rows[i].Id
+                        B = rows[j].B,
+                        I = rows[j].I,
+                        N = rows[j].N,
+                        G = rows[j].G,
+                        O = rows[j].O,
+                        CardID = rows[j].CardID,
+                        RowId = rows[j].Id
                     };
-                     _context.Match.Add(match);
+                    try
+                    {
+                        _context.Add(match);
+                        _context.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Ok(ex.ToString());
+                    }
                 }
             }
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Ok(ex.ToString());
-            }
             return Ok("SUCCESS!");
+        }
+        private void matchBalls()
+        {
+            var rng = new Random();
+            var myBalls = _context.Balls.Where(b => b.IsPlayed == false).ToArray();
+            var index = rng.Next(myBalls.Length);
+            var oneNut = myBalls[index];
+            oneNut.IsPlayed = true;
+            oneNut.Updated = DateTime.Now;
+            _context.Balls.Update(oneNut);
+            _context.SaveChanges();
+            /* Blow balls above, match balls below */
+            int numValue = int.Parse(oneNut.NumValue);
+            List<Match> matches = new List<Match>();
+            if (numValue > 0 && numValue < 16)
+            {
+                matches = _context.Match.Where(m => m.B == oneNut.NumValue).ToList();
+            }
+            else if (numValue >= 16 && numValue < 31)
+            {
+                matches = _context.Match.Where(m => m.I == oneNut.NumValue).ToList();
+            }
+            else if (numValue >= 31 && numValue < 46)
+            {
+                matches = _context.Match.Where(m => m.N == oneNut.NumValue).ToList();
+            }
+            else if (numValue >= 46 && numValue < 61)
+            {
+                matches = _context.Match.Where(m => m.G == oneNut.NumValue).ToList();
+            }
+            else if (numValue >= 61)
+            {
+                matches = _context.Match.Where(m => m.O == oneNut.NumValue).ToList();
+            }
+            for (var i = 0; i < matches.Count(); i++)
+            {
+                BallMatch ballMatch = new BallMatch()
+                {
+                    Ball = oneNut,
+                    Match = matches[i]
+                };
+                matches[i].BallMatch.Add(ballMatch);
+                _context.Match.Add(matches[i]);
+                _context.BallMatch.Add(ballMatch);
+                _context.SaveChanges();
+            };
         }
         [HttpGet("blowBalls")]
         public IActionResult BlowBallsAsync()
         {
             try
             {
-                var rng = new Random();
-                var myBalls = _context.Balls.Where(b => b.IsPlayed == false).ToArray();
-                var index = rng.Next(myBalls.Length);
-                myBalls[index].IsPlayed = true;
-                myBalls[index].Updated = DateTime.Now;
-                _context.SaveChanges();
+                matchBalls();
                 return Ok("Last blown ball: " + DateTime.Now.ToString());
             }
             catch (Exception ex)
@@ -148,8 +188,7 @@ namespace SpaBingo.Controllers
                 return innerRet;
             }));
             var rows = ret.ToList();
-            bingoCard.Rows = rows;
-                    // 5th row, build the diagonal matches
+            // 5th row, build the diagonal matches
             Row onDiagonal = new Row(){
                 B = rows[0].B,
                 I = rows[1].I,
@@ -158,6 +197,7 @@ namespace SpaBingo.Controllers
                 O = rows[4].O,
                 CardID = rows[0].CardID,
             };
+            rows.Add(onDiagonal);
             Row offDiagonal = new Row(){
                 B = rows[4].B,
                 I = rows[3].I,
@@ -166,8 +206,8 @@ namespace SpaBingo.Controllers
                 O = rows[0].O,
                 CardID = rows[0].CardID,
             };
-            bingoCard.OnDiagonal = onDiagonal;
-            bingoCard.OffDiagonal = offDiagonal;
+            rows.Add(offDiagonal);
+            bingoCard.Rows = rows;
             try
             {
                 _context.Card.Add(bingoCard);

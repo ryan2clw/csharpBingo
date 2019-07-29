@@ -1,3 +1,5 @@
+
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 
 namespace WebApi.Entities
@@ -6,7 +8,6 @@ namespace WebApi.Entities
     {
         public int Id { get; set; }
         public ICollection<Row> Rows { get; set; }
-        public Row OnDiagonal { get; set; }
-        public Row OffDiagonal { get; set; }
+
     }
 }
