@@ -8,17 +8,9 @@ import {actionCreators} from '../store/Numbers';
 import {ballAction} from '../store/Balls';
 import { Container } from 'reactstrap';
 import Spinner from './Spinner';
-//import { danger } from '../store/Message';
 import './BingoPage.css';
 import { danger } from '../store/Message';
 
-// const BoardHeader = styled.div`
-//     font-size: 18px;
-//     padding: 5px;
-// `;
-// const TallFlex = styled(Flex)`
-//     min-height: 783px;
-// `
 const Body = styled.div`
     min-height:600px;
 `

@@ -47,21 +47,29 @@ namespace SpaBingo.Controllers
         [HttpGet("playCards")]
         public IActionResult Get(List<int> cards)
         {
-            var rows = _context.Rows.Where(r => cards.Contains(r.CardID)).OrderByDescending(r=>r.CardID).ThenByDescending(r=>r.Id).ToArray();
+            var myCards = _context.Card.Where(c => cards.Contains(c.Id)).ToArray();
+            //var rows = _context.Rows.Where(r => cards.Contains(r.CardID)).OrderBy(r=>r.CardID).ThenBy(r=>r.Id).ToArray();
             List<Match> matches = new List<Match>();
-            for (var i = 0; i < rows.Count(); i++)
+            for (var i = 0; i < myCards.Count(); i++)
             {
-                Match match = new Match()
+                var rows = myCards[i].Rows.ToList();
+                rows.Add(myCards[i].OnDiagonal);
+                rows.Add(myCards[i].OffDiagonal);
+                // should have seven possible win rows to add to the match table, MARK TO DO: UNIT TEST THIS
+                for (var j = 0; j < rows.Count(); j++)
                 {
-                    B = rows[i].B,
-                    I = rows[i].I,
-                    N = rows[i].N,
-                    G = rows[i].G,
-                    O = rows[i].O,
-                    CardID = rows[i].CardID,
-                    RowId = rows[i].Id
-                };
-                _context.Add(match);
+                    Match match = new Match()
+                    {
+                        B = rows[i].B,
+                        I = rows[i].I,
+                        N = rows[i].N,
+                        G = rows[i].G,
+                        O = rows[i].O,
+                        CardID = rows[i].CardID,
+                        RowId = rows[i].Id
+                    };
+                     _context.Match.Add(match);
+                }
             }
             try
             {
@@ -69,11 +77,9 @@ namespace SpaBingo.Controllers
             }
             catch (Exception ex)
             {
-                var ret = Ok(ex);
-                ret.StatusCode = 500;
-                return ret;
+                Ok(ex.ToString());
             }
-            return Ok();
+            return Ok("SUCCESS!");
         }
         [HttpGet("blowBalls")]
         public IActionResult BlowBallsAsync()
@@ -141,7 +147,27 @@ namespace SpaBingo.Controllers
                 o.RemoveAt(oRemove);
                 return innerRet;
             }));
-            bingoCard.Rows = ret.ToList();
+            var rows = ret.ToList();
+            bingoCard.Rows = rows;
+                    // 5th row, build the diagonal matches
+            Row onDiagonal = new Row(){
+                B = rows[0].B,
+                I = rows[1].I,
+                N = rows[2].N,
+                G = rows[3].G,
+                O = rows[4].O,
+                CardID = rows[0].CardID,
+            };
+            Row offDiagonal = new Row(){
+                B = rows[4].B,
+                I = rows[3].I,
+                N = rows[2].N,
+                G = rows[1].G,
+                O = rows[0].O,
+                CardID = rows[0].CardID,
+            };
+            bingoCard.OnDiagonal = onDiagonal;
+            bingoCard.OffDiagonal = offDiagonal;
             try
             {
                 _context.Card.Add(bingoCard);
