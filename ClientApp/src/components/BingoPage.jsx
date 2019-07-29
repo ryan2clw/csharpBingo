@@ -64,7 +64,7 @@ class BingoPage extends React.Component {
                         </div>
                     </div>
                     <div className="col-md-3 d-flex flex-column align-items-center justify-content-center pt-4">
-                        <BallBoard lastNumber={this.props.lastNumber ? this.props.lastNumber : "N/A"} calledBalls={calledBalls} scoreCard={cards.scoreCard} />
+                        <BallBoard calledBalls={calledBalls} scoreCard={cards.scoreCard} />
                     </div>
                 </div>
             </Container>) :
@@ -77,11 +77,10 @@ class BingoPage extends React.Component {
             </Container>);    
     }
 }
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     const { games } = state.games;
     return {
             cards:games,
-            lastNumber: state.balls.balls ? state.balls.balls[0] : "N/A",
             calledBalls: state.balls.balls
     }
 }

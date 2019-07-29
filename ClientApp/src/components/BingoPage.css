@@ -22,9 +22,10 @@
         cursor: pointer;
         max-height:54px;
       }
-      .m-one {
-        margin: 5px;
-        font-size: 18px;
+      .five-balls {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
       }
       .aqua{
         background: #41b7b1;
@@ -33,7 +34,7 @@
         background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(67, 198, 172), rgb(25, 22, 84)) repeat scroll 0% 0%;
     }
       .current-number{
-        background:#076461;
+        background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(67, 198, 172), rgb(25, 22, 84)) repeat scroll 0% 0%;
         color:white;
         margin-bottom: 6px;
       }

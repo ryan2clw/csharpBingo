@@ -2,21 +2,18 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
+import { Alert } from 'reactstrap';
 
-//import { connect } from 'react-redux';
 const TopHeader = styled.div`
 	width: 132%;
 	margin-left: -15%;
 	margin-top: -13%;
 `
-
-// Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
     margin-bottom: 1px;
     width: 132%;
     margin-left: -15%;
 `;
-// Create a Wrapper component that'll render a <section> tag with some styles
 const Wrapper = styled.section`
     padding: 1rem;
     background: #d6d2cb center url("WoodBack.png");
@@ -26,6 +23,16 @@ const Wrapper = styled.section`
 `;
 const StatusDiv = styled.div`
     border-radius: 22px;
+`
+const RoundDiv = styled.div`
+    border-radius: 22px;
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    width: 36px;
+    margin: 1px;
+    padding: 5px;
+    text-align: center;
 `
 const BoardHeader = styled.div`
     font-size: 17px;
@@ -54,6 +61,13 @@ class BallBoard extends React.Component {
   rows = (gameJSON, rowCount = 5, columnCount = 5) => {
     return [...Array(rowCount)].map((_, i) => this.squares(i.toString(), columnCount, gameJSON[i]))
   };
+  balls = (ballArray) => {
+    let ret = [];
+    ballArray.forEach(ball => {
+      ret.push(<RoundDiv className='round-ball'>{ball}</RoundDiv>);
+    });
+    return ret;
+  }
 
   render(){
     const games = this.props.scoreCard;   
@@ -63,9 +77,9 @@ class BallBoard extends React.Component {
         <img src='/BingoBalls.png' alt="Ball Columns" width="100%"/>
       </TopHeader>
       <StatusDiv className="d-flex flex-row justify-content-center p-1 current-number">
-        <BoardHeader>Current Number: </BoardHeader>
-        <div className="m-one">
-            {this.props.lastNumber}
+        <BoardHeader></BoardHeader>
+        <div className="five-balls">
+            { this.balls(this.props.calledBalls.reverse().slice(-5)) }
         </div>
       </StatusDiv>
         {

@@ -44,11 +44,37 @@ namespace SpaBingo.Controllers
             _context.SaveChanges();
             return arr.ToArray();
         }
-        // [HttpGet("balls")]
-        // public string Get()
-        // {
-        //     return _ballBlower.RandomString;
-        // }
+        [HttpGet("playCards")]
+        public IActionResult Get(List<int> cards)
+        {
+            var rows = _context.Rows.Where(r => cards.Contains(r.CardID)).OrderByDescending(r=>r.CardID).ThenByDescending(r=>r.Id).ToArray();
+            List<Match> matches = new List<Match>();
+            for (var i = 0; i < rows.Count(); i++)
+            {
+                Match match = new Match()
+                {
+                    B = rows[i].B,
+                    I = rows[i].I,
+                    N = rows[i].N,
+                    G = rows[i].G,
+                    O = rows[i].O,
+                    CardID = rows[i].CardID,
+                    RowId = rows[i].Id
+                };
+                _context.Add(match);
+            }
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                var ret = Ok(ex);
+                ret.StatusCode = 500;
+                return ret;
+            }
+            return Ok();
+        }
         [HttpGet("blowBalls")]
         public IActionResult BlowBallsAsync()
         {

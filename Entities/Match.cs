@@ -11,6 +11,8 @@ namespace WebApi.Entities
         public string G { get; set; }
         public string O { get; set; }
         public int CardID { get; set; }
+        public int RowId { get; set; }
+        public Row Row { get; set; }
         public virtual ICollection<BallMatch> BallMatch { get; set; }
     }
 }
