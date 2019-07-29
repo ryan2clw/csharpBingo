@@ -6,18 +6,13 @@ import { history } from './store/history';
 import { Layout } from './components/Layout';
 import LoginPage from './components/LoginPage'
 import HomePage from './components/HomePage';
-import CounterPage from './components/CounterPage';
-import WeatherPage from './components/WeatherPage';
 import BingoPage  from './components/BingoPage';
 import PrivateRoute from './components/PrivateRoute';
 import { Flex } from 'reflexbox';
-//import styled from 'styled-components';
 
 class App extends React.Component {
   constructor(props) {
       super(props);
-      //console.log("APP CONSTRUCTOR PROPS", props);
-      //const { dispatch } = this.props;
       history.listen((location, action) => {
         props.dispatch(clear());
       });
@@ -41,8 +36,6 @@ class App extends React.Component {
                       <PrivateRoute exact path="/" component={HomePage} />
                       <Route path="/login" component={LoginPage} />
                       <Route path='/home' component={HomePage} />
-                      <Route path='/counter' component={CounterPage} />
-                      <Route path='/fetch-data/:startDateIndex?' component={WeatherPage} />
                       <Route path='/play' render={(props) => <BingoPage {...props} cardCount={6} />}/>
                   </Layout>
               </Router>

@@ -2,8 +2,6 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
-import { UncontrolledTooltip } from 'reactstrap';
-import { danger } from '../store/Message';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`
@@ -54,13 +52,13 @@ class Board extends React.Component {
         const games = this.props.games;
         return games && games.rows ?
             (
-                <Wrapper className="align-content-center mx-3 mt-3">
+                <Wrapper className="align-content-center mx-3 my-3">
                     <BingoHeader>
                         <img src='/BingoBalls.png' alt="Ball Columns" width="100%" />
                     </BingoHeader>
                     {this.rows(games.rows, 5, 5) /* Configurable, can send row and column lengths */}
-                    <div className="d-flex flex-row justify-content-center mt-1 pointy" onClick={this.bingo}>
-                        <img src="/BingoButton.png" alt="Bingo!" />
+                    <div className="d-flex flex-row justify-content-center mt-1 pointy bingo-button" onClick={this.bingo}>
+                        <img src="/BingoButton.png" alt="Bingo!"/>
                     </div>
                 </Wrapper>)
             : (

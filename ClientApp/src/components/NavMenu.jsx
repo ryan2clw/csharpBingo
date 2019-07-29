@@ -22,21 +22,21 @@ export default class NavMenu extends React.Component {
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow" light >
           <Container>
-            <NavbarBrand tag={Link} to="http://www.4leaflotto.com/"><img src="/4ll-logo@1x.png" alt="Logo" /></NavbarBrand>
+            <NavbarBrand tag={Link} to="/"><img src="/4ll-logo@1x.png" alt="Logo" /></NavbarBrand>
             <NavbarToggler onClick={this.toggle} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="menu-hover" to="/">Home</NavLink>
+                  <NavLink tag={Link} className="menus" to="/">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="menu-hover" to="/counter">Counter</NavLink>
+                  <NavLink tag={Link} className="menus" to="/">Account</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="menu-hover" to="/fetch-data">Weather</NavLink>
+                  <NavLink tag={Link} className="menus" to="/">Store</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="menu-hover" to="/play">Play</NavLink>
+                  <NavLink tag={Link} className="menus" to="/play">Play</NavLink>
                 </NavItem>
               </ul>
             </Collapse>

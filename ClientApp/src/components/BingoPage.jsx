@@ -6,7 +6,8 @@ import Board from './BingoBoard';
 import BallBoard from './BallBoard';
 import {actionCreators} from '../store/Numbers';
 import {ballAction} from '../store/Balls';
-//import { Alert } from 'reactstrap';
+import { Container } from 'reactstrap';
+import Spinner from './Spinner';
 //import { danger } from '../store/Message';
 import './BingoPage.css';
 import { danger } from '../store/Message';
@@ -15,8 +16,11 @@ import { danger } from '../store/Message';
 //     font-size: 18px;
 //     padding: 5px;
 // `;
-const TallFlex = styled(Flex)`
-    min-height: 783px;
+// const TallFlex = styled(Flex)`
+//     min-height: 783px;
+// `
+const Body = styled.div`
+    min-height:600px;
 `
 
 class BingoPage extends React.Component {
@@ -51,19 +55,26 @@ class BingoPage extends React.Component {
     render() {
         const { cards, calledBalls } = this.props;
         return cards && cards.cards ?
-            <TallFlex justify='space-evenly' align='center' className="row w-100">
-                <div className="col-md-7">
-                    <div className="row d-flex flex-row justify-content-center align-items-center">
-                        {this.bingoBoards(cards.cards.length)}
+        (
+            <Container justify='space-evenly' className='pb-3' >
+                <div className="row">
+                    <div className="col-md-9">
+                        <div className="row d-flex flex-row justify-content-center align-items-center">
+                            {this.bingoBoards(cards.cards.length)}
+                        </div>
+                    </div>
+                    <div className="col-md-3 d-flex flex-column align-items-center justify-content-center pt-4">
+                        <BallBoard lastNumber={this.props.lastNumber ? this.props.lastNumber : "N/A"} calledBalls={calledBalls} scoreCard={cards.scoreCard} />
                     </div>
                 </div>
-                <div className="col-md-3 d-flex flex-column align-items-center">
-                    <BallBoard lastNumber={this.props.lastNumber ? this.props.lastNumber : "N/A"} calledBalls={calledBalls} scoreCard={cards.scoreCard} />
+            </Container>) :
+            (<Container justify='space-evenly' className='pb-3' >
+                <div className="row">
+                    <Body className="col-md-12">
+                        <Spinner />
+                    </Body>
                 </div>
-            </TallFlex>:
-            <Flex justify='space-evenly' className="row w-100">
-                <h3>DATA LOADING...{console.log("-------------------------- NO DATA FOR BINGO PAGE YET -------------------")}</h3>
-            </Flex>;
+            </Container>);    
     }
 }
 function mapStateToProps(state, ownProps) {
