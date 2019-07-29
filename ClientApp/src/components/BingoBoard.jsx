@@ -2,8 +2,6 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
-import { UncontrolledTooltip } from 'reactstrap';
-import { danger } from '../store/Message';
 
 // Create a Title component that'll render an <h1> tag with some styles
 const BingoHeader = styled.div`

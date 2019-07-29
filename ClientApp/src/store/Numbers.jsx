@@ -3,15 +3,15 @@ import {numberService} from '../webservices/numberService';
 import { danger } from './Message';
 
 export const actionCreators = {
-    requestNumbers: (cardCount=1, games = []) => async (dispatch, getState) => {
-        function request(cardCount, games) { return { type: evnt.NUMBERS_REQUEST, cardCount, games } }
-        function success(games) {  return {  type: evnt.NUMBERS_SUCCESS, games } }
+    requestNumbers: (cardCount=1, cards = []) => async (dispatch, getState) => {
+        function request(cardCount, cards) { return { type: evnt.NUMBERS_REQUEST, cardCount, cards } }
+        function success(cards) {  return {  type: evnt.NUMBERS_SUCCESS, cards } }
         function failure(error) { return { type: evnt.NUMBERS_FAILURE, error } }
-        dispatch(request(cardCount, games));
+        dispatch(request(cardCount, cards));
         numberService.card(cardCount)
             .then(
-                games => {
-                    return dispatch(success(games));
+                cards => {
+                    return dispatch(success(cards));
                 },
                 error => {
                     dispatch(failure(evnt.NUMBERS_FAILURE, error.toString()));
@@ -25,7 +25,7 @@ export const gamesReducer = (state = { games: [], isLoading: false }, action) =>
     switch (action.type) {
         case evnt.NUMBERS_REQUEST:
             return {
-                games: action.games,
+                games: action.cards,
                 cardCount: action.cardCount,
                 isLoading: true
             };
@@ -34,7 +34,7 @@ export const gamesReducer = (state = { games: [], isLoading: false }, action) =>
             /* Successful API call so update dynamic data: state.whatever = action.whatever */
             return {
                 cardCount: action.cardCount,
-                games: action.games,
+                games: action.cards,
                 isLoading: false
             };
         }

@@ -2,7 +2,6 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
-import { Alert } from 'reactstrap';
 
 //import { connect } from 'react-redux';
 const TopHeader = styled.div`

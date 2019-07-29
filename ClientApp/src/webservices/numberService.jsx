@@ -25,6 +25,5 @@ const rounds = async () => {
 }
 export const numberService = {
     card,
-    rounds,
-    round
+    rounds
 };

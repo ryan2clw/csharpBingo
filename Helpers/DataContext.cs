@@ -10,8 +10,7 @@ namespace WebApi.Helpers
         public DataContext(DbContextOptions<DataContext> options) : base(options) {}
         public DbSet<Ball> Balls { get; set; }
         public DbSet<Row> Rows { get; set; }
-        public DbSet<Card> Cards { get; set; }
-        public DbSet<Ball> CalledBalls { get; set; }
+        public DbSet<Card> Card { get; set; }
         public DbSet<BallMatch> BallMatch { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

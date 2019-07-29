@@ -44,11 +44,11 @@ namespace SpaBingo.Controllers
             _context.SaveChanges();
             return arr.ToArray();
         }
-        [HttpGet("balls")]
-        public string Get()
-        {
-            return _ballBlower.RandomString;
-        }
+        // [HttpGet("balls")]
+        // public string Get()
+        // {
+        //     return _ballBlower.RandomString;
+        // }
         [HttpGet("blowBalls")]
         public IActionResult BlowBallsAsync()
         {
@@ -56,7 +56,7 @@ namespace SpaBingo.Controllers
             {
                 var rng = new Random();
                 var myBalls = _context.Balls.Where(b => b.IsPlayed == false).ToArray();
-                var index = rng.Next(myBalls.Length - 1);
+                var index = rng.Next(myBalls.Length);
                 myBalls[index].IsPlayed = true;
                 myBalls[index].Updated = DateTime.Now;
                 _context.SaveChanges();
@@ -118,7 +118,7 @@ namespace SpaBingo.Controllers
             bingoCard.Rows = ret.ToList();
             try
             {
-                _context.Cards.Add(bingoCard);
+                _context.Card.Add(bingoCard);
                 _context.SaveChanges();
             }
             catch (Exception ex)
