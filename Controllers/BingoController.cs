@@ -96,6 +96,7 @@ namespace SpaBingo.Controllers
             if (numValue > 0 && numValue < 16)
             {
                 matches = _context.Match.Where(m => m.B == oneNut.NumValue).ToList();
+
             }
             else if (numValue >= 16 && numValue < 31)
             {
@@ -118,13 +119,13 @@ namespace SpaBingo.Controllers
                 BallMatch ballMatch = new BallMatch()
                 {
                     Ball = oneNut,
-                    Match = matches[i]
+                    BallId = oneNut.Id,
+                    Match = matches[i],
+                    MatchId = matches[i].Id
                 };
-                matches[i].BallMatch.Add(ballMatch);
-                _context.Match.Add(matches[i]);
                 _context.BallMatch.Add(ballMatch);
                 _context.SaveChanges();
-            };
+            }
         }
         [HttpGet("blowBalls")]
         public IActionResult BlowBallsAsync()
