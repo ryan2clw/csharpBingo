@@ -60,17 +60,33 @@ a {
   font-size: 15px;
 }
 
-.round-div{
+.round-div {
   border-radius: 22px;
   color: #0c5460;
-  background-color: #d1ecf1;
+  background: #d1ecf1;
   border-color: #bee5eb;
-  width: 36px;
+  width: 25%;
   margin: 1px;
   padding: 5px;
   text-align: center;
+  opacity: 0.2;
 }
 .bingo-header{
   background: black;
   color:white;
+}
+.box{
+  position: relative;
+  display: inline-block; /* Make the width of box same as image */
+}
+
+.box .text{
+  font-size:21px;
+  position: absolute;
+  z-index: 999;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 10%; /* Adjust this value to move the positioned div up and down */
+  text-align: center;
 }

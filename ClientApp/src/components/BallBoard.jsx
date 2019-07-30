@@ -2,6 +2,12 @@ import React from 'react';
 import { Flex } from 'reflexbox';
 import styled from 'styled-components';
 import Square from './Square';
+import ShinyBall from './ShinyBall';
+import Bball from './images/B-Ball.png'; 
+import Iball from './images/I-Ball.png';
+import Nball from './images/N-Ball.png';
+import Gball from './images/G-Ball.png';
+import Oball from './images/O-Ball.png';
 
 const Wrapper = styled.div`
     padding: 1rem;
@@ -17,7 +23,6 @@ const StatusDiv = styled.div`
 class BallBoard extends React.Component {
   
   headerNames = (i) => {
-    console.log("i", i);
     switch(i){
       case(0):
         return "B";
@@ -65,7 +70,19 @@ class BallBoard extends React.Component {
   balls = (ballArray) => {
     let ret = [];
     ballArray.forEach(ball => {
-      ret.push(<div className='round-div'>{ball}</div>);
+      console.log("ball", parseInt(ball));
+      let myBall = parseInt(ball);
+      if(myBall>0 && myBall <15){
+        ret.push(<ShinyBall letter={Bball} className='round-div'>{ball}</ShinyBall>);
+      }else if(myBall>=16 && myBall <31){
+        ret.push(<ShinyBall letter={Iball} className='round-div'>{ball}</ShinyBall>);
+      }else if(myBall>=31 && myBall <46){
+        ret.push(<ShinyBall letter={Nball} className='round-div'>{ball}</ShinyBall>);
+      }else if(myBall>=46 && myBall <61){
+        ret.push(<ShinyBall letter={Gball} className='round-div'>{ball}</ShinyBall>);
+      }else if(myBall>=61){
+        ret.push(<ShinyBall letter={Oball} className='round-div'>{ball}</ShinyBall>);
+      }
     });
     return ret;
   }
