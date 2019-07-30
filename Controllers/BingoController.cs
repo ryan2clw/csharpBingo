@@ -92,11 +92,11 @@ namespace SpaBingo.Controllers
             _context.SaveChanges();
             /* Blow balls above, match balls below */
             int numValue = int.Parse(oneNut.NumValue);
+            /* MARK TO DO: Fall back to check remaining columns, maybe make a computed property that accumulates the group of 5 values to an array, for the all "B" case, column match, also gotta add those rows */
             List<Match> matches = new List<Match>();
             if (numValue > 0 && numValue < 16)
             {
                 matches = _context.Match.Where(m => m.B == oneNut.NumValue).ToList();
-
             }
             else if (numValue >= 16 && numValue < 31)
             {

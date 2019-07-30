@@ -10,7 +10,7 @@ const BingoHeader = styled.div`
 	margin-top: -13%;
 `
 // Create a Wrapper component that'll render a <section> tag with some styles
-const Wrapper = styled.section`
+const Wrapper = styled.div`
     padding: 1rem;
     background: #d6d2cb center url("WoodBack.png");
     height: 300px;

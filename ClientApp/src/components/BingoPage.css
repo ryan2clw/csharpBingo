@@ -1,43 +1,76 @@
-/* section{
-    margin: 10px 0 30px 0;
-} */
-    .wider{ min-width:300px}
-    .form-group{color:#2e6e80 !important}
-      a { cursor: pointer; color: #2e6e80 !important}
-      .help-block { font-size: 12px; }
-      .blu-hu {
-        background: #2e6e80 !important;
-        color: #fff !important;
-        border-color: #337ab7;
-      }
-      .blu-hu:hover {
-        background: #105e5e !important;
-        color: #fff !important;
-        border-color: #337ab7;
-      }
-      .glyphicon-heart{
-        color:crimson;
-      }
-      .bingo-button{
-        cursor: pointer;
-        max-height:54px;
-      }
-      .five-balls {
-        border-radius: 10px;
-        display: flex;
-        flex-direction: row;
-      }
-      .aqua{
-        background: #41b7b1;
-      }
-    .dope-gradient {
-        background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(67, 198, 172), rgb(25, 22, 84)) repeat scroll 0% 0%;
-    }
-      .current-number{
-        background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(67, 198, 172), rgb(25, 22, 84)) repeat scroll 0% 0%;
-        color:white;
-        margin-bottom: 6px;
-      }
-      .menus{
-          font-size:15px;
-      }
+.wider {
+  min-width: 300px
+}
+
+.form-group {
+  color: #2e6e80 !important
+}
+
+a {
+  cursor: pointer;
+  color: #2e6e80 !important
+}
+
+.help-block {
+  font-size: 12px;
+}
+
+.blu-hu {
+  background: #2e6e80 !important;
+  color: #fff !important;
+  border-color: #337ab7;
+}
+
+.blu-hu:hover {
+  background: #105e5e !important;
+  color: #fff !important;
+  border-color: #337ab7;
+}
+
+.glyphicon-heart {
+  color: crimson;
+}
+
+.bingo-button {
+  cursor: pointer;
+  max-height: 54px;
+}
+
+.five-balls {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.aqua {
+  background: #41b7b1;
+}
+
+.dope-gradient {
+  background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(67, 198, 172), rgb(25, 22, 84)) repeat scroll 0% 0%;
+}
+
+.current-number {
+  background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(67, 198, 172), rgb(25, 22, 84)) repeat scroll 0% 0%;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.menus {
+  font-size: 15px;
+}
+
+.round-div{
+  border-radius: 22px;
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  width: 36px;
+  margin: 1px;
+  padding: 5px;
+  text-align: center;
+}
+.bingo-header{
+  background: black;
+  color:white;
+}
