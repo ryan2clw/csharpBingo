@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
-namespace WebApi.Entities
+namespace SpaBingo.Entities
 {
     [DataContract]
     public class Row
@@ -10,7 +10,6 @@ namespace WebApi.Entities
         [DataMember]
         public string B { get; set; }
         [DataMember]
-
         public string I { get; set; }
         [DataMember]
         public string N { get; set; }
@@ -18,7 +17,7 @@ namespace WebApi.Entities
         public string G { get; set; }
         [DataMember]
         public string O { get; set; }
-        public Match Match { get; set; }
+
         public int CardID { get; set; }
     }
 }

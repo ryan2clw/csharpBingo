@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using WebApi.Entities;
+using SpaBingo.Entities;
 
-
-namespace WebApi.Helpers
+namespace SpaBingo.Helpers
 {
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) {}
         public DbSet<Ball> Balls { get; set; }
+        public DbSet<GameNumber> GameNumbers { get; set;}
         public DbSet<Row> Rows { get; set; }
         public DbSet<Match> Match { get; set; }
         public DbSet<Card> Card { get; set; }

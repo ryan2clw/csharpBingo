@@ -1,4 +1,4 @@
-namespace WebApi.Entities
+namespace SpaBingo.Entities
 {
     public class User
     {

@@ -1,4 +1,4 @@
-using WebApi.Entities;
+using SpaBingo.Entities;
 
 public class BallMatch
 {

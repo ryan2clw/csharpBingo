@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Helpers;
-using WebApi.Entities;
+using SpaBingo.Helpers;
+using SpaBingo.Entities;
 using Microsoft.EntityFrameworkCore;
+using EFCore.BulkExtensions;
 
 namespace SpaBingo.Controllers
 {
@@ -30,7 +31,7 @@ namespace SpaBingo.Controllers
             return arr.ToArray();
         }
         [HttpGet("[action]")]
-        public IEnumerable<Ball> InitGame(int startNumber, int endNumber)
+        public IEnumerable<Ball> InitGame(int? startNumber = 1, int? endNumber = 75)
         {
             var arr = new List<Ball>();
             for (var i = startNumber; i <= endNumber; i++)
@@ -38,10 +39,11 @@ namespace SpaBingo.Controllers
                 arr.Add(new Ball()
                 {
                     NumValue = i.ToString(),
-                    IsPlayed = false
+                    IsPlayed = false,
+                    Updated = DateTime.Now
                 });
             }
-            _context.AddRange(entities: arr);
+            _context.BulkInsert(arr);
             _context.SaveChanges();
             return arr.ToArray();
         }
@@ -49,12 +51,12 @@ namespace SpaBingo.Controllers
         public IActionResult Get(List<int> cards)
         {
             var myCards = _context.Card.Where(c => cards.Contains(c.Id)).Include(c => c.Rows).ToArray();
-            //var rows = _context.Rows.Where(r => cards.Contains(r.CardID)).OrderBy(r=>r.CardID).ThenBy(r=>r.Id).ToArray();
             List<Match> matches = new List<Match>();
             for (var i = 0; i < myCards.Count(); i++)
             {
                 var rows = myCards[i].Rows.ToList();
-                // should have seven possible win rows to add to the match table, MARK TO DO: UNIT TEST THIS
+                // should have 12 possible win rows to add to the match table,
+                // MARK TO DO: UNIT TEST THIS
                 for (var j = 0; j < rows.Count(); j++)
                 {
                     Match match = new Match()
@@ -144,11 +146,9 @@ namespace SpaBingo.Controllers
         public IActionResult StartGame()
         {
             Ball[] balls = _context.Balls.ToArray();
-            foreach (Ball ball in balls)
-            {
-                ball.IsPlayed = false;
-            }
+            _context.BulkDelete(balls);
             _context.SaveChanges();
+            InitGame();
             return Ok();
         }
         [HttpGet("[action]")]
