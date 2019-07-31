@@ -4,7 +4,7 @@ import Nball from './images/N-Ball.png'; // Tell Webpack this JS file uses this 
 const ShinyBall = props => (
         <div class="box">
         <img src={(props && props.letter) || Nball} alt="Ball" />
-        <div class="text">
+        <div className="text">
             {console.log(props)}
             <p>{ props.children || 7 }</p>
         </div>

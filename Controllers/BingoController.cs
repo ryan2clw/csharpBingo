@@ -41,7 +41,7 @@ namespace SpaBingo.Controllers
                     NumValue = i.ToString()
                 });
             }
-            _context.BulkInsert(arr);
+            _context.GameNumbers.AddRange(arr);
             _context.SaveChanges();
             return arr.ToArray();
         }
@@ -80,8 +80,9 @@ namespace SpaBingo.Controllers
             }
             return Ok("SUCCESS!");
         }
-        private Ball nextBall()
+        private void nextBall()
         {
+            // moves number from GameNumber
             var rng = new Random();
             var availableGameNumbers = _context.GameNumbers.ToArray();
             var index = rng.Next(availableGameNumbers.Length);
@@ -92,44 +93,41 @@ namespace SpaBingo.Controllers
                 NumValue = oneNut.NumValue,
             };
             _context.Balls.Add(currentBall);
+            _context.GameNumbers.Remove(oneNut);
             _context.SaveChanges();
-            return currentBall;
-        }
-        private void matchBalls(Ball currentBall)
-        {
             /* Blow balls above, match balls below
-            Mark to do, try Bulk next
              */
             int numValue = int.Parse(currentBall.NumValue);
             List<Match> matches = new List<Match>();
             /* MARK TO DO: Fall back to check remaining columns, maybe make a computed property that accumulates the group of 5 values to an array, for the all "B" case, column match, also gotta add those rows */
-            matches.AddRange(_context.Match.Where(m => m.B == currentBall.NumValue).ToList());
-            matches.AddRange(_context.Match.Where(m => m.I == currentBall.NumValue).ToList());
-            matches.AddRange(_context.Match.Where(m => m.N == currentBall.NumValue).ToList());
-            matches.AddRange(_context.Match.Where(m => m.G == currentBall.NumValue).ToList());
-            matches.AddRange(_context.Match.Where(m => m.O == currentBall.NumValue).ToList());
-
-            for (var i = 0; i < matches.Count(); i++)
+            matches.AddRange(_context.Match.Where(m => m.B == currentBall.NumValue).ToArray());
+            matches.AddRange(_context.Match.Where(m => m.I == currentBall.NumValue).ToArray());
+            matches.AddRange(_context.Match.Where(m => m.N == currentBall.NumValue).ToArray());
+            matches.AddRange(_context.Match.Where(m => m.G == currentBall.NumValue).ToArray());
+            matches.AddRange(_context.Match.Where(m => m.O == currentBall.NumValue).ToArray());
+            for (var i = 0; i < matches.Count(); i++) 
             {
-                BallMatch ballMatch = new BallMatch()
-                {
-                    Ball = currentBall,
-                    BallId = currentBall.Id,
-                    Match = matches[i],
-                    MatchId = matches[i].Id
-                };
-                _context.BallMatch.Add(ballMatch);
-                _context.SaveChanges();
+               BallMatch ballMatch = new BallMatch()
+               {
+                   Ball = currentBall,
+                   BallId = currentBall.Id,
+                   Match = matches[i],
+                   MatchId = matches[i].Id
+               };
+               _context.BallMatch.Add(ballMatch);
+               _context.SaveChanges();
             }
+            //_context.Match.AddRange(matches);
+            //_context.SaveChanges();
         }
         [HttpGet("blowBalls")]
         public IActionResult BlowBallsAsync()
         {
             try
             {
-                Ball currentBall = nextBall();
-                matchBalls(currentBall);
-                return Ok("Last blown ball: " + currentBall.NumValue + ", time: " + currentBall.Updated);
+                nextBall();
+               // matchBalls(currentBall);
+                return Ok("SUCCESS!");//Last blown ball: " + currentBall.NumValue + ", time: " + currentBall.Updated);
             }
             catch (Exception ex)
             {
@@ -138,10 +136,15 @@ namespace SpaBingo.Controllers
         }
         [HttpGet("[action]")]
         public IActionResult StartGame()
-        {
+        {// removes calledBalls, unCalledBalls, and Matches from the tables then loads fresh numbers into the machine
             Ball[] balls = _context.Balls.ToArray();
-            _context.BulkDelete(balls);
+            GameNumber[] gameNumbers = _context.GameNumbers.ToArray();
+            BallMatch[] ballMatches = _context.BallMatch.ToArray();
+            _context.Balls.RemoveRange(balls);
+            _context.GameNumbers.RemoveRange(gameNumbers);
+            _context.BallMatch.RemoveRange(ballMatches);
             _context.SaveChanges();
+            InitGame(); // by default loads 75 numbers into the GameNumbers Table
             return Ok();
         }
         [HttpGet("[action]")]
