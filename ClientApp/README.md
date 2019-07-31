@@ -1,3 +1,8 @@
+﻿ADDED THE ABILITY TO SPIN UP LOCAL DB INSTANCES, NOTE THERE IS NOW 2 CONNECTION STRINGS IN appsettings.json,
+SIMPLY RUN THE COMMAND 'dotnet ef database update' to tell SQLServer to make a local copy of the DB-schema,
+or just use my AWS instance, you put the username and password into SSMS just like you do with any other software
+in order to view the tables
+
 SO TO COMPILE AND RUN THIS THING YOU JUST TYPE "dotnet run" FROM THE ROOT DIRECTORY
 BUT WAIT, YOU NEED ALL THE JS dependencies, so go to the directory named "ClientApp" type "yarn" then go back and try step one again,
 you should only need to install the dependencies every so often (like when we add one), "npm install" also works for installing 

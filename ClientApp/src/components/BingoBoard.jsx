@@ -52,13 +52,13 @@ class Board extends React.Component {
         const games = this.props.games;
         return games && games.rows ?
             (
-                <Wrapper className="align-content-center mx-3 my-3">
+                <Wrapper className="align-content-center mx-3 mb-5">
                     <BingoHeader>
                         <img src='/BingoBalls.png' alt="Ball Columns" width="100%" />
                     </BingoHeader>
                     {this.rows(games.rows, 5, 5) /* Configurable, can send row and column lengths */}
-                    <div className="d-flex flex-row justify-content-center mt-1 pointy bingo-button" onClick={this.bingo}>
-                        <img src="/BingoButton.png" alt="Bingo!"/>
+                    <div className="d-flex flex-column justify-content-flex-start mt-1 pointy bingo-button" onClick={this.bingo}>
+                        <img src="/BingoButton.png" alt="Bingo!" className="h-50" />
                     </div>
                 </Wrapper>)
             : (

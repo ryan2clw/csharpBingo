@@ -31,16 +31,14 @@ namespace SpaBingo.Controllers
             return arr.ToArray();
         }
         [HttpGet("[action]")]
-        public IEnumerable<Ball> InitGame(int? startNumber = 1, int? endNumber = 75)
+        public IEnumerable<GameNumber> InitGame(int? startNumber = 1, int? endNumber = 75)
         {
-            var arr = new List<Ball>();
+            var arr = new List<GameNumber>();
             for (var i = startNumber; i <= endNumber; i++)
             {
-                arr.Add(new Ball()
+                arr.Add(new GameNumber()
                 {
-                    NumValue = i.ToString(),
-                    IsPlayed = false,
-                    Updated = DateTime.Now
+                    NumValue = i.ToString()
                 });
             }
             _context.BulkInsert(arr);
@@ -56,6 +54,7 @@ namespace SpaBingo.Controllers
             {
                 var rows = myCards[i].Rows.ToList();
                 // should have 12 possible win rows to add to the match table,
+                // add column wins
                 // MARK TO DO: UNIT TEST THIS
                 for (var j = 0; j < rows.Count(); j++)
                 {
@@ -66,8 +65,7 @@ namespace SpaBingo.Controllers
                         N = rows[j].N,
                         G = rows[j].G,
                         O = rows[j].O,
-                        CardID = rows[j].CardID,
-                        RowId = rows[j].Id
+                        CardID = rows[j].CardID
                     };
                     try
                     {
@@ -82,46 +80,41 @@ namespace SpaBingo.Controllers
             }
             return Ok("SUCCESS!");
         }
-        private void matchBalls()
+        private Ball nextBall()
         {
             var rng = new Random();
-            var myBalls = _context.Balls.Where(b => b.IsPlayed == false).ToArray();
-            var index = rng.Next(myBalls.Length);
-            var oneNut = myBalls[index];
-            oneNut.IsPlayed = true;
-            oneNut.Updated = DateTime.Now;
-            _context.Balls.Update(oneNut);
+            var availableGameNumbers = _context.GameNumbers.ToArray();
+            var index = rng.Next(availableGameNumbers.Length);
+            var oneNut = availableGameNumbers[index];
+            var currentBall = new Ball()
+            {
+                Updated = DateTime.Now,
+                NumValue = oneNut.NumValue,
+            };
+            _context.Balls.Add(currentBall);
             _context.SaveChanges();
-            /* Blow balls above, match balls below */
-            int numValue = int.Parse(oneNut.NumValue);
-            /* MARK TO DO: Fall back to check remaining columns, maybe make a computed property that accumulates the group of 5 values to an array, for the all "B" case, column match, also gotta add those rows */
+            return currentBall;
+        }
+        private void matchBalls(Ball currentBall)
+        {
+            /* Blow balls above, match balls below
+            Mark to do, try Bulk next
+             */
+            int numValue = int.Parse(currentBall.NumValue);
             List<Match> matches = new List<Match>();
-            if (numValue > 0 && numValue < 16)
-            {
-                matches = _context.Match.Where(m => m.B == oneNut.NumValue).ToList();
-            }
-            else if (numValue >= 16 && numValue < 31)
-            {
-                matches = _context.Match.Where(m => m.I == oneNut.NumValue).ToList();
-            }
-            else if (numValue >= 31 && numValue < 46)
-            {
-                matches = _context.Match.Where(m => m.N == oneNut.NumValue).ToList();
-            }
-            else if (numValue >= 46 && numValue < 61)
-            {
-                matches = _context.Match.Where(m => m.G == oneNut.NumValue).ToList();
-            }
-            else if (numValue >= 61)
-            {
-                matches = _context.Match.Where(m => m.O == oneNut.NumValue).ToList();
-            }
+            /* MARK TO DO: Fall back to check remaining columns, maybe make a computed property that accumulates the group of 5 values to an array, for the all "B" case, column match, also gotta add those rows */
+            matches.AddRange(_context.Match.Where(m => m.B == currentBall.NumValue).ToList());
+            matches.AddRange(_context.Match.Where(m => m.I == currentBall.NumValue).ToList());
+            matches.AddRange(_context.Match.Where(m => m.N == currentBall.NumValue).ToList());
+            matches.AddRange(_context.Match.Where(m => m.G == currentBall.NumValue).ToList());
+            matches.AddRange(_context.Match.Where(m => m.O == currentBall.NumValue).ToList());
+
             for (var i = 0; i < matches.Count(); i++)
             {
                 BallMatch ballMatch = new BallMatch()
                 {
-                    Ball = oneNut,
-                    BallId = oneNut.Id,
+                    Ball = currentBall,
+                    BallId = currentBall.Id,
                     Match = matches[i],
                     MatchId = matches[i].Id
                 };
@@ -134,12 +127,13 @@ namespace SpaBingo.Controllers
         {
             try
             {
-                matchBalls();
-                return Ok("Last blown ball: " + DateTime.Now.ToString());
+                Ball currentBall = nextBall();
+                matchBalls(currentBall);
+                return Ok("Last blown ball: " + currentBall.NumValue + ", time: " + currentBall.Updated);
             }
             catch (Exception ex)
             {
-                return Ok("Ball blowing failure: " + ex.ToString());
+                return Ok("Ball blowing failure: " + ex);
             }
         }
         [HttpGet("[action]")]
@@ -148,13 +142,12 @@ namespace SpaBingo.Controllers
             Ball[] balls = _context.Balls.ToArray();
             _context.BulkDelete(balls);
             _context.SaveChanges();
-            InitGame();
             return Ok();
         }
         [HttpGet("[action]")]
         public IEnumerable<string> Balls()
         {
-            return _context.Balls.Where(x => x.IsPlayed).OrderByDescending(x => x.Updated).Select(item => item.NumValue).ToArray();
+            return _context.Balls.OrderByDescending(x => x.Updated).Select(item => item.NumValue).ToArray();
         }
         private Card BingoCard()
         {

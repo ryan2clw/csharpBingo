@@ -14,7 +14,7 @@ const Wrapper = styled.div`
     background: #d6d2cb center url("WoodBack.png");
     border-radius: 15px;
     width: 249px;
-    height:594px;
+    height:600px;
 `;
 const StatusDiv = styled.div`
     border-radius: 22px;

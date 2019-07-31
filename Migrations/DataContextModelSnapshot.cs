@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApi.Helpers;
+using SpaBingo.Helpers;
 
 namespace SpaBingo.Migrations
 {
@@ -38,13 +38,11 @@ namespace SpaBingo.Migrations
                     b.ToTable("BallMatch");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Ball", b =>
+            modelBuilder.Entity("SpaBingo.Entities.Ball", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsPlayed");
 
                     b.Property<string>("NumValue");
 
@@ -55,7 +53,7 @@ namespace SpaBingo.Migrations
                     b.ToTable("Balls");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Card", b =>
+            modelBuilder.Entity("SpaBingo.Entities.Card", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +64,20 @@ namespace SpaBingo.Migrations
                     b.ToTable("Card");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Match", b =>
+            modelBuilder.Entity("SpaBingo.Entities.GameNumber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NumValue");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GameNumbers");
+                });
+
+            modelBuilder.Entity("SpaBingo.Entities.Match", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,17 +95,12 @@ namespace SpaBingo.Migrations
 
                     b.Property<string>("O");
 
-                    b.Property<int>("RowId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RowId")
-                        .IsUnique();
 
                     b.ToTable("Match");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Row", b =>
+            modelBuilder.Entity("SpaBingo.Entities.Row", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,28 +127,20 @@ namespace SpaBingo.Migrations
 
             modelBuilder.Entity("BallMatch", b =>
                 {
-                    b.HasOne("WebApi.Entities.Ball", "Ball")
+                    b.HasOne("SpaBingo.Entities.Ball", "Ball")
                         .WithMany("BallMatch")
                         .HasForeignKey("BallId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebApi.Entities.Match", "Match")
+                    b.HasOne("SpaBingo.Entities.Match", "Match")
                         .WithMany("BallMatch")
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Match", b =>
+            modelBuilder.Entity("SpaBingo.Entities.Row", b =>
                 {
-                    b.HasOne("WebApi.Entities.Row", "Row")
-                        .WithOne("Match")
-                        .HasForeignKey("WebApi.Entities.Match", "RowId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebApi.Entities.Row", b =>
-                {
-                    b.HasOne("WebApi.Entities.Card")
+                    b.HasOne("SpaBingo.Entities.Card")
                         .WithMany("Rows")
                         .HasForeignKey("CardID")
                         .OnDelete(DeleteBehavior.Cascade);

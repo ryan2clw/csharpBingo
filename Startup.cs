@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebApi.Helpers;
+using SpaBingo.Helpers;
 using Microsoft.EntityFrameworkCore;
 using host = Microsoft.Extensions.Hosting;
 namespace SpaBingo

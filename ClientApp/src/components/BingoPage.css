@@ -1,4 +1,4 @@
-.wider {
+﻿.wider {
   min-width: 300px
 }
 
@@ -33,7 +33,7 @@ a {
 
 .bingo-button {
   cursor: pointer;
-  max-height: 54px;
+  height:50%;
 }
 
 .five-balls {

@@ -30,7 +30,7 @@ namespace SpaBingo.Helpers
             modelBuilder.Entity<BallMatch>()
                 .HasOne(m => m.Ball)
                 .WithMany(m => m.BallMatch)
-                .HasForeignKey(k => k.BallId);   
+                .HasForeignKey(k => k.BallId);
         }
     }
 }
