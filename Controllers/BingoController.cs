@@ -114,6 +114,8 @@ namespace SpaBingo.Controllers
                    Match = matches[i],
                    MatchId = matches[i].Id
                };
+                matches[i].Left = matches[i].Left - 1;
+                _context.Match.Update(matches[i]);
                _context.BallMatch.Add(ballMatch);
                _context.SaveChanges();
             }
