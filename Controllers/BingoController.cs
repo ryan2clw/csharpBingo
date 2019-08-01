@@ -186,11 +186,7 @@ namespace SpaBingo.Controllers
                     }
                     else
                     {   // prevent dictionary key crash
-                        var oldLeft = CardHasHowManyLeft[matches[i].CardID];
-                        if(oldLeft > matches[i].Left)
-                        {
-                            CardHasHowManyLeft[matches[i].CardID] = matches[i].Left;
-                        }
+                        CardHasHowManyLeft[matches[i].CardID] = matches[i].Left;
                     }
                 }
                 json.NumbersLeftOnCard = CardHasHowManyLeft;

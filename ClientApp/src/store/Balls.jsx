@@ -12,7 +12,7 @@ export const ballAction = {
         numberService.rounds()
             .then(
                 balls => { 
-                    return dispatch(success(balls.ballsBlown));
+                    return dispatch(success(balls));
                 },
                 error => {
                     dispatch(failure(evnt.ROUND_FAILURE, error.toString()));
@@ -36,7 +36,7 @@ export const ballAction = {
     }
 };
 /* Reducers map actions to state, set the default state to an initial value */
-export const ballsReducer = (state = { balls: [], isLoading: false }, action) => {
+export const ballsReducer = (state = { balls: [], cardStatus:{}, isLoading: false }, action) => {
 
     switch (action.type) {
         case evnt.ROUND_REQUEST:
@@ -46,7 +46,8 @@ export const ballsReducer = (state = { balls: [], isLoading: false }, action) =>
             };
         case evnt.ROUND_SUCCESS:
             return {
-                balls: action.balls
+                balls: action.balls.ballsBlown,
+                cardStatus:  action.balls.numbersLeftOnCard
             };
         case evnt.ROUND_FAILURE:
             return {
