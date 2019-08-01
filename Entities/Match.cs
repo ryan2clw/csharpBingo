@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace SpaBingo.Entities
 {
@@ -11,6 +12,7 @@ namespace SpaBingo.Entities
         public string G { get; set; }
         public string O { get; set; }
         public int Left { get; set; }
+        public int NeededToWin { get; set; }
         public int CardID { get; set; }
         public virtual ICollection<BallMatch> BallMatch { get; set; }
     }

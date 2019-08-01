@@ -95,11 +95,11 @@ namespace SpaBingo.Controllers
             _context.Balls.Add(currentBall);
             _context.GameNumbers.Remove(oneNut);
             _context.SaveChanges();
-            /* Blow balls above, match balls below
+            /*
+             * Blow balls above, match balls below
              */
             int numValue = int.Parse(currentBall.NumValue);
             List<Match> matches = new List<Match>();
-            /* MARK TO DO: Fall back to check remaining columns, maybe make a computed property that accumulates the group of 5 values to an array, for the all "B" case, column match, also gotta add those rows */
             matches.AddRange(_context.Match.Where(m => m.B == currentBall.NumValue).ToArray());
             matches.AddRange(_context.Match.Where(m => m.I == currentBall.NumValue).ToArray());
             matches.AddRange(_context.Match.Where(m => m.N == currentBall.NumValue).ToArray());
@@ -114,13 +114,11 @@ namespace SpaBingo.Controllers
                    Match = matches[i],
                    MatchId = matches[i].Id
                };
-                matches[i].Left = matches[i].Left - 1;
-                _context.Match.Update(matches[i]);
+               matches[i].Left = matches[i].Left - 1;
+               _context.Match.Update(matches[i]);
                _context.BallMatch.Add(ballMatch);
                _context.SaveChanges();
             }
-            //_context.Match.AddRange(matches);
-            //_context.SaveChanges();
         }
         [HttpGet("blowBalls")]
         public IActionResult BlowBallsAsync()
@@ -128,7 +126,6 @@ namespace SpaBingo.Controllers
             try
             {
                 nextBall();
-               // matchBalls(currentBall);
                 return Ok("SUCCESS!");//Last blown ball: " + currentBall.NumValue + ", time: " + currentBall.Updated);
             }
             catch (Exception ex)
@@ -137,11 +134,27 @@ namespace SpaBingo.Controllers
             }
         }
         [HttpGet("[action]")]
+        public IActionResult CheckBingo(List<int> cards)
+        {
+            List<List<Match>> cardMatches =  new List<List<Match>>();
+            for (var i = 0; i < cards.Count; i++)
+            {
+                List<Match> matches = _context.Match.Where(m => m.CardID == cards[i]).ToList();
+                cardMatches.Add(matches);
+            }
+            return Ok(cardMatches);
+        }
+        [HttpGet("[action]")]
         public IActionResult StartGame()
         {// removes calledBalls, unCalledBalls, and Matches from the tables then loads fresh numbers into the machine
             Ball[] balls = _context.Balls.ToArray();
             GameNumber[] gameNumbers = _context.GameNumbers.ToArray();
             BallMatch[] ballMatches = _context.BallMatch.ToArray();
+            var rowsInPlay = _context.Match.ToList();
+            foreach(var row in rowsInPlay)
+            {
+                row.Left = row.NeededToWin;  // MARK TO DO: USE BULK UPDATE OR INSTALL DAPPER FOR SP
+            }
             _context.Balls.RemoveRange(balls);
             _context.GameNumbers.RemoveRange(gameNumbers);
             _context.BallMatch.RemoveRange(ballMatches);
