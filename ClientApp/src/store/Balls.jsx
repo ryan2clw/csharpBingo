@@ -12,7 +12,7 @@ export const ballAction = {
         numberService.rounds()
             .then(
                 balls => { 
-                    return dispatch(success(balls));
+                    return dispatch(success(balls.ballsBlown));
                 },
                 error => {
                     dispatch(failure(evnt.ROUND_FAILURE, error.toString()));

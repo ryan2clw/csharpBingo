@@ -105,19 +105,19 @@ namespace SpaBingo.Controllers
             matches.AddRange(_context.Match.Where(m => m.N == currentBall.NumValue).ToArray());
             matches.AddRange(_context.Match.Where(m => m.G == currentBall.NumValue).ToArray());
             matches.AddRange(_context.Match.Where(m => m.O == currentBall.NumValue).ToArray());
-            for (var i = 0; i < matches.Count(); i++) 
+            for (var i = 0; i < matches.Count(); i++)
             {
-               BallMatch ballMatch = new BallMatch()
-               {
-                   Ball = currentBall,
-                   BallId = currentBall.Id,
-                   Match = matches[i],
-                   MatchId = matches[i].Id
-               };
-               matches[i].Left = matches[i].Left - 1;
-               _context.Match.Update(matches[i]);
-               _context.BallMatch.Add(ballMatch);
-               _context.SaveChanges();
+                BallMatch ballMatch = new BallMatch()
+                {
+                    Ball = currentBall,
+                    BallId = currentBall.Id,
+                    Match = matches[i],
+                    MatchId = matches[i].Id
+                };
+                matches[i].Left = matches[i].Left - 1;
+                _context.Match.Update(matches[i]);
+                _context.BallMatch.Add(ballMatch);
+                _context.SaveChanges();
             }
         }
         [HttpGet("blowBalls")]
@@ -136,13 +136,19 @@ namespace SpaBingo.Controllers
         [HttpGet("[action]")]
         public IActionResult CheckBingo(List<int> cards)
         {
-            List<List<Match>> cardMatches =  new List<List<Match>>();
+            List<List<Match>> cardMatches = new List<List<Match>>();
+            Dictionary<int, int> CardHasHowManyLeft = new Dictionary<int, int>();
             for (var i = 0; i < cards.Count; i++)
             {
                 List<Match> matches = _context.Match.Where(m => m.CardID == cards[i]).ToList();
                 cardMatches.Add(matches);
+                for (var j = 0; j < cardMatches.Count; j++)
+                {
+                    CardHasHowManyLeft.Add(matches[i].CardID, matches[i].Left);
+                }
+
             }
-            return Ok(cardMatches);
+            return Ok(CardHasHowManyLeft);
         }
         [HttpGet("[action]")]
         public IActionResult StartGame()
@@ -151,7 +157,7 @@ namespace SpaBingo.Controllers
             GameNumber[] gameNumbers = _context.GameNumbers.ToArray();
             BallMatch[] ballMatches = _context.BallMatch.ToArray();
             var rowsInPlay = _context.Match.ToList();
-            foreach(var row in rowsInPlay)
+            foreach (var row in rowsInPlay)
             {
                 row.Left = row.NeededToWin;  // MARK TO DO: USE BULK UPDATE OR INSTALL DAPPER FOR SP
             }
@@ -163,9 +169,33 @@ namespace SpaBingo.Controllers
             return Ok();
         }
         [HttpGet("[action]")]
-        public IEnumerable<string> Balls()
+        public IActionResult Balls()
         {
-            return _context.Balls.OrderByDescending(x => x.Updated).Select(item => item.NumValue).ToArray();
+            List<int> cards = new List<int>() { 7 };
+            var json = new RoundJSON();
+            json.BallsBlown = _context.Balls.OrderByDescending(x => x.Updated).Select(item => item.NumValue).ToArray();
+            for (var i = 0; i < cards.Count; i++)
+            {
+                Dictionary<int, int> CardHasHowManyLeft = new Dictionary<int, int>();
+                List<Match> matches = _context.Match.Where(m => m.CardID == cards[i]).ToList();
+                for (var j = 0; j < matches.Count; j++)
+                {
+                    if (!CardHasHowManyLeft.Keys.Contains(matches[i].CardID))
+                    {
+                        CardHasHowManyLeft.Add(matches[i].CardID, matches[i].Left);
+                    }
+                    else
+                    {   // prevent dictionary key crash
+                        var oldLeft = CardHasHowManyLeft[matches[i].CardID];
+                        if(oldLeft > matches[i].Left)
+                        {
+                            CardHasHowManyLeft[matches[i].CardID] = matches[i].Left;
+                        }
+                    }
+                }
+                json.NumbersLeftOnCard = CardHasHowManyLeft;
+            }
+            return Ok(json);
         }
         private Card BingoCard()
         {
@@ -201,7 +231,7 @@ namespace SpaBingo.Controllers
             }));
             var rows = ret.ToList();
             // 5th row, build the diagonal matches
-            Row onDiagonal = new Row(){
+            Row onDiagonal = new Row() {
                 B = rows[0].B,
                 I = rows[1].I,
                 N = rows[2].N,
@@ -210,7 +240,7 @@ namespace SpaBingo.Controllers
                 CardID = rows[0].CardID,
             };
             rows.Add(onDiagonal);
-            Row offDiagonal = new Row(){
+            Row offDiagonal = new Row() {
                 B = rows[4].B,
                 I = rows[3].I,
                 N = rows[2].N,
@@ -278,6 +308,11 @@ namespace SpaBingo.Controllers
         {
             public FakeCard ScoreCard { get; set; }
             public List<Card> Cards { get; set; }
+        }
+        public class RoundJSON
+        {
+            public string[] BallsBlown { get; set; }
+            public Dictionary<int, int> NumbersLeftOnCard { get; set; }
         }
 
         public class FakeCard // non-persistent data
