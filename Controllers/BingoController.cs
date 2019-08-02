@@ -156,40 +156,6 @@ namespace SpaBingo.Controllers
             Ball[] balls = _context.Balls.ToArray();
             GameNumber[] gameNumbers = _context.GameNumbers.ToArray();
             BallMatch[] ballMatches = _context.BallMatch.ToArray();
-            //List<Match> matches = _context.Match.ToList();  // 12 groups of win combos per 6 cards
-            //if (matches.Count > 72)
-            //{
-            //    matches.RemoveRange(72, (matches.Count - 72));
-            //}
-            //else if(matches.Count < 72)
-            //{
-            //    List<int> cardIDs = new List<int>() { 600, 599, 598, 597, 596, 595 };
-            //    var rows = _context.Rows.Where(r => cardIDs.Contains(r.CardID)).ToArray();
-            //    List<Match> newPossibleMatchesToGrade = new List<Match>();
-            //    for(var i = 0; i < 12; i++)
-            //    {
-            //        Match newMatch = new Match()
-            //        {
-            //            B = rows[i].B,
-            //            I = rows[i].I,
-            //            N = rows[i].N,
-            //            G = rows[i].G,
-            //            O = rows[i].O,
-            //            CardID = rows[i].CardID,
-            //            Left = 5,
-            //            NeededToWin = 5 // MARK TO DO: ADD FREE SQUARE LOGIC
-            //        };
-            //        newPossibleMatchesToGrade.Add(newMatch);
-            //    }
-            //    _context.Match.AddRange(newPossibleMatchesToGrade);
-            //    try
-            //    {
-            //        _context.SaveChanges();
-            //    }catch(Exception ex)
-            //    {
-            //        throw (ex); // fatal error no cards in play
-            //    }
-            //}
             var rowsInPlay = _context.Match.ToList();
             foreach (var row in rowsInPlay)
             {
@@ -228,7 +194,11 @@ namespace SpaBingo.Controllers
             }
             return Ok(json);
         }
-        private Card BingoCard()
+        //private Card BingoCard(int cardID)
+        //{
+        //    return _context.Card.Where(c => c.Id == cardID).FirstOrDefault();
+        //}
+        private Card SeedBingoCard()
         {
             var rng = new Random();
             var b = BallNumbers(1, 15).ToList();
@@ -376,13 +346,8 @@ namespace SpaBingo.Controllers
             CardData cardData = new CardData(); // Cards are persistent entities, the rest is for JSON
             FakeCard scoreCard = ScoreCard();
             cardData.ScoreCard = scoreCard;
-            List<Card> cards = new List<Card>();
-            for (var j = 0; j < cardCount; j++)
-            {
-                Card newCard = BingoCard();
-                cards.Add(newCard);
-            }
-            cardData.Cards = cards;
+            List<int> cards = new List<int>() { 600, 599, 598, 597, 596, 595 }; // MARK TO DO: REMOVE HARD CODED CARDS
+            cardData.Cards = _context.Card.Where(c => cards.Contains(c.Id)).Include(c => c.Rows).ToList();
             return Ok(cardData);
         }
         public class CardData
