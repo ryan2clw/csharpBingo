@@ -156,43 +156,45 @@ namespace SpaBingo.Controllers
             Ball[] balls = _context.Balls.ToArray();
             GameNumber[] gameNumbers = _context.GameNumbers.ToArray();
             BallMatch[] ballMatches = _context.BallMatch.ToArray();
-            List<Match> matches = _context.Match.ToList();  // 12 groups of win combos per 6 cards
-            if (matches.Count > 72)
-            {
-                matches.RemoveRange(72, (matches.Count - 72));
-            }
-            else if(matches.Count < 72)
-            {
-                List<int> cardIDs = new List<int>() { 1, 2, 3, 4, 5, 6 };
-                var rows = _context.Rows.Where(r => cardIDs.Contains(r.CardID)).ToArray();
-                List<Match> newPossibleMatchesToGrade = new List<Match>();
-                for(var i = 0; i < cardIDs.Count; i++)
-                {
-                    Match newMatch = new Match()
-                    {
-                        B = rows[i].B,
-                        I = rows[i].I,
-                        N = rows[i].N,
-                        G = rows[i].G,
-                        O = rows[i].O,
-                        CardID = rows[i].CardID,
-                        NeededToWin = 5 // MARK TO DO: ADD FREE SQUARE LOGIC
-                    };
-                    newPossibleMatchesToGrade.Add(newMatch);
-                }
-                _context.Match.AddRange(newPossibleMatchesToGrade);
-                try
-                {
-                    _context.SaveChanges();
-                }catch(Exception ex)
-                {
-                    throw (ex); // fatal error no cards in play
-                }
-            }
+            //List<Match> matches = _context.Match.ToList();  // 12 groups of win combos per 6 cards
+            //if (matches.Count > 72)
+            //{
+            //    matches.RemoveRange(72, (matches.Count - 72));
+            //}
+            //else if(matches.Count < 72)
+            //{
+            //    List<int> cardIDs = new List<int>() { 600, 599, 598, 597, 596, 595 };
+            //    var rows = _context.Rows.Where(r => cardIDs.Contains(r.CardID)).ToArray();
+            //    List<Match> newPossibleMatchesToGrade = new List<Match>();
+            //    for(var i = 0; i < 12; i++)
+            //    {
+            //        Match newMatch = new Match()
+            //        {
+            //            B = rows[i].B,
+            //            I = rows[i].I,
+            //            N = rows[i].N,
+            //            G = rows[i].G,
+            //            O = rows[i].O,
+            //            CardID = rows[i].CardID,
+            //            Left = 5,
+            //            NeededToWin = 5 // MARK TO DO: ADD FREE SQUARE LOGIC
+            //        };
+            //        newPossibleMatchesToGrade.Add(newMatch);
+            //    }
+            //    _context.Match.AddRange(newPossibleMatchesToGrade);
+            //    try
+            //    {
+            //        _context.SaveChanges();
+            //    }catch(Exception ex)
+            //    {
+            //        throw (ex); // fatal error no cards in play
+            //    }
+            //}
             var rowsInPlay = _context.Match.ToList();
             foreach (var row in rowsInPlay)
             {
                 row.Left = row.NeededToWin;  // MARK TO DO: USE BULK UPDATE OR INSTALL DAPPER FOR SP
+                _context.Match.Update(row);
             }
             _context.Balls.RemoveRange(balls);
             _context.GameNumbers.RemoveRange(gameNumbers);
@@ -204,12 +206,12 @@ namespace SpaBingo.Controllers
         [HttpGet("[action]")]
         public IActionResult Balls()
         {
-            List<int> cards = new List<int>() { 1,2,3,4,5,6 };
+            List<int> cards = new List<int>() { 600, 599, 598, 597, 596, 595 }; // MARK TO DO: REMOVE HARD CODED CARDS
             var json = new RoundJSON();
             json.BallsBlown = _context.Balls.OrderByDescending(x => x.Updated).Select(item => item.NumValue).ToArray();
+            Dictionary<int, int> CardHasHowManyLeft = new Dictionary<int, int>();
             for (var i = 0; i < cards.Count; i++)
             {
-                Dictionary<int, int> CardHasHowManyLeft = new Dictionary<int, int>();
                 List<Match> matches = _context.Match.Where(m => m.CardID == cards[i]).ToList();
                 for (var j = 0; j < matches.Count; j++)
                 {
@@ -327,6 +329,7 @@ namespace SpaBingo.Controllers
             rows.Add(gColumn);
             rows.Add(oColumn);
             rows.Add(offDiagonal);
+            rows.Add(onDiagonal);
             bingoCard.Rows = rows;
             try
             {
