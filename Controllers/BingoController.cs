@@ -136,17 +136,23 @@ namespace SpaBingo.Controllers
         [HttpGet("[action]")]
         public IActionResult CheckBingo(List<int> cards)
         {
-            List<List<Match>> cardMatches = new List<List<Match>>();
-            Dictionary<int, int> CardHasHowManyLeft = new Dictionary<int, int>();
-            for (var i = 0; i < cards.Count; i++)
-            {
-                List<Match> matches = _context.Match.Where(m => m.CardID == cards[i]).ToList();
-                cardMatches.Add(matches);
-                for (var j = 0; j < cardMatches.Count; j++)
-                {
-                    CardHasHowManyLeft.Add(matches[i].CardID, matches[i].Left);
-                }
 
+            //List<List<Match>> cardMatches = new List<List<Match>>();
+            Dictionary<int, int> CardHasHowManyLeft = new Dictionary<int, int>();
+            CardHasHowManyLeft.Add(600, 5);
+            CardHasHowManyLeft.Add(599, 5);
+            CardHasHowManyLeft.Add(598, 5);
+            CardHasHowManyLeft.Add(597, 5);
+            CardHasHowManyLeft.Add(596, 5);
+            CardHasHowManyLeft.Add(595, 5);
+            Match[] matches = _context.Match.ToArray();
+            for (var j = 0; j < matches.Count(); j++)
+            {
+                int oldLeft = CardHasHowManyLeft[matches[j].Left];
+                if (matches[j].Left < oldLeft)
+                {
+                    CardHasHowManyLeft[matches[j].CardID] = matches[j].Left;
+                }
             }
             return Ok(CardHasHowManyLeft);
         }
@@ -186,8 +192,11 @@ namespace SpaBingo.Controllers
                         CardHasHowManyLeft.Add(matches[i].CardID, matches[i].Left);
                     }
                     else
-                    {   // prevent dictionary key crash
-                        CardHasHowManyLeft[matches[i].CardID] = matches[i].Left;
+                    {   // prevent dictionary key crash, take smallest value
+                        var newLeft = matches[i].Left;
+                        if(newLeft<CardHasHowManyLeft[matches[i].CardID]){
+                            CardHasHowManyLeft[matches[i].CardID] = matches[i].Left;
+                        }
                     }
                 }
                 json.NumbersLeftOnCard = CardHasHowManyLeft;

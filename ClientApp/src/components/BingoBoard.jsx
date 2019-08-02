@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 class Board extends React.Component {
     
     bingo = () => {
-        this.props.updateBingo();
+        this.props.checkBingo();
     }
 
     squares = (rowNumber = "0", columnCount, rowJSON) => {

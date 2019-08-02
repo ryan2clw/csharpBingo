@@ -9,7 +9,7 @@ import {ballAction} from '../store/Balls';
 import { Container } from 'reactstrap';
 import Spinner from './Spinner';
 import './BingoPage.css';
-import { danger } from '../store/Message';
+import { danger, success } from '../store/Message';
 
 const Body = styled.div`
     min-height:600px;
@@ -17,8 +17,13 @@ const Body = styled.div`
 
 class BingoPage extends React.Component {
 
+    checkBingo = () => {
+        let winDict = this.props.cardStatus || "YOUR MOM";
+        this.props.dispatch(success("CARD " + JSON.stringify(winDict) + " HAS WON BINGO"));
+    }
+
     updateBingo = () => {
-        this.props.dispatch(danger("You did not win the bingo game, nice try though!"));
+        this.props.dispatch(danger("You did not win the bingo game, nice try though! "));
     };
 
     numbers = (cardCount = 2) => this.props.dispatch(actionCreators.requestNumbers(cardCount));
@@ -35,7 +40,7 @@ class BingoPage extends React.Component {
         const { cards, calledBalls } = this.props;
         console.log("calledBalls", calledBalls);        
         return [...Array(cardCount)].map((_, i) => {
-            return (<Board updateBingo={this.updateBingo} calledBalls={calledBalls} key={"Card-" + i.toString()} games={cards.cards[i] || []} />);
+            return (<Board checkBingo={this.checkBingo} calledBalls={calledBalls} key={"Card-" + i.toString()} games={cards.cards[i] || []} />);
         });
     };
 
@@ -74,7 +79,8 @@ function mapStateToProps(state) {
     const { games } = state.games;
     return {
             cards:games,
-            calledBalls: state.balls.balls
+            calledBalls: state.balls.balls,
+            cardStatus: state.balls.cardStatus
     }
 }
 export default connect(mapStateToProps)(BingoPage);
