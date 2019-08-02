@@ -33,6 +33,7 @@ class BingoPage extends React.Component {
     };
     bingoBoards = (cardCount = 2) => {
         const { cards, calledBalls } = this.props;
+        console.log("calledBalls", calledBalls);        
         return [...Array(cardCount)].map((_, i) => {
             return (<Board updateBingo={this.updateBingo} calledBalls={calledBalls} key={"Card-" + i.toString()} games={cards.cards[i] || []} />);
         });

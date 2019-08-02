@@ -156,6 +156,39 @@ namespace SpaBingo.Controllers
             Ball[] balls = _context.Balls.ToArray();
             GameNumber[] gameNumbers = _context.GameNumbers.ToArray();
             BallMatch[] ballMatches = _context.BallMatch.ToArray();
+            List<Match> matches = _context.Match.ToList();  // 12 groups of win combos per 6 cards
+            if (matches.Count > 72)
+            {
+                matches.RemoveRange(72, (matches.Count - 72));
+            }
+            else if(matches.Count < 72)
+            {
+                List<int> cardIDs = new List<int>() { 1, 2, 3, 4, 5, 6 };
+                var rows = _context.Rows.Where(r => cardIDs.Contains(r.CardID)).ToArray();
+                List<Match> newPossibleMatchesToGrade = new List<Match>();
+                for(var i = 0; i < cardIDs.Count; i++)
+                {
+                    Match newMatch = new Match()
+                    {
+                        B = rows[i].B,
+                        I = rows[i].I,
+                        N = rows[i].N,
+                        G = rows[i].G,
+                        O = rows[i].O,
+                        CardID = rows[i].CardID,
+                        NeededToWin = 5 // MARK TO DO: ADD FREE SQUARE LOGIC
+                    };
+                    newPossibleMatchesToGrade.Add(newMatch);
+                }
+                _context.Match.AddRange(newPossibleMatchesToGrade);
+                try
+                {
+                    _context.SaveChanges();
+                }catch(Exception ex)
+                {
+                    throw (ex); // fatal error no cards in play
+                }
+            }
             var rowsInPlay = _context.Match.ToList();
             foreach (var row in rowsInPlay)
             {
@@ -171,7 +204,7 @@ namespace SpaBingo.Controllers
         [HttpGet("[action]")]
         public IActionResult Balls()
         {
-            List<int> cards = new List<int>() { 7 };
+            List<int> cards = new List<int>() { 1,2,3,4,5,6 };
             var json = new RoundJSON();
             json.BallsBlown = _context.Balls.OrderByDescending(x => x.Updated).Select(item => item.NumValue).ToArray();
             for (var i = 0; i < cards.Count; i++)
@@ -235,7 +268,6 @@ namespace SpaBingo.Controllers
                 O = rows[4].O,
                 CardID = rows[0].CardID,
             };
-            rows.Add(onDiagonal);
             Row offDiagonal = new Row() {
                 B = rows[4].B,
                 I = rows[3].I,
@@ -244,6 +276,56 @@ namespace SpaBingo.Controllers
                 O = rows[0].O,
                 CardID = rows[0].CardID,
             };
+            Row bColumn = new Row()
+            {
+                B = rows[4].B,
+                I = rows[3].B,
+                N = rows[2].B,
+                G = rows[1].B,
+                O = rows[0].B,
+                CardID = rows[0].CardID,
+            };
+            Row iColumn = new Row()
+            {
+                B = rows[4].I,
+                I = rows[3].I,
+                N = rows[2].I,
+                G = rows[1].I,
+                O = rows[0].I,
+                CardID = rows[0].CardID,
+            };
+            Row nColumn = new Row()
+            {
+                B = rows[4].N,
+                I = rows[3].N,
+                N = rows[2].N,
+                G = rows[1].N,
+                O = rows[0].N,
+                CardID = rows[0].CardID,
+            };
+            Row gColumn = new Row()
+            {
+                B = rows[4].G,
+                I = rows[3].G,
+                N = rows[2].G,
+                G = rows[1].G,
+                O = rows[0].G,
+                CardID = rows[0].CardID,
+            };
+            Row oColumn = new Row()
+            {
+                B = rows[4].O,
+                I = rows[3].O,
+                N = rows[2].O,
+                G = rows[1].O,
+                O = rows[0].O,
+                CardID = rows[0].CardID,
+            };
+            rows.Add(bColumn);
+            rows.Add(iColumn);
+            rows.Add(nColumn);
+            rows.Add(gColumn);
+            rows.Add(oColumn);
             rows.Add(offDiagonal);
             bingoCard.Rows = rows;
             try
