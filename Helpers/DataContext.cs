@@ -13,22 +13,6 @@ namespace SpaBingo.Helpers
         public DbSet<Match> Match { get; set; }
         public DbSet<Card> Card { get; set; }
         public DbSet<BallMatch> BallMatch { get; set; }
-
-        /* JOEL TIAGO TABLES */
-        public DbSet<BingoGameConfiguration> BingoGameConfigurations { get; set; }
-        public DbSet<BingoGame> BingoGames { get; set; }
-        public DbSet<BingoWinPattern> BingoWinPatterns { get; set; }
-        public DbSet<BingoCard> BingoCards { get; set; }
-        public DbSet<BingoDrawingPrize> BingoDrawingPrizes { get; set; }
-        public DbSet<BingoDrawing> BingoDrawings { get; set; }
-        public DbSet<BingoGameWinPattern> BingoGameWinPatterns { get; set; }
-        public DbSet<BingoWinPatternBall> BingoWinPatternBalls { get; set; }
-        public DbSet<BingoCardNumber> BingoCardNumbers { get; set; }
-        public DbSet<BingoDrawingBall> BingoDrawingBalls { get; set; }
-
-        /* JOEL TIAGO TABLES */
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Ball>()
