@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using SpaBingo.Entities;
 
 namespace SpaBingo.Helpers

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'reflexbox';
 import { connect } from 'react-redux';
@@ -78,9 +78,9 @@ class BingoPage extends React.Component {
 function mapStateToProps(state) {
     const { games } = state.games;
     return {
-            cards:games,
-            calledBalls: state.balls.balls,
-            cardStatus: state.balls.cardStatus
+        cards: games,
+        calledBalls: state.balls.balls,
+        cardStatus: state.balls.cardStatus
     }
 }
 export default connect(mapStateToProps)(BingoPage);
