@@ -1,4 +1,4 @@
-using SpaBingo.Entities;
+using SpaBingo.Entities.Bingo;
 
 public class BallMatch
 {

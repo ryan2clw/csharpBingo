@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
-namespace SpaBingo.Entities
+namespace SpaBingo.Entities.Bingo
 {
     [DataContract]
     public class Row

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
-namespace SpaBingo.Entities
+namespace SpaBingo.Entities.Bingo
 {
     public class Match
     {

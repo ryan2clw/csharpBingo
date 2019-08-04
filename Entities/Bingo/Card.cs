@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 
-namespace SpaBingo.Entities
+namespace SpaBingo.Entities.Bingo
 {
     public class Card
     {

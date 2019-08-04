@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SpaBingo.Helpers;
-using SpaBingo.Entities;
+using SpaBingo.Entities.Bingo;
 using Microsoft.EntityFrameworkCore;
 using EFCore.BulkExtensions;
 

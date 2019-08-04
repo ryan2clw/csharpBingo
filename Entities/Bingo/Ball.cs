@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SpaBingo.Entities
+namespace SpaBingo.Entities.Bingo
 {
     public class Ball
     {
