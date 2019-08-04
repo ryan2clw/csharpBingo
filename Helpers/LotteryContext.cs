@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SpaBingo.Entities;
+using SpaBingo.Entities.Lottery;
 
 namespace SpaBingo.Helpers
 {
