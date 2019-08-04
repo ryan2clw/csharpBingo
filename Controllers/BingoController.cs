@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using SpaBingo.Helpers;
 using SpaBingo.Entities.Bingo;
 using Microsoft.EntityFrameworkCore;
-using EFCore.BulkExtensions;
 
 namespace SpaBingo.Controllers
 {

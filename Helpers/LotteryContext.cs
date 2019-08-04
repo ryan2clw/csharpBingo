@@ -7,5 +7,6 @@ namespace SpaBingo.Helpers
     {
         public LotteryContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Customer> Customers { get; set; }
-	}
+        public DbSet<Franchise> Franchises { get; set; }
+    }
 }
