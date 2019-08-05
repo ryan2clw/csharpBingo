@@ -194,13 +194,11 @@ namespace SpaBingo.Controllers
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        private Franchise FranchiseFromKey(Guid key)
-        {
-            using (var db = DataFactory.LotteryDB())
-            {
-                return FranchiseFromKey(db, key);
-            }
-        }
+        //private Franchise FranchiseFromKey(Guid key)
+        //{
+        //    var db = LotteryDB
+        //    return FranchiseFromKey(db, key);
+        //}
 
         /// <summary>
         /// Gets franchise info from key using an existing database connection. Returns null if franchise is not found.
@@ -303,21 +301,21 @@ namespace SpaBingo.Controllers
                         return Ok(new GetPlayerInfoResponse(status));
 
                     //We're just checking is the player is allowed to play.
-                    FranchiseInfoResult franchiseInfoRequest = GetFranchiseInfoFromKey(request.Key);
-                    using (Lotto.Orders.WebOrderTakerModel.WebOrderTakerModel LotteryOrderTaker = new MCS.Lottery.Lotto.Orders.WebOrderTakerModel.WebOrderTakerModel(franchiseInfoRequest, player.PlayerAccountGUID, TokenType.UserID, /*null,*/ ip, hostName, 1, null))
-                    {
-                        var wprovider = LotteryOrderTaker.GetWalletProvider();
-                        if (wprovider.IsError)
-                            return Ok(new GetPlayerInfoResponse(wprovider.Message));
-                        if (!wprovider.CustomerVerified(LotteryOrderTaker.Wallet.InternalID))
-                            return Ok(new GetPlayerInfoResponse(wprovider.Message));
+                    //FranchiseInfoResult franchiseInfoRequest = GetFranchiseInfoFromKey(request.Key);
+                    //using (Lotto.Orders.WebOrderTakerModel.WebOrderTakerModel LotteryOrderTaker = new MCS.Lottery.Lotto.Orders.WebOrderTakerModel.WebOrderTakerModel(franchiseInfoRequest, player.PlayerAccountGUID, TokenType.UserID, /*null,*/ ip, hostName, 1, null))
+                    //{
+                    //    var wprovider = LotteryOrderTaker.GetWalletProvider();
+                    //    if (wprovider.IsError)
+                    //        return Ok(new GetPlayerInfoResponse(wprovider.Message));
+                    //    if (!wprovider.CustomerVerified(LotteryOrderTaker.Wallet.InternalID))
+                    //        return Ok(new GetPlayerInfoResponse(wprovider.Message));
 
                         return Ok(new GetPlayerInfoResponse()
                         {
                             WasSuccessful = true,
                             Player = player,
                         });
-                    }
+                   // }
                 }
             }
         }
