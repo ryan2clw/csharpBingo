@@ -21,9 +21,9 @@ namespace SpaBingo.Entities.Lottery
         public string LastSeenHostName { get; set; }
         public int? AssignedStaffID { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<CustomerAccount> CustomerAccounts { get; set; }
-        public virtual ICollection<Tokens_ForCustomers> Tokens_ForCustomers { get; set; }
+        //public virtual ICollection<Tokens_ForCustomers> Tokens_ForCustomers { get; set; }
     }
 }

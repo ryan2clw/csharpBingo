@@ -24,7 +24,7 @@ namespace SpaBingo.Entities.Lottery
         public string B10 { get; set; }
         public decimal? TotalLimit { get; set; }
 
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual Games_Lottery_GameTypes Games_Lottery_GameTypes { get; set; }
 
     }

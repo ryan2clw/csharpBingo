@@ -15,7 +15,7 @@ namespace SpaBingo.Entities.Lottery
         public int FranchiseID { get; set; }
         public int? LocationID { get; set; }
 
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual Staff Staff { get; set; }
     }
 }

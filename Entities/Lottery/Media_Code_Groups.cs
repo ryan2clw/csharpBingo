@@ -16,7 +16,7 @@ namespace SpaBingo.Entities.Lottery
         public string Description { get; set; }
         public bool IsActive { get; set; }
 
-        public virtual Franchise Franchise { get; set; }
-        public virtual ICollection<Syndicate_Promo_Link> Syndicate_Promo_Link { get; set; }
+        //public virtual Franchise Franchise { get; set; }
+        //public virtual ICollection<Syndicate_Promo_Link> Syndicate_Promo_Link { get; set; }
     }
 }

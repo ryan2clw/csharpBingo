@@ -14,7 +14,7 @@ namespace SpaBingo.Entities.Lottery
         public bool IsUnique { get; set; }
         public int? MinLength { get; set; }
 
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual GeneralDomain GeneralDomain { get; set; }
     }
 }

@@ -48,9 +48,9 @@ namespace SpaBingo.Entities.Lottery
         public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Games_Lottery_BallLimits> Games_Lottery_BallLimits { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
-        public virtual ICollection<Staff_AllowedFranchises> Staff_AllowedFranchises { get; set; }
+        //public virtual ICollection<Staff_AllowedFranchises> Staff_AllowedFranchises { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual Franchise_ConfigurationSettings_Lottery Franchise_ConfigurationSettings_Lottery { get; set; }
+        //public virtual Franchise_ConfigurationSettings_Lottery Franchise_ConfigurationSettings_Lottery { get; set; }
         public virtual ICollection<Drawing> Drawings { get; set; }
         public virtual ICollection<Syndicate> Syndicates { get; set; }
         public virtual ICollection<Media_Codes> Media_Codes { get; set; }
@@ -58,10 +58,10 @@ namespace SpaBingo.Entities.Lottery
         public virtual Limit Limit { get; set; }
         public virtual ICollection<Staff> Staffs { get; set; }
         public virtual ICollection<Games_Lottery_Games> Games_Lottery_Games { get; set; }
-        public virtual ICollection<Report_ViewableInFranchises> Report_ViewableInFranchises { get; set; }
+        //public virtual ICollection<Report_ViewableInFranchises> Report_ViewableInFranchises { get; set; }
         public virtual ICollection<Promotion_Franchises> Promotion_Franchises { get; set; }
         public virtual ICollection<Media_Code_Groups> Media_Code_Groups { get; set; }
-        public virtual ICollection<Syndicate_Promo_Link> Syndicate_Promo_Link { get; set; }
+        //public virtual ICollection<Syndicate_Promo_Link> Syndicate_Promo_Link { get; set; }
         public virtual ICollection<OrderBundle> OrderBundles { get; set; }
         public virtual ICollection<FormFields_ConfigurationSettings> FormFields_ConfigurationSettings { get; set; }
     }

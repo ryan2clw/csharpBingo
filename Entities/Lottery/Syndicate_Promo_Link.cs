@@ -18,7 +18,7 @@ namespace SpaBingo.Entities.Lottery
         public int? MediaCode_GroupID { get; set; }
         public int? Promo_CancelAfterPooledCount { get; set; }
 
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual Media_Code_Groups Media_Code_Groups { get; set; }
         public virtual Syndicate Syndicate { get; set; }
         public virtual Syndicate Syndicate1 { get; set; }

@@ -30,7 +30,7 @@ namespace SpaBingo.Entities.Lottery
         public bool FullPoolsNotRequired { get; set; }
 
         public virtual ICollection<Syndicate_Games_Link> Syndicate_Games_Link { get; set; }
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual ICollection<Syndicate_Periods> Syndicate_Periods { get; set; }
         public virtual Games_Lottery_Games Games_Lottery_Games { get; set; }
         }

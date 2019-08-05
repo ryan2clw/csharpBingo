@@ -30,7 +30,7 @@ namespace SpaBingo.Entities.Lottery
             public int? MediaCodeGroupID { get; set; }
 
             public virtual ICollection<Syndicate_MediaCodes> Syndicate_MediaCodes { get; set; }
-            public virtual Franchise Franchise { get; set; }
-            public virtual ICollection<CustomerAccounts_Syndicates_ExtraData> CustomerAccounts_Syndicates_ExtraData { get; set; }
+            //public virtual Franchise Franchise { get; set; }
+            //public virtual ICollection<CustomerAccounts_Syndicates_ExtraData> CustomerAccounts_Syndicates_ExtraData { get; set; }
         }
     }

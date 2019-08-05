@@ -17,8 +17,8 @@ namespace SpaBingo.Entities.Lottery
 		public bool ThirdPartyJob { get; set; }
 
         public virtual ICollection<Staff_Job_TransactionTypes> Staff_Job_TransactionTypes { get; set; }
-        public virtual ICollection<aspnet_Roles> aspnet_Roles { get; set; }
+        //public virtual ICollection<aspnet_Roles> aspnet_Roles { get; set; }
         public virtual ICollection<Staff> Staffs { get; set; }
-        public virtual ICollection<Report_ViewableByJobs> Report_ViewableByJobs { get; set; }
+        //public virtual ICollection<Report_ViewableByJobs> Report_ViewableByJobs { get; set; }
     }
 }

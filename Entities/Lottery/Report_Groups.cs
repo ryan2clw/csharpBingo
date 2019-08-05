@@ -20,7 +20,7 @@ namespace SpaBingo.Entities.Lottery
         public int? TranslationID { get; set; }
         public bool IsGlobalReport { get; set; }
 
-        public virtual ICollection<Report_ViewableByJobs> Report_ViewableByJobs { get; set; }
-        public virtual ICollection<Report_ViewableInFranchises> Report_ViewableInFranchises { get; set; }
+        //public virtual ICollection<Report_ViewableByJobs> Report_ViewableByJobs { get; set; }
+        //public virtual ICollection<Report_ViewableInFranchises> Report_ViewableInFranchises { get; set; }
     }
 }

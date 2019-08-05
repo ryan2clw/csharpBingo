@@ -38,9 +38,9 @@ namespace SpaBingo.Entities.Lottery
         public string PINHash { get; set; }
         public string PINSalt { get; set; }
         public int ThemePreference { get; set; }
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual ICollection<Staff_Sessions> Staff_Sessions { get; set; }
         public virtual Staff_Jobs Staff_Jobs { get; set; }
-        public virtual ICollection<Staff_AllowedFranchises> Staff_AllowedFranchises { get; set; }
+        // public virtual ICollection<Staff_AllowedFranchises> Staff_AllowedFranchises { get; set; }
     }
 }

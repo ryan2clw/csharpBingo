@@ -196,7 +196,21 @@ namespace SpaBingo.Controllers
         /// <returns></returns>
         private Franchise FranchiseFromKey(Guid key)
         {
-            return FranchiseFromKey(key);
+            using (var db = DataFactory.LotteryDB())
+            {
+                return FranchiseFromKey(db, key);
+            }
+        }
+
+        /// <summary>
+        /// Gets franchise info from key using an existing database connection. Returns null if franchise is not found.
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private Franchise FranchiseFromKey(LotteryContext db, Guid key)
+        {
+            return db.Franchises.SingleOrDefault(f => f.ReplicationID == key);
         }
         /// <summary>
         /// Grab the Franchise register based on the key sent
@@ -273,7 +287,9 @@ namespace SpaBingo.Controllers
             }
             else
             {
-                    var franchise = FranchiseFromKey(request.Key);
+                var db = _context;
+                {
+                    var franchise = FranchiseFromKey(db, request.Key);
                     if (franchise == null)
                         return Ok(new GetPlayerInfoResponse(GeneralErrors.PLAYER_NOT_FOUND));
 
@@ -288,21 +304,21 @@ namespace SpaBingo.Controllers
 
                     //We're just checking is the player is allowed to play.
                     FranchiseInfoResult franchiseInfoRequest = GetFranchiseInfoFromKey(request.Key);
-                    //using (Orders.WebOrderTakerModel.WebOrderTakerModel LotteryOrderTaker = new MCS.Lottery.Lotto.Orders.WebOrderTakerModel.WebOrderTakerModel(franchiseInfoRequest, player.PlayerAccountGUID, TokenType.UserID, /*null,*/ ip, hostName, 1, null))
-                    //{
-                    //    var wprovider = LotteryOrderTaker.GetWalletProvider();
-                    //    if (wprovider.IsError)
-                    //        return Ok(new GetPlayerInfoResponse(wprovider.Message));
-                    //    if (!wprovider.CustomerVerified(LotteryOrderTaker.Wallet.InternalID))
-                    //        return Ok(new GetPlayerInfoResponse(wprovider.Message));
-
-                    return Ok(new GetPlayerInfoResponse()
+                    using (Lotto.Orders.WebOrderTakerModel.WebOrderTakerModel LotteryOrderTaker = new MCS.Lottery.Lotto.Orders.WebOrderTakerModel.WebOrderTakerModel(franchiseInfoRequest, player.PlayerAccountGUID, TokenType.UserID, /*null,*/ ip, hostName, 1, null))
                     {
-                        WasSuccessful = true,
-                        Player = player,
-                    });
-                    //}
-                
+                        var wprovider = LotteryOrderTaker.GetWalletProvider();
+                        if (wprovider.IsError)
+                            return Ok(new GetPlayerInfoResponse(wprovider.Message));
+                        if (!wprovider.CustomerVerified(LotteryOrderTaker.Wallet.InternalID))
+                            return Ok(new GetPlayerInfoResponse(wprovider.Message));
+
+                        return Ok(new GetPlayerInfoResponse()
+                        {
+                            WasSuccessful = true,
+                            Player = player,
+                        });
+                    }
+                }
             }
         }
         #endregion Data Calls

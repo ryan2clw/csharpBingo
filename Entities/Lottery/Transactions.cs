@@ -60,10 +60,10 @@ namespace SpaBingo.Entities.Lottery
 
         public virtual Customer Customers { get; set; }
         public virtual TransactionType TransactionTypes { get; set; }
-        public virtual Franchises Franchises { get; set; }
+        //public virtual Franchises Franchises { get; set; }
         public virtual Orders Orders { get; set; }
         public virtual Transactions_AdditionalInfo Transactions_AdditionalInfo { get; set; }
-        public virtual Transactions_CurrencyConversions Transactions_CurrencyConversions { get; set; }
+        //public virtual Transactions_CurrencyConversions Transactions_CurrencyConversions { get; set; }
         public virtual ICollection<Games_ProgressiveJackpots_Queue> Games_ProgressiveJackpots_Queue { get; set; }
     }
 }

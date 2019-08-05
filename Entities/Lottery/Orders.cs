@@ -35,10 +35,10 @@ namespace SpaBingo.Entities.Lottery
         public decimal TotalTaxCharged { get; set; }
 
         public virtual Customer Customers { get; set; }
-        public virtual Franchises Franchises { get; set; }
+        //public virtual Franchises Franchises { get; set; }
         public virtual ICollection<OrderDetails_Lottery> OrderDetails_Lottery { get; set; }
         public virtual ICollection<Syndicate_Orders> Syndicate_Orders { get; set; }
         public virtual ICollection<Transactions> Transactions { get; set; }
-        public virtual Orders_AdditionalInfo Orders_AdditionalInfo { get; set; }
+        //public virtual Orders_AdditionalInfo Orders_AdditionalInfo { get; set; }
     }
 }

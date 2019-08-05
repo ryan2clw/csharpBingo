@@ -14,7 +14,7 @@ namespace SpaBingo.Entities.Lottery
         public string Name { get; set; }
         public decimal Price { get; set; }
         public bool IsActive { get; set; }
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual ICollection<OrderBundle_Detail> OrderBundle_Detail { get; set; }
     }
 }

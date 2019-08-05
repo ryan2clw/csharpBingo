@@ -16,7 +16,7 @@ namespace SpaBingo.Entities.Lottery
         public bool IsActive { get; set; }
 
         public virtual Games_Lottery_LotteryProviders Games_Lottery_LotteryProviders { get; set; }
-        public virtual ICollection<OrderDetails_Lottery_LotteryProviderDetails> OrderDetails_Lottery_LotteryProviderDetails { get; set; }
+        //public virtual ICollection<OrderDetails_Lottery_LotteryProviderDetails> OrderDetails_Lottery_LotteryProviderDetails { get; set; }
         public virtual ICollection<Games_Lottery_GameTypes> Games_Lottery_GameTypes { get; set; }
     }
 }

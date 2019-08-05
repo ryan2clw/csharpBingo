@@ -27,11 +27,10 @@ namespace SpaBingo.Entities.Lottery
         public string ImageMimeType { get; set; }
         public bool IsPromo { get; set; }
 
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual ICollection<Syndicate_Games_Link> Syndicate_Games_Link { get; set; }
         public virtual ICollection<Syndicate_MediaCodes> Syndicate_MediaCodes { get; set; }
-        public virtual ICollection<Syndicate_Promo_Link> Syndicate_Promo_Link { get; set; }
-        public virtual ICollection<Syndicate_Promo_Link> Syndicate_Promo_Link1 { get; set; }
+        //public virtual ICollection<Syndicate_Promo_Link> Syndicate_Promo_Link { get; set; }
         public virtual ICollection<OrderBundle_Detail> OrderBundle_Detail { get; set; }
         public virtual ICollection<OrderDetails_Product> OrderDetails_Product { get; set; }
     }

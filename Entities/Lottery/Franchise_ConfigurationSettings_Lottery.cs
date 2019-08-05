@@ -13,6 +13,6 @@ namespace SpaBingo.Entities.Lottery
         public bool AutoPoster_IsActive { get; set; }
         public string AutoPoster_Inactive_Reason { get; set; }
 
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
     }
 }

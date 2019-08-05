@@ -21,7 +21,7 @@ namespace SpaBingo.Entities.Lottery
         public bool IsGlobalReport { get; set; }
 
         public virtual Report_Groups Report_Groups { get; set; }
-        public virtual ICollection<Report_ViewableByJobs> Report_ViewableByJobs { get; set; }
-        public virtual ICollection<Report_ViewableInFranchises> Report_ViewableInFranchises { get; set; }
+        //public virtual ICollection<Report_ViewableByJobs> Report_ViewableByJobs { get; set; }
+        //public virtual ICollection<Report_ViewableInFranchises> Report_ViewableInFranchises { get; set; }
     }
 }

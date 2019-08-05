@@ -63,7 +63,7 @@ namespace SpaBingo.Entities.Lottery
         public int PaymentTypeID { get; set; }
         public DateTime? NotifiedOn { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual TransactionType TransactionType { get; set; }
         // public virtual Transactions_AdditionalInfo Transactions_AdditionalInfo { get; set; }
         public virtual Order Order { get; set; }

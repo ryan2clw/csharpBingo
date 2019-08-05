@@ -66,7 +66,7 @@ namespace SpaBingo.Entities.Lottery
         public decimal PayoutTaxCharged { get; set; }
 
         public virtual Order Order { get; set; }
-        public virtual OrderDetails_Lottery_LotteryProviderDetails OrderDetails_Lottery_LotteryProviderDetails { get; set; }
+        //public virtual OrderDetails_Lottery_LotteryProviderDetails OrderDetails_Lottery_LotteryProviderDetails { get; set; }
         public virtual Drawing Drawing { get; set; }
         public virtual OrderBundle_Detail OrderBundle_Detail { get; set; }
     }

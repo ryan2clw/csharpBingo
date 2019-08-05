@@ -78,10 +78,10 @@ namespace SpaBingo.Entities.Lottery
         public string ImportedIdentifier { get; set; }
         public virtual ICollection<CustomerAccounts_Exclusions> CustomerAccounts_Exclusions { get; set; }
         public virtual ICollection<CustomerBalance> CustomerBalances { get; set; }
-        public virtual Limit SelfImposedLimit { get; set; }
-        public virtual Limit SystemImposedLimit { get; set; }
+        //public virtual Limit SelfImposedLimit { get; set; }
+        //public virtual Limit SystemImposedLimit { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual ICollection<Customer_Billing_Queue_Detail> Customer_Billing_Queue_Detail { get; set; }
-        public virtual CustomerAccounts_Syndicates_ExtraData CustomerAccounts_Syndicates_ExtraData { get; set; }
+        //public virtual CustomerAccounts_Syndicates_ExtraData CustomerAccounts_Syndicates_ExtraData { get; set; }
     }
 }

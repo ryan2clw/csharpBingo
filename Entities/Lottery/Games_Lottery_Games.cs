@@ -65,7 +65,7 @@ namespace SpaBingo.Entities.Lottery
         public string NumberProviderIdentifier { get; set; }
         public string AllowedBallCountsOnOrder { get; set; }
 
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         //public virtual ICollection<Games_Lottery_Drawings> Games_Lottery_Drawings { get; set; }
         //public virtual ICollection<Games_Lottery_Games_BallAliases> Games_Lottery_Games_BallAliases { get; set; }
         //public virtual ICollection<Games_Lottery_Keno_Payouts> Games_Lottery_Keno_Payouts { get; set; }

@@ -18,6 +18,5 @@ namespace SpaBingo.Entities.Lottery
         public virtual ICollection<Franchises> Franchises { get; set; }
         public virtual ICollection<LimitDetail> LimitDetails { get; set; }
         public virtual ICollection<CustomerAccounts> CustomerAccounts { get; set; }
-        public virtual ICollection<CustomerAccounts> CustomerAccounts1 { get; set; }
     }
 }

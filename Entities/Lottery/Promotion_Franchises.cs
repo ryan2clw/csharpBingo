@@ -13,7 +13,7 @@ namespace SpaBingo.Entities.Lottery
         public int PromotionID { get; set; }
         public int ConfigurationID { get; set; }
 
-        public virtual Franchise Franchise { get; set; }
+        //public virtual Franchise Franchise { get; set; }
         public virtual Promotion Promotion { get; set; }
     }
 }

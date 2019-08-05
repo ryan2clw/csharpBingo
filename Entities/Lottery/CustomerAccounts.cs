@@ -78,8 +78,7 @@ namespace SpaBingo.Entities.Lottery
         public virtual Customer Customers { get; set; }
         public virtual ICollection<CustomerAccounts_Exclusions> CustomerAccounts_Exclusions { get; set; }
         public virtual Limits Limits { get; set; }
-        public virtual Limits Limits1 { get; set; }
-        public virtual CustomerAccounts_Syndicates_ExtraData CustomerAccounts_Syndicates_ExtraData { get; set; }
+        //public virtual CustomerAccounts_Syndicates_ExtraData CustomerAccounts_Syndicates_ExtraData { get; set; }
         public virtual ICollection<CustomerBalance> CustomerBalances { get; set; }
     }
 }
