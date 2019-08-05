@@ -27,6 +27,7 @@ namespace SpaBingo
             services.AddDbContext<LotteryContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("LotteryConnection")));
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
