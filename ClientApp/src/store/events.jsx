@@ -6,11 +6,6 @@ In React terms these are action types, and an event in programming is a type of 
 so I labeled what are normally called actionTypes as evnt.  */
 
 export const evnt = {
-    /* Below are events for the for scafolded template pages ( Counter, FetchData) */
-    incrementCountType: 'INCREMENT_COUNT',
-    decrementCountType: 'DECREMENT_COUNT',
-    requestWeatherForecastsType: 'REQUEST_WEATHER_FORECASTS',
-    receiveWeatherForecastsType: 'RECEIVE_WEATHER_FORECASTS',
     /* End of demo page events, delete this section above eventually */
     SUCCESS: 'ALERT_SUCCESS',
     ERROR: 'alert-danger',
@@ -20,6 +15,10 @@ export const evnt = {
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
     LOGIN_FAILURE: 'LOGIN_FAILURE',   
     LOGOUT: 'LOGOUT',
+    /* Order Card */
+    CARD_REQUEST: 'CARD_REQUEST',
+    CARD_SUCCESS: 'CARD_SUCCESS',
+    CARD_FAILURE: 'CARD_FAILURE',
     /* Fill Board */
     NUMBERS_REQUEST: 'NUMBERS_REQUEST',
     NUMBERS_SUCCESS: 'NUMBERS_SUCCESS',

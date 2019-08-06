@@ -12,9 +12,12 @@ html {
     font-size: 16px;
   }
 }
-
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
-
-
+.makeStyles-layout-2 {
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 3px;
+}

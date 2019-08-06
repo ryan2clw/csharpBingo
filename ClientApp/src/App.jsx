@@ -7,8 +7,11 @@ import { Layout } from './components/Layout';
 import LoginPage from './components/LoginPage'
 import HomePage from './components/HomePage';
 import BingoPage  from './components/BingoPage';
-import PrivateRoute from './components/PrivateRoute';
+import LobbyPage from './components/LobbyPage';
+//import PrivateRoute from './components/PrivateRoute';
 import { Flex } from 'reflexbox';
+
+
 
 class App extends React.Component {
   constructor(props) {
@@ -33,7 +36,7 @@ class App extends React.Component {
                             }
                         </div>
                       </Flex>
-                      <PrivateRoute exact path="/" component={HomePage} />
+                      <Route exact path="/" component={LobbyPage} />
                       <Route path="/login" component={LoginPage} />
                       <Route path='/home' component={HomePage} />
                       <Route path='/play' render={(props) => <BingoPage {...props} cardCount={6} />}/>

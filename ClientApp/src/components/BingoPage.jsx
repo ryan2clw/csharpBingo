@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import styled from 'styled-components';
-import { Flex } from 'reflexbox';
+//import { Flex } from 'reflexbox';
 import { connect } from 'react-redux';
 import Board from './BingoBoard';
 import BallBoard from './BallBoard';

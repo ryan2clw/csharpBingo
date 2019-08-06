@@ -46,7 +46,7 @@ class BallBoard extends React.Component {
     return (
       <Flex column justify='center' key={"Row(" + rowNumber + ")"} className="aqua">
         <Flex >
-        {rowNumber == "0" &&
+        {rowNumber === "0" &&
           [...Array(columnCount)].map((_, i) => {
             let reactKey = "Header(" + rowNumber + "," + i + ")";
             return (<Square height="30px" width="50px" ticketNumber={this.headerNames(i)} key={reactKey} className="ticket-number bingo-header"></Square>)
@@ -70,8 +70,8 @@ class BallBoard extends React.Component {
   balls = (ballArray) => {
     let ret = [];
     ballArray.forEach(ball => {
-      console.log("ball", parseInt(ball));
-      let myBall = parseInt(ball);
+      console.log("ball", parseInt(ball, 10));
+      let myBall = parseInt(ball, 10);
       if(myBall>0 && myBall <15){
         ret.push(<ShinyBall letter={Bball} className='round-div'>{ball}</ShinyBall>);
       }else if(myBall>=16 && myBall <31){
