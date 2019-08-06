@@ -5,7 +5,6 @@ import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Flex } from 'reflexbox';
 import Checkout from './Checkout';
-import GameTable from './GameTable';
 
 const FlexTall = styled(Flex)`
     height: 900px;
@@ -13,7 +12,7 @@ const FlexTall = styled(Flex)`
 `
 
 
-class LobbyPage extends React.Component {
+class SignupPage extends React.Component {
 
     render() {
         console.log("THIS props", this.props);
@@ -26,10 +25,9 @@ class LobbyPage extends React.Component {
                 </FlexTall>
                 <hr />
                 <FlexTall justify='center' align='center'>
-                    <GameTable></GameTable>
-                    {/* <Button>
+                    <Button>
                         OPEN PAY MODAL
-                    </Button> */}
+                    </Button>
                     <Modal open={ this.props.buyCardOpen || false }>
                         <Checkout />
                     </Modal>
@@ -45,4 +43,4 @@ function mapStateToProps(state) {
          buyCardOpen: buyCardOpen
     };
 }
-export default LobbyPage = connect(mapStateToProps)(LobbyPage);
+export default SignupPage = connect(mapStateToProps)(SignupPage);
