@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal } from 'reactstrap';
+import { Modal } from 'reactstrap';
 import styled from 'styled-components';
 import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
